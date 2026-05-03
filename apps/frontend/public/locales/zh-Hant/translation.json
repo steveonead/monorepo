@@ -1,0 +1,9 @@
+{
+  "index": {
+    "title": "歡迎使用 react 和 react-i18next",
+    "description": {
+      "part1": "要開始使用，請編輯 <1>src/App.js</1> 並保存以重新載入。",
+      "part2": "使用上方的按鈕在英文和德文之間切換語言。"
+    }
+  }
+}

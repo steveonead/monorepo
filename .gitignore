@@ -1,0 +1,46 @@
+# deps
+node_modules/
+
+# build
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# vite
+.vite/
+
+# env
+.env
+.env.local
+.env.*.local
+.envrc
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# coverage / test artifacts
+coverage/
+playwright-report/
+test-results/
+
+# generated
+apps/frontend/src/routeTree.gen.ts
+apps/backend/src/generated/
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# claude code
+.claude/settings.local.json
+
+# pnpm
+.pnpm-store/
