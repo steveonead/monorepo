@@ -5,7 +5,7 @@ import type { Linter } from 'eslint';
 import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 import antfu from '@antfu/eslint-config';
 import pluginImportAlias from '@dword-design/eslint-plugin-import-alias';
-import pluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 export type ConfigOptions = OptionsConfig & Omit<TypedFlatConfigItem, 'files'>;
 
@@ -127,5 +127,5 @@ export default function config(options: ConfigOptions = {}, ...userConfigs: User
     },
 
     ...userConfigs,
-  ).append(pluginPrettierRecommended);
+  ).append(eslintConfigPrettier);
 }

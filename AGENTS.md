@@ -16,3 +16,7 @@
 ├── turbo.json
 ├── pnpm-workspace.yaml
 ```
+
+## Linting & Formatting
+
+由 `.claude/hooks/eslint-fix.sh` PostToolUse hook 接手，每次 Write/Edit 後自動執行。**不需手動呼叫 `eslint --fix` 或 `prettier`。**
