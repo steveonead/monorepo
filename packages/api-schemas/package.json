@@ -1,12 +1,11 @@
 {
   "name": "@superdsp/api-schemas",
-  "type": "module",
   "version": "0.0.1",
   "private": true,
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+    "./auth/*": {
+      "types": "./src/auth/*.ts",
+      "default": "./src/auth/*.ts"
     }
   },
   "main": "./src/index.ts",

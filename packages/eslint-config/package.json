@@ -11,9 +11,7 @@
       "import": "./src/index.ts"
     }
   },
-  "scripts": {
-    "lint": "eslint ."
-  },
+  "scripts": {},
   "dependencies": {
     "@antfu/eslint-config": "catalog:",
     "@dword-design/eslint-plugin-import-alias": "^8.1.8",

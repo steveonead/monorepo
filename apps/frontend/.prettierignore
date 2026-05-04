@@ -1,1 +1,4 @@
+# lint-staged 以此目錄為 CWD 執行 prettier，導致 root .prettierignore 的路徑
+# (apps/frontend/src/components/ui) 被相對 CWD 解析而失效。
+# 需在此重複宣告，以正確路徑 ignore shadcn/ui 自動產生的元件。
 src/components/ui

@@ -1,5 +1,6 @@
-import path from 'node:path'
-import { defineConfig } from 'prisma/config'
+import path from 'node:path';
+import process from 'node:process';
+import { defineConfig } from 'prisma/config';
 
 export default defineConfig({
   schema: path.join('prisma', 'schema.prisma'),
@@ -9,4 +10,4 @@ export default defineConfig({
   datasource: {
     url: process.env.DATABASE_URL,
   },
-})
+});

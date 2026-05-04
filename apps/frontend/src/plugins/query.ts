@@ -3,6 +3,7 @@ import type { QueryKey } from '@tanstack/react-query';
 import { matchQuery, MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 
 declare module '@tanstack/react-query' {
+  // eslint-disable-next-line ts/consistent-type-definitions
   interface Register {
     queryMeta: {
       skipGlobalError?: boolean;

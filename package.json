@@ -12,8 +12,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
-    "test": "turbo test",
-    "format": "turbo format"
+    "test": "turbo test"
   },
   "devDependencies": {
     "@superdsp/eslint-config": "workspace:*",
@@ -21,7 +20,7 @@
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
     "simple-git-hooks": "^2.13.1",
-    "turbo": "^2.9.7",
+    "turbo": "^2.9.8",
     "typescript": "catalog:"
   },
   "volta": {
