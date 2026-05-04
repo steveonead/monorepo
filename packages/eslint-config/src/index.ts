@@ -1,7 +1,10 @@
+import process from 'node:process';
+
 import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from '@antfu/eslint-config';
 import type { Linter } from 'eslint';
 import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 import antfu from '@antfu/eslint-config';
+import importAlias from '@dword-design/eslint-plugin-import-alias';
 
 export type ConfigOptions = OptionsConfig & Omit<TypedFlatConfigItem, 'files'>;
 
@@ -111,6 +114,14 @@ export default function config(options: ConfigOptions = {}, ...userConfigs: User
       files: ['package.json'],
       rules: {
         'pnpm/json-enforce-catalog': 'off',
+      },
+    },
+
+    importAlias.configs.recommended,
+    {
+      files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+      rules: {
+        '@dword-design/import-alias/prefer-alias': ['error', { aliasForSubpaths: true }],
       },
     },
 
