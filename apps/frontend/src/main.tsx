@@ -14,11 +14,13 @@ const router = createTanstackRouterWithQueryClient(queryClient);
 
 // Register things for type safety
 declare module '@tanstack/react-router' {
+  // eslint-disable-next-line ts/consistent-type-definitions
   interface Register {
     router: typeof router;
   }
 }
 
+// eslint-disable-next-line ts/no-non-null-assertion
 const rootElement = document.getElementById('app')!;
 
 if (!rootElement.innerHTML) {

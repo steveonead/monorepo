@@ -44,3 +44,6 @@ apps/backend/src/generated/
 
 # pnpm
 .pnpm-store/
+
+# ito docs
+ito-temp/

@@ -31,7 +31,7 @@
     "@nestjs/testing": "^11.1.19",
     "@superdsp/eslint-config": "workspace:*",
     "@swc/cli": "^0.8.1",
-    "@swc/core": "^1.15.32",
+    "@swc/core": "^1.15.33",
     "@types/express": "^5.0.6",
     "@types/node": "catalog:",
     "prisma": "^7.8.0",
