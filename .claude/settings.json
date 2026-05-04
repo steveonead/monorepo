@@ -1,13 +1,38 @@
 {
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/block-dangerous.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/enforce-pnpm.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/eslint-fix.sh",
+            "command": ".claude/hooks/lint-and-format.sh",
             "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/typecheck.sh"
           }
         ]
       }
