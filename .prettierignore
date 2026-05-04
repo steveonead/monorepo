@@ -6,6 +6,8 @@ node_modules
 .cache
 .vite
 .pnpm-store
+.gitignore
+.prettierignore
 
 # 建置產物
 dist
