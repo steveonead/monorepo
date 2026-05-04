@@ -4,7 +4,8 @@ import type { Awaitable, OptionsConfig, TypedFlatConfigItem } from '@antfu/eslin
 import type { Linter } from 'eslint';
 import type { FlatConfigComposer } from 'eslint-flat-config-utils';
 import antfu from '@antfu/eslint-config';
-import importAlias from '@dword-design/eslint-plugin-import-alias';
+import pluginImportAlias from '@dword-design/eslint-plugin-import-alias';
+import pluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export type ConfigOptions = OptionsConfig & Omit<TypedFlatConfigItem, 'files'>;
 
@@ -117,7 +118,7 @@ export default function config(options: ConfigOptions = {}, ...userConfigs: User
       },
     },
 
-    importAlias.configs.recommended,
+    pluginImportAlias.configs.recommended,
     {
       files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       rules: {
@@ -126,5 +127,5 @@ export default function config(options: ConfigOptions = {}, ...userConfigs: User
     },
 
     ...userConfigs,
-  );
+  ).append(pluginPrettierRecommended);
 }
