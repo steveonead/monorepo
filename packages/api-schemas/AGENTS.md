@@ -1,9 +1,35 @@
-# 前後端 API 介面
+# 前後端共用 Zod Schema
 
-## Package Exports
+前後端同時共用的 Zod schema 及其衍生 TypeScript type，依領域分組，透過 `tsdown` 編譯輸出。
 
-`package.json` 以 wildcard subpath pattern 直接暴露 `.ts` source（無 dist）。`./src/{module}/*.ts` 下每個檔案自動成為一個 export entry
+## 限制
 
-## Import 規則
+**NEVER**放僅單端使用的 schema／type（放對應 app）、非 schema 邏輯（另開 package）。
 
-`packages/api-schemas/src` 內部**只能用相對路徑，禁用 `@/` alias**
+## 開發指南
+
+### 新增領域時，必須同時改以下三處
+
+**1. `tsdown.config.ts`**
+
+```ts
+entry: [
+  // ...
+  'src/<domain>/<file>.ts',
+],
+```
+
+**2. `package.json` exports**
+
+```json
+"./<domain>/*": {
+  "import": { "types": "./dist/<domain>/*.d.mts", "default": "./dist/<domain>/*.mjs" },
+  "require": { "types": "./dist/<domain>/*.d.cts", "default": "./dist/<domain>/*.cjs" }
+}
+```
+
+**3. Build**
+
+```bash
+pnpm --filter @superdsp/api-schemas build
+```

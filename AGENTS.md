@@ -18,7 +18,7 @@ pnpm test         # 測試所有 package（turbo test）
 │   ├── frontend/          # Vite + React + TanStack Router
 │   └── backend/           # NestJS + Prisma
 ├── packages/
-│   ├── api-schemas/       # 共享 Zod schema，依領域組織
+│   ├── api-schemas/       # 共享 Zod schema，依領域分組
 │   └── eslint-config/     # @antfu/eslint-config 封裝
 ├── docs/
 │   └── adr/

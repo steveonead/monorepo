@@ -1,54 +1,24 @@
 import config from '@superdsp/eslint-config';
-import path from 'node:path';
-
-function createPreferAliasRule(aliases) {
-  return {
-    meta: {
-      type: 'suggestion',
-      fixable: 'code',
-      messages: {
-        useAlias: "Use '{{fixed}}' instead of '{{source}}'",
-      },
-      schema: [],
-    },
-    create(context) {
-      return {
-        ImportDeclaration(node) {
-          const source = node.source.value;
-          if (!source.startsWith('.')) return;
-
-          const absImport = path.resolve(path.dirname(context.filename), source);
-
-          for (const [aliasName, aliasDir] of Object.entries(aliases)) {
-            const absAlias = path.resolve(context.cwd, aliasDir);
-            if (absImport.startsWith(absAlias + path.sep) || absImport === absAlias) {
-              const rel = path.relative(absAlias, absImport).replaceAll('\\', '/');
-              const fixed = `${aliasName}/${rel}`;
-              context.report({
-                node: node.source,
-                messageId: 'useAlias',
-                data: { fixed, source },
-                fix: (fixer) => fixer.replaceText(node.source, `'${fixed}'`),
-              });
-              break;
-            }
-          }
-        },
-      };
-    },
-  };
-}
 
 export default config(
   {
     ignores: ['dist', 'src/generated/**'],
   },
+  // 告知 ESLint parser 目前啟用了 emitDecoratorMetadata 與 experimentalDecorators，
+  // 讓 ts/consistent-type-imports 規則自動跳過含有 decorator 的檔案（controller、service、module 等），
+  // 避免 ESLint auto-fix 將 class import 改成 import type，導致 NestJS DI 在 runtime 無法解析依賴。
+  // 參考：https://typescript-eslint.io/blog/changes-to-consistent-type-imports-with-decorators/
   {
-    plugins: {
-      local: { rules: { 'prefer-alias': createPreferAliasRule({ '@': './src' }) } },
+    languageOptions: {
+      parserOptions: {
+        emitDecoratorMetadata: true,
+        experimentalDecorators: true,
+      },
     },
+  },
+  {
     rules: {
-      'local/prefer-alias': 'error',
+      'node/prefer-global/process': 'off',
     },
   },
 );

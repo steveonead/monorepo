@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createResponseSchema } from '../base/api';
+import { createResponseSchema } from '@/base/api';
 
 export const UserSchema = z.object({
   id: z.uuid(),

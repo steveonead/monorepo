@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
+    "dev:mockoon": "vite --mode mockoon --open",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",

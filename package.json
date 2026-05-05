@@ -10,6 +10,7 @@
     "prepare": "simple-git-hooks",
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev:mockoon": "turbo run @superdsp/frontend#dev:mockoon @superdsp/backend#dev",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "test": "turbo test"
@@ -17,6 +18,7 @@
   "devDependencies": {
     "@superdsp/eslint-config": "workspace:*",
     "eslint": "catalog:",
+    "fallow": "^2.63.0",
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
     "simple-git-hooks": "^2.13.1",
