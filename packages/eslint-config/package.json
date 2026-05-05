@@ -15,8 +15,8 @@
   "dependencies": {
     "@antfu/eslint-config": "catalog:",
     "@dword-design/eslint-plugin-import-alias": "^8.1.8",
-    "eslint-flat-config-utils": "catalog:",
-    "eslint-config-prettier": "^10.1.0"
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-flat-config-utils": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

@@ -4,21 +4,11 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { isDev } from '@/lib/env';
-import { setupI18n } from '@/plugins/i18n';
-import queryClient from '@/plugins/query';
-import { createTanstackRouterWithQueryClient } from '@/plugins/router';
+import { setupI18n } from '@/lib/i18n';
+import queryClient from '@/lib/tanstack/query';
+import router from '@/lib/tanstack/router';
 
 import '@/index.css';
-
-const router = createTanstackRouterWithQueryClient(queryClient);
-
-// Register things for type safety
-declare module '@tanstack/react-router' {
-  // eslint-disable-next-line ts/consistent-type-definitions
-  interface Register {
-    router: typeof router;
-  }
-}
 
 // eslint-disable-next-line ts/no-non-null-assertion
 const rootElement = document.getElementById('app')!;

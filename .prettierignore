@@ -37,3 +37,5 @@ yarn.lock
 # 圖檔
 *.svg
 
+# Mockoon
+mockoon.json

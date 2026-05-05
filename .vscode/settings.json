@@ -9,6 +9,10 @@
     "**/routeTree.gen.ts": true
   },
 
+  "files.associations": {
+    ".env.*": "env"
+  },
+
   "js/ts.preferences.importModuleSpecifier": "non-relative",
 
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -63,6 +67,7 @@
 
   "cSpell.words": [
     "antfu",
+    "axios",
     "hugeicons",
     "iconify",
     "languagedetector",

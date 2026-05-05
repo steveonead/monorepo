@@ -9,7 +9,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ZodValidationPipe());
   app.enableCors();
   app.enableShutdownHooks();
-  await app.listen(process.env.PORT ?? 5011);
+  await app.listen(process.env.PORT ?? 5012);
 }
 
 bootstrap();

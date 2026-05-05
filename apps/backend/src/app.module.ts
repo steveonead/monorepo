@@ -5,6 +5,13 @@ import { HealthModule } from '@/health/health.module';
 import { UserModule } from '@/user/user.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), HealthModule, UserModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env'],
+    }),
+    HealthModule,
+    UserModule,
+  ],
 })
 export class AppModule {}

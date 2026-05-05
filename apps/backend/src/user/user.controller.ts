@@ -21,7 +21,7 @@ export class UserController {
     const user: User = {
       id: randomUUID(),
       ...dto,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString().slice(0, 10),
     };
     users.push(user);
     return user;

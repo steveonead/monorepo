@@ -14,50 +14,50 @@ export const Route = createRootRouteWithContext<{
   component: RootComponent,
   notFoundComponent: () => {
     return (
-      <>
+      <WithDevTools>
         <div>
           <p>This is the notFoundComponent configured on root route</p>
           <Link to="/">Start Over</Link>
         </div>
-        {isDev && (
-          <>
-            <ReactQueryDevtools buttonPosition="bottom-right" />
-            <TanStackRouterDevtools position="bottom-left" />
-          </>
-        )}
-      </>
+      </WithDevTools>
     );
   },
   errorComponent: ({ error }) => {
     return (
-      <>
+      <WithDevTools>
         <div>
           <p>This is the errorComponent configured on root route</p>
           <pre>{error.message}</pre>
           <Link to="/">Start Over</Link>
         </div>
-        {isDev && (
-          <>
-            <ReactQueryDevtools buttonPosition="bottom-right" />
-            <TanStackRouterDevtools position="bottom-left" />
-          </>
-        )}
-      </>
+      </WithDevTools>
     );
   },
 });
 
-function RootComponent() {
+function WithDevTools({ children }: { children: React.ReactNode }) {
+  if (!isDev) {
+    return <>{children}</>;
+  }
+
   return (
     <>
+      {children}
+      <ReactQueryDevtools buttonPosition="bottom-right" />
+      <TanStackRouterDevtools position="bottom-left" />
+    </>
+  );
+}
+
+function RootComponent() {
+  return (
+    <WithDevTools>
       <div className="flex min-h-screen flex-col">
         <Header />
         <hr />
         <Outlet />
         <Footer />
       </div>
-      <ReactQueryDevtools buttonPosition="bottom-right" />
-      <TanStackRouterDevtools position="bottom-left" />
-    </>
+    </WithDevTools>
   );
 }

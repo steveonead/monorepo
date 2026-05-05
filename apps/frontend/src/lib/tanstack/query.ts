@@ -13,6 +13,7 @@ declare module '@tanstack/react-query' {
     };
   }
 }
+
 class HttpError extends Error {
   constructor(
     public status: number,

@@ -24,7 +24,7 @@ export default function config(options: ConfigOptions = {}, ...userConfigs: User
           'sort-imports': 'off',
           'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
           'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-          'unused-imports/no-unused-vars': ['warn'],
+          'unused-imports/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
           'unused-imports/no-unused-imports': 'off',
           'no-nested-ternary': 'error',
           'no-empty': ['error', { allowEmptyCatch: false }],
