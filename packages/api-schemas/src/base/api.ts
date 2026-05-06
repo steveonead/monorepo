@@ -17,3 +17,14 @@ export type ApiErrorResponse = z.infer<ReturnType<typeof createApiErrorSchema>>;
 export function createResponseSchema<T extends z.ZodTypeAny>(dataSchema: T) {
   return z.union([createApiSuccessSchema(dataSchema), createApiErrorSchema()]);
 }
+
+export function createPaginatedResponseSchema<T extends z.ZodTypeAny>(itemSchema: T) {
+  return createApiSuccessSchema(
+    z.object({
+      items: z.array(itemSchema),
+      total: z.number().int().nonnegative(),
+      page: z.number().int().positive(),
+      pageSize: z.number().int().positive(),
+    }),
+  );
+}
