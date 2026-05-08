@@ -13,6 +13,12 @@
       "skillPath": ".claude/skills/ito-commit/SKILL.md",
       "computedHash": "be9e9e2552212613bd1fe1364cca246714fcac031617c82f4e155d5864dcbf7c"
     },
+    "ito-diagnose": {
+      "source": "steveonead/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-diagnose/SKILL.md",
+      "computedHash": "01a22e29cfddb36d0223fe108ccbd939f1dfbb5c333acf14db0f36df7b8e64cb"
+    },
     "ito-explain": {
       "source": "steveonead/agent-skills",
       "sourceType": "github",
@@ -23,7 +29,19 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-grill/SKILL.md",
-      "computedHash": "1a7cc0301682500c18141341ec68a033a6f09d77cfe96ff7d50cd8e98bf5d887"
+      "computedHash": "6924ed7a32d6bb67ef4b14245419e70490a86ab5f3a983d6c66fafd9de9f04a2"
+    },
+    "ito-grill-with-docs": {
+      "source": "steveonead/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-grill-with-docs/SKILL.md",
+      "computedHash": "319c456b35e287b19297fff5c564a3a5d1e04c6e81ff7d3120ac39a159bd38c9"
+    },
+    "ito-handoff": {
+      "source": "steveonead/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-handoff/SKILL.md",
+      "computedHash": "3259a866fa4009aaa76b20188b4ce9ebafcef889d6f6e4252ef01bf4aa5bfded"
     },
     "ito-hunt": {
       "source": "steveonead/agent-skills",
@@ -43,6 +61,12 @@
       "skillPath": ".claude/skills/ito-prd/SKILL.md",
       "computedHash": "901bf938713c6f86910af518fd61392cf8b8b5182ae0274e021fa50743e88aeb"
     },
+    "ito-prototype": {
+      "source": "steveonead/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-prototype/SKILL.md",
+      "computedHash": "d7fcdfe2d329f8e1e8409e214ce9a7df565b4dab2e78e413eb7d9346a22e3a66"
+    },
     "ito-search": {
       "source": "steveonead/agent-skills",
       "sourceType": "github",
@@ -53,13 +77,19 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-skill/SKILL.md",
-      "computedHash": "f600dd8d4f3b95b74bd84939290350d76774b01c3703eafb2b4c10ac9fc86f73"
+      "computedHash": "6c54f2d7098c8d379a9e84c5eb1fa7119593d76f46075e1c3cbc2f042fbdad7f"
     },
     "ito-tdd": {
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-tdd/SKILL.md",
       "computedHash": "642e0f4b2d60caf553f14d24b260b15f342ea67bcb9f847c35f92072a8b3d3e2"
+    },
+    "ito-tickets": {
+      "source": "steveonead/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-tickets/SKILL.md",
+      "computedHash": "36a7feecdfccf00710ef115d303ba19dd64e0c16f5d24e0cfa971d86a5fb0b90"
     },
     "ito-ui-verify": {
       "source": "steveonead/agent-skills",
