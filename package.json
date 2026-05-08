@@ -18,11 +18,11 @@
   "devDependencies": {
     "@superdsp/eslint-config": "workspace:*",
     "eslint": "catalog:",
-    "fallow": "^2.63.0",
+    "fallow": "^2.66.2",
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
     "simple-git-hooks": "^2.13.1",
-    "turbo": "^2.9.8",
+    "turbo": "^2.9.9",
     "typescript": "catalog:"
   },
   "volta": {
