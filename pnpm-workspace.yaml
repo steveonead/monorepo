@@ -2,6 +2,17 @@ packages:
   - 'apps/*'
   - 'packages/*'
 
+catalog:
+  '@antfu/eslint-config': ^8.2.0
+  '@types/node': ^25.6.2
+  axios: '^1.16.0'
+  eslint: ^10.3.0
+  eslint-flat-config-utils: ^3.2.0
+  prettier: ^3.8.3
+  typescript: ^6.0.3
+  vitest: ^4.1.5
+  zod: ^4.4.3
+
 minimumReleaseAge: 1440 # 1 day
 shellEmulator: true
 trustPolicy: no-downgrade
@@ -13,14 +24,3 @@ trustPolicyExclude:
   - chokidar@4.0.3
   - semver@6.3.1 # shadcn 依賴的 @babel 套件，發布時缺少 provenance attestation，非供應鏈攻擊
   - reselect@5.1.1 # @base-ui/react 依賴鏈，發布時遺失 provenance attestation（reduxjs/reselect#752），非供應鏈攻擊
-
-catalog:
-  '@antfu/eslint-config': ^8.2.0
-  '@types/node': ^25.6.0
-  axios: '^1.16.0'
-  eslint: ^10.3.0
-  eslint-flat-config-utils: ^3.2.0
-  prettier: ^3.8.3
-  typescript: ^6.0.3
-  vitest: ^4.1.5
-  zod: ^4.4.3
