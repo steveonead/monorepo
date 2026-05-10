@@ -4,7 +4,7 @@
 
 - NestJS 11
 - TypeScript 6
-- Prisma 7
+- Prisma 6
 - Zod 4 + nestjs-zod
 - Vitest + Supertest（e2e）
 
