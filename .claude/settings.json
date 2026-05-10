@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/typecheck.sh"
+            "command": "bash -c '$CLAUDE_PROJECT_DIR/.claude/hooks/typecheck.sh'"
           }
         ]
       }
