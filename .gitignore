@@ -28,6 +28,9 @@ coverage/
 playwright-report/
 test-results/
 
+# tanstack
+.tanstack/
+
 # generated
 apps/frontend/src/routeTree.gen.ts
 apps/backend/src/generated/

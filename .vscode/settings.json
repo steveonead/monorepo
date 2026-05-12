@@ -68,6 +68,7 @@
   "cSpell.words": [
     "antfu",
     "axios",
+    "envrc",
     "hugeicons",
     "iconify",
     "languagedetector",
@@ -78,9 +79,11 @@
     "Playwriter",
     "shadcn",
     "superdsp",
+    "tanstack",
     "Turborepo",
     "unplugin",
     "viewports",
+    "vite",
     "vitest"
   ],
   "i18n-ally.localesPaths": ["public/locales"],
