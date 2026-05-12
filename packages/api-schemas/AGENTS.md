@@ -8,18 +8,9 @@
 
 ## 開發指南
 
-### 新增領域時，必須同時改以下三處
+### 新增領域時，必須同時改以下兩處
 
-**1. `tsdown.config.ts`**
-
-```ts
-entry: [
-  // ...
-  'src/<domain>/<file>.ts',
-],
-```
-
-**2. `package.json` exports**
+**1. `package.json` exports**
 
 ```json
 "./<domain>/*": {
@@ -28,7 +19,7 @@ entry: [
 }
 ```
 
-**3. Build**
+**2. Build**
 
 ```bash
 pnpm --filter @superdsp/api-schemas build

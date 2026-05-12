@@ -1,11 +1,12 @@
 import { resolve } from 'node:path';
+import process from 'node:process';
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-  entry: ['src/auth/login.ts', 'src/auth/user.ts', 'src/base/api.ts', 'src/campaigns/campaign.ts'],
+  entry: ['src/**/*.ts', '!src/**/*.test.ts', '!src/**/*.spec.ts'],
   format: ['esm', 'cjs'],
   dts: true,
-  clean: true,
+  clean: process.env.NODE_ENV !== 'production',
   inputOptions: {
     resolve: {
       alias: {
