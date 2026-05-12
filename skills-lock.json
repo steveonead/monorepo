@@ -5,13 +5,13 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-cleanup/SKILL.md",
-      "computedHash": "b16fcb1c87190d61e7bb3fde11751888ab6416ec8c586c477676936d7855d018"
+      "computedHash": "05c630ca68050b80f1f2e313a7cceab0ddfa352c3a1f84d11cb1364e0226735f"
     },
     "ito-commit": {
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-commit/SKILL.md",
-      "computedHash": "be9e9e2552212613bd1fe1364cca246714fcac031617c82f4e155d5864dcbf7c"
+      "computedHash": "ace17f2dffb9de5677f99c5810d757a9fbb3ee3f9eb878031201957b8503f111"
     },
     "ito-diagnose": {
       "source": "steveonead/agent-skills",
@@ -55,6 +55,12 @@
       "skillPath": ".claude/skills/ito-issues/SKILL.md",
       "computedHash": "cb7709d424dfc6ee85ea54a5f435547a2d136eb1ca101f50d186f1bb4c4caf1a"
     },
+    "ito-pr": {
+      "source": "steveonead/agent-skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-pr/SKILL.md",
+      "computedHash": "04daed9f3828f7fd62237c6ed55376616b20f7eb77a4a9b1d777d2a09c8fa427"
+    },
     "ito-prd": {
       "source": "steveonead/agent-skills",
       "sourceType": "github",
@@ -71,7 +77,7 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-search/SKILL.md",
-      "computedHash": "59ea295a7a16630a57ef6d10c98c09fe1b4c2bc88e82d06de404983bf8996919"
+      "computedHash": "bfbe5985d9ff076cd5b4e1cabf1ed3b6f48827786175d57c9a99b2b6e66e3d4e"
     },
     "ito-skill": {
       "source": "steveonead/agent-skills",
