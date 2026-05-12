@@ -13,7 +13,10 @@
     "dev:mockoon": "turbo run @superdsp/frontend#dev:mockoon @superdsp/backend#dev",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
-    "test": "turbo test"
+    "test": "turbo test",
+    "prisma:generate": "pnpm --filter @superdsp/backend prisma:generate",
+    "prisma:migrate": "pnpm --filter @superdsp/backend prisma:migrate",
+    "prisma:studio": "pnpm --filter @superdsp/backend prisma:studio"
   },
   "devDependencies": {
     "@superdsp/eslint-config": "workspace:*",
