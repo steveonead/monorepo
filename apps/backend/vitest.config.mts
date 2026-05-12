@@ -8,14 +8,30 @@ export default defineConfig({
       module: { type: 'es6' },
     }),
   ],
-  test: {
-    globals: true,
-    environment: 'node',
-    include: ['src/**/*.spec.ts'],
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
+  },
+  test: {
+    globals: true,
+    environment: 'node',
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['src/**/*.spec.ts'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'e2e',
+          include: ['test/**/*.e2e-spec.ts'],
+          testTimeout: 30000,
+        },
+      },
+    ],
   },
 });
