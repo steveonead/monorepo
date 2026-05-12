@@ -16,6 +16,9 @@
   "js/ts.preferences.importModuleSpecifier": "non-relative",
 
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
   "editor.formatOnSave": true,
 
   // Auto fix
