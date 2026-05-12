@@ -17,7 +17,7 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-diagnose/SKILL.md",
-      "computedHash": "01a22e29cfddb36d0223fe108ccbd939f1dfbb5c333acf14db0f36df7b8e64cb"
+      "computedHash": "fb65635750c599546562a47affab1053242e2d1930f1f9f643a76c2fa48c0ea0"
     },
     "ito-explain": {
       "source": "steveonead/agent-skills",
@@ -35,7 +35,7 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-grill-with-docs/SKILL.md",
-      "computedHash": "319c456b35e287b19297fff5c564a3a5d1e04c6e81ff7d3120ac39a159bd38c9"
+      "computedHash": "8665ec6271b9933c841eaa69e2b52a4de8dcf5c0bf907cac0e0bd64d8ae6c338"
     },
     "ito-handoff": {
       "source": "steveonead/agent-skills",
