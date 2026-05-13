@@ -22,7 +22,7 @@
 
 ### Database（MySQL 5.7）
 
-公司 infrastructure 限制，**禁用** MySQL 8.0 專屬語法：
+infrastructure 限制，**禁用** MySQL 8.0 專屬語法：
 
 - Window functions
 - `WITH` CTE
