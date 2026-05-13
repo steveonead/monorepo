@@ -13,7 +13,7 @@ catalog:
   vitest: ^4.1.5
   zod: ^4.4.3
 
-minimumReleaseAge: 1440 # 1 day
+minimumReleaseAge: 10080 # 7 day
 shellEmulator: true
 trustPolicy: no-downgrade
 # chokidar@4.0.2 & 4.0.3 發布時未透過 CI/CD，導致缺少 provenance attestation
