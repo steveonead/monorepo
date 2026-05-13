@@ -8,12 +8,12 @@
   "packageManager": "pnpm@10.33.2",
   "scripts": {
     "prepare": "simple-git-hooks",
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "dev:mockoon": "turbo run @superdsp/frontend#dev:mockoon @superdsp/backend#dev",
-    "lint": "turbo lint",
-    "typecheck": "turbo typecheck",
-    "test": "turbo test",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:mockoon": "turbo run dev:mockoon",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
     "prisma:generate": "pnpm --filter @superdsp/backend prisma:generate",
     "prisma:migrate": "pnpm --filter @superdsp/backend prisma:migrate",
     "prisma:studio": "pnpm --filter @superdsp/backend prisma:studio"

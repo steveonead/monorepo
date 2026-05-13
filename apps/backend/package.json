@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nest build",
     "dev": "nest start --watch",
+    "dev:mockoon": "nest start --watch",
     "start": "node dist/main.js",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
