@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "dev": {
+      "env": ["DATABASE_URL", "PORT"]
+    },
+    "test": {
+      "env": ["DATABASE_URL", "PORT"]
+    },
+    "typecheck": {
+      "outputs": ["dist/*.tsbuildinfo"]
+    }
+  }
+}
