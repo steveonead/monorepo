@@ -17,7 +17,7 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-commit/SKILL.md",
-      "computedHash": "ace17f2dffb9de5677f99c5810d757a9fbb3ee3f9eb878031201957b8503f111"
+      "computedHash": "64128ed8b741146f58feb6bba7ee4d2d32d2d035b0c1715efadd2ac2e5b5f8d3"
     },
     "ito-diagnose": {
       "source": "steveonead/agent-skills",
