@@ -35,16 +35,6 @@ export default function Header() {
       >
         About
       </Link>
-      <Link
-        to="/layout-a"
-        activeProps={{
-          className: 'font-bold',
-        }}
-        data-test="layout-a-link"
-      >
-        Layout A
-      </Link>
-
       <Combobox items={frameworks}>
         <ComboboxInput
           placeholder="Select a framework"

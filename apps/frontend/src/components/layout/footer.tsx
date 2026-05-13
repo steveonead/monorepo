@@ -1,8 +1,4 @@
-import {
-  Home01Icon,
-  InformationCircleIcon,
-  LeftToRightListBulletIcon,
-} from '@hugeicons/core-free-icons';
+import { Home01Icon, InformationCircleIcon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Link } from '@tanstack/react-router';
 
@@ -33,16 +29,6 @@ export default function Footer() {
             size={16}
           />
           About
-        </Link>
-        <Link
-          to="/layout-a"
-          className="flex items-center gap-1 hover:text-gray-100"
-        >
-          <HugeiconsIcon
-            icon={LeftToRightListBulletIcon}
-            size={16}
-          />
-          Layout A
         </Link>
       </nav>
       <p className="text-center text-sm text-gray-400">
