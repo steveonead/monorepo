@@ -83,7 +83,7 @@
       "source": "steveonead/agent-skills",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-search/SKILL.md",
-      "computedHash": "bfbe5985d9ff076cd5b4e1cabf1ed3b6f48827786175d57c9a99b2b6e66e3d4e"
+      "computedHash": "e1117f75beb5a694a11774a87fee3e13b0fa8f134bb9cc51b1ce993c09bef34f"
     },
     "ito-skill": {
       "source": "steveonead/agent-skills",
