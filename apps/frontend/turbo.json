@@ -6,7 +6,11 @@
       "outputs": ["dist/**", "node_modules/.tmp/**"]
     },
     "typecheck": {
-      "outputs": ["node_modules/.tmp/**"]
+      "outputs": ["node_modules/.tmp/**"],
+      "incremental": [
+        { "outputs": ["node_modules/.tmp/tsconfig.app.tsbuildinfo"] },
+        { "outputs": ["node_modules/.tmp/tsconfig.node.tsbuildinfo"] }
+      ]
     }
   }
 }

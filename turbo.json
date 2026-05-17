@@ -1,7 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "futureFlags": {
+    "incrementalTasks": true
+  },
   "tasks": {
+    "topo": {
+      "dependsOn": ["^topo"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
@@ -22,9 +28,10 @@
       "outputs": []
     },
     "typecheck": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["topo"],
       "outputs": ["*.tsbuildinfo"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+      "inputs": ["$TURBO_DEFAULT$"],
+      "incremental": [{ "outputs": ["tsconfig.tsbuildinfo"] }]
     },
     "test": {
       "dependsOn": ["^build"],

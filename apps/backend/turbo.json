@@ -9,7 +9,8 @@
       "env": ["DATABASE_URL", "PORT"]
     },
     "typecheck": {
-      "outputs": ["dist/*.tsbuildinfo"]
+      "outputs": ["dist/*.tsbuildinfo"],
+      "incremental": [{ "outputs": ["dist/tsconfig.tsbuildinfo"] }]
     }
   }
 }
