@@ -11,7 +11,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node", "vitest/globals"],
+    "types": ["node", "vitest/globals", "@total-typescript/ts-reset"],
     "declaration": true,
     "outDir": "./dist",
     "removeComments": true,

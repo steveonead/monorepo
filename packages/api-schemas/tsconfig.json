@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"],
+    "types": ["node", "@total-typescript/ts-reset"],
     "declaration": true,
     "declarationMap": true
   },

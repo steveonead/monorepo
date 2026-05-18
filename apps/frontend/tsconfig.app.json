@@ -12,7 +12,12 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "types": [
+      "vite/client",
+      "vitest/globals",
+      "@testing-library/jest-dom",
+      "@total-typescript/ts-reset"
+    ],
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "verbatimModuleSyntax": true
