@@ -3,7 +3,7 @@ packages:
   - 'packages/*'
 
 catalog:
-  '@antfu/eslint-config': ^8.2.0
+  '@antfu/eslint-config': ^9.0.0
   '@types/node': ^25.6.2
   axios: '^1.16.0'
   eslint: ^10.3.0
