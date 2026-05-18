@@ -1,5 +1,7 @@
 # SuperDSP monorepo
 
+SuperDSP 2.0 使用 turborepo 2 建立的 monorepo
+
 ## 常見指令
 
 ```bash

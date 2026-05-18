@@ -1,5 +1,7 @@
 # SuperDSP Monorepo
 
+SuperDSP 2.0
+
 ## 調整 Node.js / pnpm 版本
 
 升版時需同步更新以下四處，確保 Volta 與 nvm 用戶行為一致：
