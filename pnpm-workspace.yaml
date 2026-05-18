@@ -13,9 +13,25 @@ catalog:
   vitest: ^4.1.5
   zod: ^4.4.3
 
+shamefully-hoist: false
+strict-peer-dependencies: false
+
+pmOnFail: error
 minimumReleaseAge: 10080 # 7 day
+minimumReleaseAgeStrict: false
 shellEmulator: true
 trustPolicy: no-downgrade
+
+allowBuilds:
+  '@nestjs/core': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@swc/core': true
+  esbuild: true
+  msw: true
+  prisma: true
+  simple-git-hooks: true
+
 # chokidar@4.0.2 & 4.0.3 發布時未透過 CI/CD，導致缺少 provenance attestation
 # 非供應鏈攻擊，為維護者發布流程問題（v5.0.0 已修復，改用 Trusted Publishing）
 # 但 @nestjs/cli v11 明確鎖定 chokidar@4.0.3，無法升級至 v5
