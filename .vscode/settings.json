@@ -68,6 +68,11 @@
   ],
   "css.validate": false,
 
+  // Tailwind CSS IntelliSense
+  "tailwindCSS.classFunctions": ["cn", "clsx", "cva"],
+  // 避免與 eslint-plugin-better-tailwindcss/enforce-canonical-classes 雙重提示
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+
   "cSpell.words": [
     "antfu",
     "axios",

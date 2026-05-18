@@ -1,6 +1,7 @@
 import config from '@superdsp/eslint-config';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import pluginRouter from '@tanstack/eslint-plugin-router';
+import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
 import pluginCheckFile from 'eslint-plugin-check-file';
 import pluginJestDom from 'eslint-plugin-jest-dom';
 import pluginTestingLibrary from 'eslint-plugin-testing-library';
@@ -67,5 +68,24 @@ export default config(
     files: ['src/**/*.test.tsx'],
     ...pluginTestingLibrary.configs['flat/react'],
     ...pluginJestDom.configs['flat/recommended'],
+  },
+
+  // better-tailwindcss：correctness + 部分 stylistic（排序與換行交給 prettier）
+  {
+    name: 'better-tailwindcss',
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: {
+      'better-tailwindcss': pluginBetterTailwindcss,
+    },
+    settings: {
+      'better-tailwindcss': {
+        entryPoint: 'src/index.css',
+      },
+    },
+    rules: {
+      ...pluginBetterTailwindcss.configs.recommended.rules,
+      'better-tailwindcss/enforce-consistent-class-order': 'off',
+      'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
+    },
   },
 );
