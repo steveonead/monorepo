@@ -3,9 +3,11 @@ import { queryOptions } from '@tanstack/react-query';
 
 import { sendRequest } from '@/lib/axios';
 
+import { authKeys } from './keys';
+
 export function userQueryOption(userId: number) {
   return queryOptions({
-    queryKey: ['user', userId],
+    queryKey: authKeys.user(userId),
     queryFn: async () =>
       sendRequest(
         {
