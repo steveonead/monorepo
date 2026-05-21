@@ -5,7 +5,7 @@ packages:
 catalog:
   '@antfu/eslint-config': ^9.0.0
   '@types/node': ^25.7.0
-  axios: '^1.16.0'
+  axios: '^1.16.1'
   eslint: ^10.3.0
   eslint-flat-config-utils: ^3.2.0
   prettier: ^3.8.3

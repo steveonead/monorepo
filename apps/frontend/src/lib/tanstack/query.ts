@@ -53,11 +53,11 @@ const queryClient = new QueryClient({
   }),
   mutationCache: new MutationCache({
     // eslint-disable-next-line max-params
-    onSuccess: async (_data, _vars, _ctx, mutation) => {
+    onSuccess: (_data, _vars, _ctx, mutation) => {
       // 未宣告 meta.invalidates 的 mutation 不做任何 invalidation（opt-in）
       // 全域 callback 採 fire-and-forget，不 await；若特定 mutation 需要等 refetch
       // 完成再繼續，請在該 useMutation 的 local onSuccess return invalidateQueries(...)
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         predicate: (query) =>
           mutation.meta?.invalidates?.some((queryKey) => matchQuery({ queryKey }, query)) ?? false,
       });
