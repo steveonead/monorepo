@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createApiSuccessSchema, createPaginatedResponseSchema } from '../base/api.js';
+import { createApiSuccessSchema, createPaginatedResponseSchema } from '@/base/api.js';
 
 export const CampaignStatus = z.enum(['ACTIVE', 'PAUSED', 'ENDED', 'DRAFT']);
 

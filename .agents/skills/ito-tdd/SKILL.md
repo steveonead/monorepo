@@ -25,6 +25,8 @@ description: 以測試驅動開發引導功能實作與 bug 修復。使用者�
 
 **壞測試**耦合實作：mock 內部協作者、測試私有方法、或透過外部手段驗證。警訊：重構後測試失敗，但行為沒變。
 
+**描述語言**：`describe()` 和 `it()` 的描述預設用繁體中文。技術術語（HTTP 狀態碼、API 名稱、method 名稱等）保留英文。只對新測試套用，不改既有測試。
+
 詳細範例與 mocking 守則，讀取 `references/tests.md`。
 
 ## 反模式：水平切片
@@ -45,6 +47,13 @@ description: 以測試驅動開發引導功能實作與 bug 修復。使用者�
 ## 核心流程
 
 以下為功能實作流程。收到 bug report 時，改見「Bug Fix 流程」。
+
+### 步驟 0：讀取 Best Practice Map
+
+嘗試讀取 `docs/BEST-PRACTICE-MAP.md`：
+
+- 若找到：分析任務涉及的檔案路徑與技術 stack，對應 map 中的 group，讀取命中的 best practice skill 文件。後續寫測試與實作時套用相關規則（尤其是測試框架規則，如 vitest-best-practices、react-testing-library-best-practices）。
+- 若找不到：跳過，不報錯，依原流程繼續。
 
 ### 步驟 1：規劃
 
@@ -86,7 +95,7 @@ GREEN: 最少程式碼通過 → 通過
 
 所有測試通過後，尋找重構候選：
 
-- **重複邏輯** → 提取函式或 class
+- **重複邏輯** → 提取函式或 `class`
 - **過長方法** → 拆成私有 helper（測試保留在公開介面上）
 - **Shallow module** → 合併或深化
 - **Feature envy** → 把邏輯移到資料所在之處
@@ -160,6 +169,7 @@ it('完成任務時設定 completedAt', async () => {
 
 ## 驗證
 
+- [ ] 若 `docs/BEST-PRACTICE-MAP.md` 存在，已讀取並套用對應 best practice 規則
 - [ ] 每個新行為都有對應測試
 - [ ] 所有測試通過
 - [ ] bug fix 包含一個在 fix 之前失敗的重現測試
@@ -168,5 +178,6 @@ it('完成任務時設定 completedAt', async () => {
 
 ## 延伸參考
 
-- `references/tests.md`：好測試與壞測試的對比範例，mocking 守則，DAMP、AAA、One Assertion Per Concept 等寫測試實務
+- `docs/BEST-PRACTICE-MAP.md`：各 stack best practice 的對照表，步驟 0 啟動時讀取，命中時載入對應 best practice 文件
+- `references/tests.md`：好測試與壞測試的對比範例，mocking 守則，DAMP、AAA、One Assertion Per Concept、測試描述語言等寫測試實務
 - `references/design.md`：為 testability 設計介面，deep module 模式
