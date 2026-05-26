@@ -17,7 +17,7 @@ pnpm test         # 測試所有 package（turbo test）
 ```
 /
 ├── apps/
-│   ├── frontend/          # Vite + React + TanStack Router
+│   ├── frontend/          # Vite + React + TanStack Router + TanStack Query + shadcn/ui
 │   └── backend/           # NestJS + Prisma
 ├── packages/
 │   ├── api-schemas/       # 共享 Zod schema，依領域分組

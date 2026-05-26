@@ -16,6 +16,23 @@ export const CampaignSchema = z.object({
 
 export type Campaign = z.infer<typeof CampaignSchema>;
 
+export const CreateCampaignSchema = CampaignSchema.omit({ id: true });
+
+export type CreateCampaign = z.infer<typeof CreateCampaignSchema>;
+
+// PATCH 採部分更新：所有欄位皆可選，只驗證有提供的欄位
+export const UpdateCampaignSchema = CampaignSchema.omit({ id: true }).partial();
+
+export type UpdateCampaign = z.infer<typeof UpdateCampaignSchema>;
+
+export const CampaignListQuerySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  pageSize: z.coerce.number().int().positive().default(20),
+  status: CampaignStatus.optional(),
+});
+
+export type CampaignListQuery = z.infer<typeof CampaignListQuerySchema>;
+
 export const CampaignDetailResponseSchema = createApiSuccessSchema(CampaignSchema);
 export const CampaignListResponseSchema = createPaginatedResponseSchema(CampaignSchema);
 

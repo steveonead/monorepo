@@ -33,6 +33,9 @@ Prisma 設定使用 `engine: "classic"`。
 
 ### 測試
 
-- Unit tests：`vitest run`（`vitest.config.mts`，對應 `src/**/*.spec.ts`）
-- E2e tests：`vitest run --config vitest.config.e2e.mts`（對應 `test/**/*.e2e-spec.ts`）
+統一在 `vitest.config.mts` 以 `projects` 區分 unit 與 e2e：
+
+- 全部：`pnpm test`（`vitest run`）
+- Unit tests：`pnpm test:ui`（`--project unit`，對應 `src/**/*.spec.ts`）
+- E2e tests：`pnpm test:e2e`（`--project e2e`，對應 `test/**/*.e2e-spec.ts`）
   - NestJS e2e 是 in-memory module + Supertest HTTP 測試，非瀏覽器 e2e
