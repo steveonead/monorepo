@@ -121,6 +121,12 @@
       "skillPath": ".claude/skills/react-testing-library-best-practices/SKILL.md",
       "computedHash": "b37f688944d2f69ff511bf482f6399a619d4d31052b5fb7a138b45006c4e07c0"
     },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "80a6226e78f6d1fe464214ae0ef449d49d8ffaa3e7704f011e9b418c678ad4d1"
+    },
     "tailwindcss-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
