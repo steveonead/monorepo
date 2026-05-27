@@ -1,7 +1,9 @@
 import type { Campaign } from '@superdsp/api-schemas/campaigns/campaign';
 
 import { CampaignStatus } from '@superdsp/api-schemas/campaigns/campaign';
+import { useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import {
   Pagination,
   PaginationContent,
@@ -25,6 +27,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { CampaignFormDialog } from '@/features/campaign/components/campaign-form-dialog';
+import { DeleteCampaignDialog } from '@/features/campaign/components/delete-campaign-dialog';
 import { useCampaignList } from '@/features/campaign/queries/use-campaign-list';
 import { cn } from '@/lib/utils';
 
@@ -60,6 +64,9 @@ function formatBudget(budgetTwd?: number) {
 }
 
 export function CampaignListView({ page, status, onChange }: CampaignListViewProps) {
+  const [createOpen, setCreateOpen] = useState(false);
+  const [editingCampaign, setEditingCampaign] = useState<Campaign>();
+  const [deletingCampaign, setDeletingCampaign] = useState<Campaign>();
   const { data, isPending } = useCampaignList({ page, status });
   const campaigns = data?.data.items ?? [];
   const isEmpty = !isPending && campaigns.length === 0;
@@ -100,7 +107,30 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
             </SelectGroup>
           </SelectContent>
         </Select>
+
+        <Button onClick={() => setCreateOpen(true)}>新增</Button>
       </div>
+
+      <CampaignFormDialog
+        open={createOpen}
+        onOpenChange={setCreateOpen}
+      />
+
+      <CampaignFormDialog
+        open={editingCampaign !== null && editingCampaign !== undefined}
+        campaign={editingCampaign}
+        onOpenChange={(open) => {
+          if (!open) setEditingCampaign(undefined);
+        }}
+      />
+
+      <DeleteCampaignDialog
+        open={deletingCampaign !== null && deletingCampaign !== undefined}
+        campaign={deletingCampaign}
+        onOpenChange={(open) => {
+          if (!open) setDeletingCampaign(undefined);
+        }}
+      />
 
       <Table>
         <TableHeader>
@@ -110,13 +140,14 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
             <TableHead>Status</TableHead>
             <TableHead>預算</TableHead>
             <TableHead>起訖日期</TableHead>
+            <TableHead>操作</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {isPending && (
             <TableRow>
               <TableCell
-                colSpan={5}
+                colSpan={6}
                 className="text-muted-foreground h-24 text-center"
               >
                 載入中…
@@ -126,7 +157,7 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
           {isEmpty && (
             <TableRow>
               <TableCell
-                colSpan={5}
+                colSpan={6}
                 className="text-muted-foreground h-24 text-center"
               >
                 目前沒有 campaign 資料
@@ -140,6 +171,24 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
               <TableCell>{campaign.status}</TableCell>
               <TableCell>{formatBudget(campaign.budgetTwd)}</TableCell>
               <TableCell>{formatDateRange(campaign.startDate, campaign.endDate)}</TableCell>
+              <TableCell>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setEditingCampaign(campaign)}
+                  >
+                    編輯
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => setDeletingCampaign(campaign)}
+                  >
+                    刪除
+                  </Button>
+                </div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

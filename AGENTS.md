@@ -12,6 +12,12 @@ pnpm typecheck    # 型別檢查所有 package（turbo typecheck）
 pnpm test         # 測試所有 package（turbo test）
 ```
 
+## Import 規則
+
+**禁止任何相對路徑 import，一律使用各 package 定義的 path alias。**
+
+各 package 的 alias 對應請見各自的 `AGENTS.md`。
+
 ## 目錄結構
 
 ```

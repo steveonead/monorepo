@@ -14,6 +14,10 @@
 - i18next 26
 - Vitest 4
 
+## Import 規則
+
+禁止相對路徑，一律使用 `@`（對應 `src/*`）。
+
 ## 注意事項
 
 - 本專案已啟用 `react compiler`，採用 **annotation mode**：需手動加 `'use memo'` directive 才會被 compiler 最佳化。

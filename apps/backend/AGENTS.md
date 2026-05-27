@@ -8,6 +8,10 @@
 - Zod 4 + nestjs-zod 5
 - Vitest 4 + Supertest 7（e2e）
 
+## Import 規則
+
+禁止相對路徑，一律使用 `@`（對應 `src/*`）。
+
 ## 注意事項
 
 ### Validation（nestjs-zod）

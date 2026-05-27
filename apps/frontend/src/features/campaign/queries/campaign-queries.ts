@@ -1,11 +1,10 @@
 import { CampaignListResponseSchema } from '@superdsp/api-schemas/campaigns/campaign';
 import { keepPreviousData, queryOptions } from '@tanstack/react-query';
 
+import type { CampaignListParams } from '@/features/campaign/queries/keys';
+
+import { campaignKeys } from '@/features/campaign/queries/keys';
 import { sendRequest } from '@/lib/axios';
-
-import type { CampaignListParams } from './keys';
-
-import { campaignKeys } from './keys';
 
 export function campaignListOptions(params: CampaignListParams) {
   return queryOptions({

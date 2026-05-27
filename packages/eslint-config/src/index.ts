@@ -32,6 +32,7 @@ export default function config(options: ConfigOptions = {}, ...userConfigs: User
           'no-nested-ternary': 'error',
           'no-empty': ['error', { allowEmptyCatch: false }],
           'max-params': ['error', { max: 3 }],
+          eqeqeq: ['error', 'always'],
         },
       },
       typescript: {

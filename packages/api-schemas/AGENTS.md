@@ -2,6 +2,10 @@
 
 前後端同時共用的 Zod schema 及其衍生 TypeScript type，依領域分組，透過 `tsdown` 編譯輸出。
 
+## Import 規則
+
+禁止相對路徑，一律使用 `@`（對應 `src/*`）。
+
 ## 限制
 
 **NEVER**放僅單端使用的 schema／type（放對應 app）、非 schema 邏輯（另開 package）。
