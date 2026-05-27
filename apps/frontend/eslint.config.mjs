@@ -3,7 +3,6 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import pluginRouter from '@tanstack/eslint-plugin-router';
 import pluginBetterTailwindcss from 'eslint-plugin-better-tailwindcss';
 import pluginCheckFile from 'eslint-plugin-check-file';
-import pluginJestDom from 'eslint-plugin-jest-dom';
 import pluginTestingLibrary from 'eslint-plugin-testing-library';
 
 export default config(
@@ -63,11 +62,10 @@ export default config(
   ...pluginRouter.configs['flat/recommended'],
   ...pluginQuery.configs['flat/recommended'],
 
-  // testing-library + jest-dom — only for component test files
+  // testing-library — only for component test files
   {
     files: ['src/**/*.test.tsx'],
     ...pluginTestingLibrary.configs['flat/react'],
-    ...pluginJestDom.configs['flat/recommended'],
   },
 
   // better-tailwindcss：correctness + 部分 stylistic（排序與換行交給 prettier）

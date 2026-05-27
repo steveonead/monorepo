@@ -6,9 +6,11 @@
 - TypeScript 6
 - Vite 8
 - Zod 4
+- Tailwind CSS 4 + shadcn + Base UI + hugeicons
 - TanStack Router
 - TanStack Query 5
-- Tailwind CSS 4 + shadcn + Base UI
+- TanStack Form
+- TanStack Table 8
 - i18next 26
 - Vitest 4
 

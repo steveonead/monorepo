@@ -12,6 +12,8 @@ export async function setupI18n() {
     .use(HTTPBackend) // Loads translations from a backend
     .init({
       ns: ['translation', 'test'],
+      supportedLngs: ['zh-Hant', 'en-US'],
+      load: 'currentOnly',
       fallbackLng: 'zh-Hant',
       debug: isDev,
       interpolation: {

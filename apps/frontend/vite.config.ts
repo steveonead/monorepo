@@ -8,9 +8,7 @@ import { defineConfig } from 'vite';
 const MOCKOON_PREFIX_REGEX = /^\/mockoon/;
 const API_PREFIX_REGEX = /^\/api/;
 
-export default defineConfig(({ mode }) => {
-  console.log(mode);
-
+export default defineConfig(() => {
   return {
     plugins: [
       tailwindcss(),

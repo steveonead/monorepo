@@ -1,12 +1,10 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 
-import { userQueryOption } from '@/features/auth/queries/user';
+import { getToken } from '@/features/auth/stores/auth-store';
 
 export const Route = createFileRoute('/_auth')({
-  beforeLoad: async ({ context: { queryClient } }) => {
-    const user = await queryClient.ensureQueryData(userQueryOption(1));
-
-    if (user.status !== 'success') {
+  beforeLoad: () => {
+    if (!getToken()) {
       throw redirect({ to: '/login' });
     }
   },
