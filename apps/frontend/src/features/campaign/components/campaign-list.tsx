@@ -79,7 +79,7 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
   const canGoNext = page < totalPages;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex max-w-7xl flex-col gap-4">
       <div className="flex items-center justify-between gap-2">
         <Select
           items={STATUS_FILTER_ITEMS}
