@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.1.2
+
+[compare changes](https://github.com/steveonead/monorepo/compare/v0.1.1...v0.1.2)
+
+### 🩹 Fixes
+
+- **auth:** 更新 hardcoded 測試帳號密碼 ([2bd06d6](https://github.com/steveonead/monorepo/commit/2bd06d6))
+
+### 🎨 Styles
+
+- **campaign:** 加入 max-w-7xl 限制列表最大寬度 ([18cc1f2](https://github.com/steveonead/monorepo/commit/18cc1f2))
+
+### 🤖 CI
+
+- 升級 GitHub Actions 至支援 Node.js 24 的版本 ([c106339](https://github.com/steveonead/monorepo/commit/c106339))
+
+### ❤️ Contributors
+
+- Stevesun <stevesun@guoshipartners.com>
+
 ## v0.1.1
 
 ### 🚀 Enhancements
