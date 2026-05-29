@@ -12,7 +12,7 @@
 - **tanstack-best-practices**: TanStack Router 路由設計、loader、search params；TanStack Query 的 query/mutation
 - **zod-best-practices**: API response 型別驗證、表單 schema 定義、runtime type guard
 - **vitest-best-practices**: utility function 與 custom hook 的 unit test
-- **react-testing-library-best-practices**: component 整合測試、使用者互動流程驗證
+- **rtl-best-practices**: component 整合測試、使用者互動流程驗證
 
 ## backend (apps/backend — NestJS + Prisma)
 

@@ -1,105 +1,81 @@
 ---
 name: nestjs-best-practices
-description: NestJS 最佳實踐規則集。撰寫、審查或重構 controller、service、module 時使用，涵蓋分層架構、依賴注入、enhancer 管線與 Prisma 整合，搭配 nestjs-zod 驗證、Vitest + SuperTest 測試。不適用於 GraphQL、Microservices。
+description: NestJS 11 + nestjs-zod 5 + Zod 4 最佳實踐規則集，供撰寫、審查或重構 NestJS 相關程式碼時參考。適用於 API 設計、模組架構、DTO 驗證、依賴注入、錯誤處理與安全設定。不適用於純 TypeScript 工具函式或前端框架層。
 ---
 
-# NestJS 11 Best Practices
+# NestJS Best Practices
 
-這份規則集聚焦 NestJS 11 應用本身的設計與實作，涵蓋 v10 → v11 的 breaking change、模組與分層架構、依賴注入、驗證、錯誤處理、設定、Prisma 整合、測試，以及 Guard / Interceptor / Logging / Lifecycle 等請求管線與維運面向。
+涵蓋 NestJS v11 與 nestjs-zod 全域設定、DTO 設計、模組架構、依賴注入、錯誤處理、安全與效能維運。
 
 ## 適用時機
 
 參考這份規則集的時機：
-
-- 撰寫新的 NestJS 11 controller、service、module 或 provider
-- 審查現有 NestJS 程式碼是否符合架構與 v11 慣例
-- 從 NestJS 10 升級到 11 的 migration 流程
-- AI agent 自動產生 NestJS 程式碼時對齊 v11 與本專案 stack
+- 撰寫新的 NestJS 程式碼
+- 審查現有程式碼的品質
+- 重構或最佳化現有程式碼
 
 ## 規則分類
 
 | 分類 | 前綴 |
 |------|------|
-| v10 → v11 遷移 | `migration-` |
-| 模組與分層架構 | `architecture-` |
+| nestjs-zod 全域設定 | `setup-` |
+| DTO 設計 | `dto-` |
+| 模組架構 | `module-` |
 | 依賴注入 | `di-` |
-| 驗證（Zod 整合） | `validation-` |
 | 錯誤處理 | `error-` |
-| 設定管理 | `config-` |
-| Prisma 整合 | `prisma-` |
-| 測試 | `testing-` |
-| Guard | `guard-` |
-| Interceptor | `interceptor-` |
-| Logging | `logging-` |
-| Lifecycle | `lifecycle-` |
+| 安全 | `security-` |
+| 效能與維運 | `perf-` |
 
 ## 規則速查
 
-### v10 → v11 遷移
+### nestjs-zod 全域設定
 
-- `migration-config-precedence` — `@nestjs/config@4` 的 `ignoreEnvVars` 改用 `validatePredefined`，遷移時確認變數讀取優先序
-- `migration-dynamic-module-ref` — 動態模組改以 object reference 判斷相等，共用須先指派成變數再 import
-- `migration-cache-keyv` — `CacheModule` 改用 Keyv 統一介面，store 設定需調整
+- `setup-global-pipe` — 以 `APP_PIPE` token 全域註冊 `ZodValidationPipe`
+- `setup-global-interceptor` — 以 `APP_INTERCEPTOR` 全域註冊 `ZodSerializerInterceptor`
+- `setup-serialization-exception-filter` — 以 `APP_FILTER` 全域掛載 filter 捕捉 `ZodSerializationException`
+- `setup-cleanup-openapi` — 掛載 Swagger 前呼叫 `cleanupOpenApiDoc()` 修正 OpenAPI 格式
+- `setup-strict-schema-declaration` — 啟用 `strictSchemaDeclaration: true` 強制所有端點使用 Zod DTO
+- `setup-zod-response` — 以 `@ZodResponse` 取代 `@ApiOkResponse` + `@ZodSerializerDto`
 
-### 模組與分層架構
+### DTO 設計
 
-- `architecture-feature-module-by-domain` — 依業務領域切 feature module，不要在 root 放 `controllers/`、`services/` 這種技術分層資料夾
-- `architecture-thin-controller` — controller 只收 request、回傳 response，business logic 一律放 service；破壞性 API 變更用 `app.enableVersioning()` 管理
-- `architecture-module-encapsulation` — 模組只 export 對外需要的 provider 當公開 API，內部 repository／細節不外露
-- `architecture-avoid-global-module` — 少用 `@Global()`，優先用 `imports` 明確宣告依賴
-- `architecture-circular-dependency` — 用事件（`@nestjs/event-emitter`）或抽共用模組解循環依賴，`forwardRef()` 是最後手段
-- `architecture-layering` — 維持 controller → service → repository 分層，每個 service 單一職責，repository 用 `select`/`include` 精確控制回傳欄位避免 N+1
+- `dto-create-zod-dto` — 以 `createZodDto(schema)` 取代 class-validator DTO
+- `dto-compose-with-schema` — 以 `DTO.schema.omit/pick/extend` 組合 DTO，不重寫 schema
+- `dto-meta-openapi-ref` — Zod v4 以 `.meta({ id: 'Name' })` 建立具名 OpenAPI `$ref`
+- `dto-codec-transform` — 雙向資料轉換（如 Date ↔ ISO string）使用 codec 模式
+- `dto-type-inference` — 型別宣告用 `z.infer` / `z.output`，transform 前的輸入型別用 `z.input`
+- `dto-shared-package` — monorepo 中 Zod schema 放獨立 shared package，前後端共用
+
+### 模組架構
+
+- `module-feature-first` — 以 feature domain 為頂層組織單位，不以技術角色分層
+- `module-thin-controller` — Controller 只負責接收請求、呼叫 Service、回傳 DTO
+- `module-return-dto` — Service public method 回傳 DTO，不直接回傳 Entity
+- `module-repository-pattern` — Service 依賴 Repository 介面，不直接呼叫 ORM
+- `module-selective-export` — Module 只 export 其他 module 真正需要的項目（通常只有 Service）
+- `module-shared-cross-cutting` — SharedModule 只存放真正 cross-cutting 的項目
+- `module-avoid-circular-dependency` — 循環依賴優先以 EventEmitter 解耦，`forwardRef()` 是最後手段
 
 ### 依賴注入
 
-- `di-constructor-injection` — 預設用 constructor injection，不要手動 `new`，也不要把 `ModuleRef` 當 service locator 隱藏依賴
-- `di-inject-by-token` — 對外部邊界用 interface + custom token 注入，方便替換與測試
-- `di-provider-scope` — REQUEST / TRANSIENT scope 逐級傳播且損效能，無狀態 provider 維持 DEFAULT
-
-### 驗證（Zod 整合）
-
-- `validation-zod-dto` — 用 `createZodDto(schema)` 從 Zod schema 建 DTO class，取代 class-validator DTO
-- `validation-global-zod-pipe` — 全域註冊 `ZodValidationPipe`（`APP_PIPE`），讓 `@Body/@Query/@Param` 自動以 Zod 驗證
-- `validation-strict-schema` — 用 `createZodValidationPipe({ strictSchemaDeclaration: true })`，確保每個參數都綁到 Zod DTO 才放行
-- `validation-zod-serializer` — 回應用 `ZodSerializerInterceptor` + `@ZodSerializerDto`，按 schema 序列化避免外洩欄位
+- `di-constructor-injection` — 偏好建構子注入，避免 property injection
+- `di-provider-scope` — 預設使用 DEFAULT（singleton）scope，謹慎使用 REQUEST scope
+- `di-injection-token` — 以 InjectionToken 注入介面，而非直接注入 class 實作
 
 ### 錯誤處理
 
-- `error-builtin-http-exception` — 用內建 `HttpException` 子類別表達錯誤，別自己拼 status code
-- `error-global-exception-filter` — 用全域 exception filter 統一錯誤回應格式，並接住 `nestjs-zod` 的 `ZodValidationException`
-- `error-prisma-translation` — 在 service/repository 邊界把 Prisma known error（P2002 等）轉成對應 HttpException
+- `error-global-exception-filter` — 以 Global Exception Filter 統一錯誤回應格式
+- `error-throw-not-null` — Service 層拋 NestJS HTTP Exception，不回傳 null
 
-### 設定管理
+### 安全
 
-- `config-validate-on-startup` — `ConfigModule.forRoot` 的 `validate` 用 Zod schema，啟動時 fail fast
-- `config-typed-access` — 用 `registerAs` + `ConfigType` 注入 typed config，不直接讀 `process.env`
+- `security-jwt-default-closed` — JWT Guard 預設全局封閉，以 `@Public()` decorator 白名單開放
+- `security-rate-limiting` — 以 `@nestjs/throttler` 實作 Rate Limiting
 
-### Prisma 整合
+### 效能與維運
 
-- `prisma-injectable-service` — 把 `PrismaClient` 包成 `@Injectable` 的 `PrismaService` 單例注入，別在各 service `new`
-- `prisma-lifecycle-hooks` — `PrismaService` 用 `OnModuleInit` 連線，搭配 NestJS shutdown hooks 正確關閉
-- `prisma-transaction` — 多步驟寫入用 `$transaction` 確保原子性與一致性
-
-### 測試
-
-- `testing-vitest-swc-decorators` — Vitest 跑 NestJS 需 `unplugin-swc` + `reflect-metadata` 處理 `emitDecoratorMetadata`
-- `testing-unit-testing-module` — 單元測 provider 用 `Test.createTestingModule` 組最小 module、用 `overrideProvider` mock 掉相依
-
-### Guard
-
-- `guard-authz` — 認證／授權用 Guard，別在 controller/service 內手刻權限判斷；rate limiting 用 `ThrottlerGuard`
-
-### Interceptor
-
-- `interceptor-cross-cutting` — logging、response 包裝、timeout、cache 等共通邏輯用 Interceptor 統一處理，別散落在各個 handler
-
-### Logging
-
-- `logging-structured` — 用 Nest `Logger` 或 `nestjs-pino` 做結構化 logging，禁用裸 `console.log`
-
-### Lifecycle
-
-- `lifecycle-graceful-shutdown` — 開 `app.enableShutdownHooks()`，用 `OnApplicationShutdown` / `OnModuleDestroy` 正確收尾連線與資源
+- `perf-interceptor-crosscutting` — logging、response transform、caching 放 Interceptor 處理
+- `perf-config-validation` — 以 `ConfigModule.forRoot({ validate })` 在啟動時驗證環境變數
 
 ## 使用方式
 
@@ -114,11 +90,3 @@ references/[類別前綴]-[規則名稱].md
 - 不建議的寫法（含說明）
 - 建議的寫法（含說明）
 - 補充說明與參考
-
-## 參考來源
-
-- [NestJS 官方文件](https://docs.nestjs.com/)
-- [NestJS v11 Migration Guide](https://docs.nestjs.com/migration-guide)
-- [Announcing NestJS 11](https://trilon.io/blog/announcing-nestjs-11-whats-new)
-- [nestjs-zod](https://github.com/BenLorantfy/nestjs-zod)
-- [NestJS Prisma Recipe](https://docs.nestjs.com/recipes/prisma)

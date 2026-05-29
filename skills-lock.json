@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "ito-best-practices": {
+      "source": "onead/ito-frontend-doc-vault",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ito-best-practices/SKILL.md",
+      "computedHash": "77a122f3d65bb16fe5215de999323e1b93675e1e202ed9d101d65b3bc87fe3b2"
+    },
     "ito-cleanup": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
@@ -83,7 +89,7 @@
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-tdd/SKILL.md",
-      "computedHash": "2206842717d5038f871fde95de22df599cbd6fbee1519bce8c2bdaa2cb010146"
+      "computedHash": "90f7d95ce4bd1a9ee248f4d24f75cbf13d34bbd877bb77aede173f9a2eab6150"
     },
     "ito-tickets": {
       "source": "onead/ito-frontend-doc-vault",
@@ -101,61 +107,61 @@
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/js-ts-best-practices/SKILL.md",
-      "computedHash": "6cd27e3d8b5661a65562d93dc4bc09ec746a95e3e97b5d392d68eecf0afd1800"
+      "computedHash": "61b90dc981389e542babed40a28c2897bd7e88aa43e296c0ace1295c80e3bc32"
     },
     "nestjs-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/nestjs-best-practices/SKILL.md",
-      "computedHash": "dfbf5c890d1a7469435e623e36f0d4d97096c76189ccf7ec40040053bf39a947"
+      "computedHash": "6d35d19768fb951a2a367e8da09e815f7e82f5c001e9672a71735373ee3eb420"
     },
     "react-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/react-best-practices/SKILL.md",
-      "computedHash": "15c70017b3a7cdca723370485d0107508a2bd5116bf090995ef7e8b125e0eaf5"
+      "computedHash": "314f61502c17727ed9f6d279049ce7a905876f2485cd481e6f817511947abc56"
     },
-    "react-testing-library-best-practices": {
+    "rtl-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
-      "skillPath": ".claude/skills/react-testing-library-best-practices/SKILL.md",
-      "computedHash": "b37f688944d2f69ff511bf482f6399a619d4d31052b5fb7a138b45006c4e07c0"
+      "skillPath": ".claude/skills/rtl-best-practices/SKILL.md",
+      "computedHash": "4402da65227f4d722a3ccf148cc8ab746d46d4a43432d2edca8face329f4c632"
     },
-    "shadcn": {
-      "source": "shadcn/ui",
-      "sourceType": "github",
-      "skillPath": "skills/shadcn/SKILL.md",
-      "computedHash": "80a6226e78f6d1fe464214ae0ef449d49d8ffaa3e7704f011e9b418c678ad4d1"
-    },
-    "tailwindcss-best-practices": {
+    "supertest-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
-      "skillPath": ".claude/skills/tailwindcss-best-practices/SKILL.md",
-      "computedHash": "c38c9555e8f8ff98b9e699517c702f810643dd00c51d039f59db94d6d2618a70"
+      "skillPath": ".claude/skills/supertest-best-practices/SKILL.md",
+      "computedHash": "eebb5e774d16c8fc21181552db45ce74ed423e864ef2f0a2d11690357d126373"
+    },
+    "tailwind-best-practices": {
+      "source": "onead/ito-frontend-doc-vault",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/tailwind-best-practices/SKILL.md",
+      "computedHash": "f79159c186bbc7d0cb26b6da054102db9b9b6a3fd2c40d1ea4c09de7619602b8"
     },
     "tanstack-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/tanstack-best-practices/SKILL.md",
-      "computedHash": "ac1b2deeb0131942edce80f588288bd93898537d3ae152c491c81fb3e082b0c4"
+      "computedHash": "7079fa53911ba7150310812d474c60c67c1a96bf2d9483823ad63c621ffc94d1"
     },
     "vitest-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/vitest-best-practices/SKILL.md",
-      "computedHash": "f1a799a5104353a38d426e65da5c188d968150a9365bd4c0ff084052864277b3"
+      "computedHash": "df631382e8ede0f76262a50bca2ba6870c883308ecc07dc87cf2c87a9ccc5f11"
     },
     "zod-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/zod-best-practices/SKILL.md",
-      "computedHash": "6ebaa679b412a958dc527e53447abf9cb795950a1a992c4250655b858891123e"
+      "computedHash": "86f9886234f976e5d9bf175e59a8567d897814f8ec9d0643fd0f4f489257cb54"
     },
     "zustand-best-practices": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/zustand-best-practices/SKILL.md",
-      "computedHash": "57f27799cc6a7a6a028a13ee0314fd2b520469cc8ff8921f60286492bcb41d1b"
+      "computedHash": "8c3d7f5379706009a76b27ed317d574df99a898426ca4892da9dc2aed99dd8a9"
     }
   }
 }

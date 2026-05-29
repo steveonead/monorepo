@@ -1,57 +1,66 @@
 ---
 name: tanstack-best-practices
-description: TanStack Query 與 TanStack Router 最佳實踐規則集。撰寫、審查或重構 TanStack 程式碼時使用，涵蓋資料管理與路由導航，針對 Vite + React SPA 與 file-based routing，不適用於 SSR、TanStack Start 或 Next.js App Router。
+description: TanStack Query v5 + Router v1 最佳實踐規則集，供撰寫、審查或重構 TanStack Query/Router 相關程式碼時參考。適用於純 SPA + React 19 + TypeScript strict mode 的專案。不適用於 TanStack Query v4 或 React Router。
 ---
 
-# TanStack Best Practices
+# TanStack Query v5 + Router v1 Best Practices
 
-這份規則集針對 TanStack Query v5 + TanStack Router 在 Vite SPA 環境的搭配使用。Query 規則特別強調 v5 與 v4 的差異（如 `useSuspenseQuery` 一級公民、移除 `onSuccess`/`onError`/`onSettled`、`queryOptions()` API、`placeholderData: keepPreviousData` 等），Router 規則聚焦 file-based routing、loader / beforeLoad / search params 驗證、與 Query 的整合。
+這份規則集涵蓋 TanStack Query v5 的 Breaking Changes、Query 設計模式、Mutation 策略，以及 TanStack Router v1 與 Query 的整合實踐。
 
 ## 適用時機
 
-- 撰寫新的 Query / Router 程式碼
-- 審查既有程式碼是否使用 v5 API 與型別安全模式
-- TanStack Query v4 → v5 migration
-- 對 AI 產出的 Query / Router 程式碼做對齊
+參考這份規則集的時機：
+- 撰寫新的 TanStack Query 或 TanStack Router 程式碼
+- 審查現有程式碼是否使用了 v4 的舊 API
+- 重構或最佳化 Query 的 cache 策略與 Router 整合方式
 
 ## 規則分類
 
-| 分類 | 前綴 | 條數 |
-|------|------|------|
-| Query 資料管理 | `query-` | 9 |
-| Router 路由與導航 | `router-` | 10 |
-| Query + Router 整合 | `integration-` | 1 |
+| 分類 | 前綴 |
+|------|------|
+| v5 API 遷移 | `migrate-` |
+| Query 設計 | `query-` |
+| Mutation | `mutation-` |
+| Router 整合 | `router-` |
 
 ## 規則速查
 
-### Query 資料管理
+### v5 API 遷移
 
-- `query-options-factory` — 以 `queryOptions()` 統一定義 query，跨 component / loader / prefetch 共用同一份
-- `query-set-global-staletime` — 全域 `staleTime` 至少應設為 30 秒，禁止沿用預設值 `0`
-- `query-suspense-first` — 優先使用 `useSuspenseQuery` + Suspense + ErrorBoundary，元件本體不寫 `isPending` / `isError` 分支
-- `query-no-effect-callbacks` — `useQuery` 在 v5 移除 `onSuccess` / `onError` / `onSettled`，禁止使用
-- `query-placeholderdata-keep-previous` — 分頁或篩選應使用 `placeholderData: keepPreviousData`（v5 名稱）
-- `query-no-derived-state` — 不要把 query data 複製進 `useState` 或外部 store，應直接訂閱
-- `query-invalidate-over-setdata` — Mutation 後優先使用 `invalidateQueries`，僅 optimistic update 才使用 `setQueryData`
-- `query-mutation-declarative-invalidation` — 以 `MutationCache` 全域 `onSuccess` + `meta.invalidates` 統一定義各 mutation 影響的 keys
-- `query-mutation-optimistic-flow` — Optimistic update 需完整實作 `onMutate` → `cancelQueries` → `onError` rollback → `onSettled` invalidate 四步流程
+- `migrate-object-only-api` — hooks 只接受物件格式，禁用 v4 函數重載
+- `migrate-status-naming` — status/isLoading/cacheTime 命名更新為 v5 版本
+- `migrate-no-query-callbacks` — onSuccess/onError/onSettled 已從 useQuery 移除
+- `migrate-keep-previous-data` — keepPreviousData 改用 placeholderData + keepPreviousData 函式
+- `migrate-suspense-query` — Suspense 模式改用 useSuspenseQuery
+- `migrate-infinite-query-params` — useInfiniteQuery 要求 initialPageParam 必填
+- `migrate-throw-on-error` — useErrorBoundary 重命名為 throwOnError
 
-### Router 路由與導航
+### Query 設計
 
-- `router-create-router-config` — `createRouter()` 以 `createRootRouteWithContext` 注入 `queryClient` context，loader 才能取得 `ensureQueryData`
-- `router-preload-strategy` — `defaultPreload: 'intent'` 啟用 hover / touch 預載，`defaultPreloadStaleTime: 0` 讓 cache 新鮮度交給 React Query
-- `router-loader-ensure-data` — Route loader 應使用 `ensureQueryData` 消除 waterfall
-- `router-beforeload-auth-guard` — 以 `beforeLoad` + `throw redirect()` 實現認證守衛，禁止在 component 內以 `useEffect` 跳轉
-- `router-pathless-layout-auth` — 認證守衛集中於 `_authenticated.tsx` pathless layout
-- `router-loaderdeps-search` — loader 依賴 search params 必須宣告 `loaderDeps`
-- `router-zod-validator-search` — 以 `zodValidator(schema)` + `fallback()` 驗證 search params
-- `router-deferred-loading` — 關鍵資料 `await ensureQueryData`，非關鍵資料 `prefetchQuery`（不等待）+ `<Suspense>` 串流
-- `router-state-components` — Route 必須提供 `errorComponent` / `notFoundComponent` / `pendingComponent`
-- `router-type-safe-navigation` — 以 `<Link>` / `useNavigate({ from })` 實現型別安全導航，禁用 `window.location.href`
+- `query-options-factory` — queryOptions() 作為主要抽象，跨場景共用
+- `query-key-factory` — 每個 feature 一個 Key Factory，支援批量 invalidate
+- `query-stale-time-strategy` — 全域 staleTime 策略與 gcTime 設定原則
+- `query-suspense-parallel` — 同元件多 query 用 useSuspenseQueries 避免 waterfall
+- `query-select-stable-ref` — select 傳入穩定函式引用，避免多餘重算
+- `query-enabled-dependent` — enabled 控制依賴查詢的發出時機
+- `query-client-defaults` — QueryClient 全域 defaults 集中設定
 
-### Query + Router 整合
+### Mutation
 
-- `integration-shared-queryoptions` — `<Link>` hover prefetch、loader 與 component 的 `useSuspenseQuery` 必須複用同一份 `queryOptions()` 工廠
+- `mutation-optimistic-steps` — Optimistic Update 的標準三 callback 五動作流程
+- `mutation-cache-invalidation` — mutationCache global callback + meta.invalidates 集中管理 invalidation
+
+### Router 整合
+
+- `router-query-client-context` — QueryClient 注入 Router Context 的正確方式
+- `router-disable-preload-cache` — 關閉 Router 內建快取，讓 Query 全權管理 freshness
+- `router-loader-prefetch-only` — Loader 只負責 prime cache，不決定 blocking
+- `router-no-loader-data` — 元件永遠用 Query hooks，不用 useLoaderData
+- `router-hook-blocking-vs-deferred` — useSuspenseQuery vs useQuery 決定路由 blocking 行為
+- `router-search-params-zod` — Search params 用 Zod 驗證 + loaderDeps 宣告依賴
+- `router-error-boundary` — errorComponent + useQueryErrorResetBoundary 正確重置錯誤狀態
+- `router-pending-component` — pendingComponent + pendingMs 控制路由切換 loading 畫面
+- `router-link-preload` — Link preload="intent" 開啟 hover prefetch
 
 ## 使用方式
 
@@ -62,21 +71,7 @@ references/[類別前綴]-[規則名稱].md
 ```
 
 每個規則檔案包含：
-- 為何此規則重要
+- 說明此規則重要的原因
 - 不建議的寫法（含說明）
 - 建議的寫法（含說明）
-- 補充說明與例外
-
-## 環境前提
-
-這份規則集假設：
-- **Vite SPA**：純客戶端渲染，不涉及 SSR / HydrationBoundary / TanStack Start
-- **React Compiler annotation mode**：需手動加 `"use memo"` 才會自動 memo，但本規則集不要求 manual `useMemo` / `useCallback`，僅在需要 stable reference 的場景明示
-- **File-based routing**：所有範例使用 `createFileRoute('/path')`
-
-## 參考來源
-
-- [TanStack Query v5 Docs](https://tanstack.com/query/v5/docs)
-- [TanStack Router Docs](https://tanstack.com/router/latest/docs)
-- [TkDodo's Blog — Automatic Query Invalidation after Mutations](https://tkdodo.eu/blog/automatic-query-invalidation-after-mutations)
-- [Announcing TanStack Query v5](https://tanstack.com/blog/announcing-tanstack-query-v5)
+- 補充說明與參考

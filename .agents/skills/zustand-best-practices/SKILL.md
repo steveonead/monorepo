@@ -1,18 +1,17 @@
 ---
 name: zustand-best-practices
-description: Zustand store 最佳實踐規則集。撰寫、審查或重構 store 程式碼時使用，涵蓋 store 結構、selector、middleware 組合與元件層常見錯誤。不適用於 server 端資料的快取與同步。
+description: Zustand v5 最佳實踐規則集，供撰寫、審查或重構 Zustand 相關程式碼時參考。適用於純 SPA 環境，不含 SSR/Next.js。
 ---
 
-# Zustand Best Practices
+# Zustand v5 Best Practices
 
-Zustand v5 store 的設計與效能規則集，聚焦在 store 結構、selector 用法、middleware 組合、v5 升級雷區與元件層面的常見錯誤，幫助維持 client state 邏輯集中、re-render 可控、行為可預期。
+涵蓋 store 設計、效能、middleware 組合、TypeScript 型別與測試。以純 SPA 環境為前提，v5 API 為基準。
 
 ## 適用時機
 
-參考這份規則集的時機：
-- 撰寫新的 Zustand store 或 selector hook
-- 為 PR 進行 self-review，確認 store / selector / middleware 寫法
-- 從 Zustand v4 升級到 v5，檢查破壞性行為
+- 撰寫新的 Zustand store 或 selector
+- 審查現有 store 的架構與效能問題
+- 從 v4 升級至 v5
 
 ## 規則分類
 
@@ -21,52 +20,49 @@ Zustand v5 store 的設計與效能規則集，聚焦在 store 結構、selector
 | Store 設計 | `store-` |
 | 效能 | `perf-` |
 | Middleware | `middleware-` |
-| v5 升級 | `v5-` |
-| 元件慣例 | `component-` |
+| TypeScript | `ts-` |
+| 測試 | `test-` |
 
 ## 規則速查
 
 ### Store 設計
 
-- `store-actions-object` — Action 集中在 store 的 `actions` 物件，元件透過 `actions` 呼叫而非直接 `setState`
-- `store-module-level-actions` — React 元件外（loader、utility）呼叫 action 用 module-level function
-- `store-no-fetch-in-actions` — Action 只負責 `set()` client state，data fetching 一律交給 TanStack Query
-- `store-initial-state-object` — initialState 抽成獨立物件，讓 `reset()` 不需要重複列每個欄位
-- `store-one-per-domain` — 一個 store 對應一個 domain，避免單一巨型 store 把不相關的 state 揉在一起
-- `store-no-derived-state` — Derived state 用 selector 即時計算，不寫成 store 欄位
-- `store-no-direct-mutation` — `set()` 的 updater 不可直接 mutate state，永遠回傳新物件
+- `store-actions-object` — 所有 action 集中在 store 的 `actions` 物件，訂閱 `actions` 不觸發 re-render
+- `store-module-level-action` — React 元件外呼叫 action 改用 module-level function
+- `store-no-fetching` — Zustand 只管 client state，server state 交給 TanStack Query
+- `store-initial-state` — store 初始 state 抽成獨立常數或用 `getInitialState()`，`reset` action 引用同一來源
+- `store-domain-split` — 依 domain 邊界拆分 store，命名統一為 `use[Domain]Store`
+- `store-derived-selector` — 可由現有 state 推導的值用 selector 計算，不存入 store
+- `store-no-direct-mutate` — `set()` 內回傳新物件，禁止直接 mutate state
 
 ### 效能
 
-- `perf-selector-with-hooks` — 透過 selector + custom hooks 精準取值，禁止 `useStore()` 訂閱整個 store
-- `perf-use-shallow-import-path` — 用 hook 版 `useShallow`（建議從 `zustand/react/shallow` 引入），別把純函式 `shallow` 當 selector 第二參數
-- `perf-keep-selector-simple` — Selector 內保持單純存取，轉換邏輯放在 custom hook 內
-- `perf-multiple-hooks-over-object-selector` — 需要多個 store 值時，預設各自呼叫 hook，只有需要單一物件時才用 `useShallow`
+- `perf-selector-subscription` — 以 selector 精準訂閱，封裝成 custom hook
+- `perf-pure-selector` — Selector 只取原始值，`.map`/`.filter` 等轉換放 hook 層配合 `useMemo`
+- `perf-atomic-subscription` — 多個值預設各自訂閱，只在需要以單一物件傳遞時才用 `useShallow`
 
 ### Middleware
 
-- `middleware-devtools-persist-order` — `devtools` 包外層、`persist` 包內層，不可顛倒
-- `middleware-persist-partialize` — 用 `partialize` 明確列出要持久化的欄位，暫時性 UI state 不得進 storage
+- `middleware-ordering` — middleware 順序：`devtools` 最外、`persist` 次之、`immer` 最內
+- `middleware-partialize` — 用 `partialize` 明確指定需要持久化的 state，暫時 UI state 與 actions 不進 storage
+- `middleware-devtools-config` — devtools 設定 `enabled: process.env.NODE_ENV === 'development'`，並給予語意化 `name`
 
-### v5 升級
+### TypeScript
 
-- `v5-no-equality-fn-in-create` — `create()` 不再接受第二個 equalityFn 參數，要自訂 equality 改用 `createWithEqualityFn`
-- `v5-stable-selector-output` — Selector 必須回傳 stable reference，回傳新建立的物件或陣列會導致 infinite loop
-
-### 元件慣例
-
-- `component-no-store-inside-component` — `create()` 只能在 module top-level 呼叫，禁止寫在 React 元件內部
+- `ts-curry-syntax` — TypeScript 用雙括號 curry 語法 `create<T>()()`，單括號在有 middleware 時型別失效
+- `ts-equality-fn` — v5 `create()` 不接受 equalityFn 參數，需要 store 層級 equality 時改用 `createWithEqualityFn`
+- `ts-module-singleton` — store 必須在 module top-level 宣告，禁止在元件或 hook 內呼叫 `create()`
 
 ## 使用方式
 
 讀取個別規則檔案以取得詳細說明與範例：
 
 ```
-references/<類別前綴>-<規則名稱>.md
+references/[類別前綴]-[規則名稱].md
 ```
 
 每個規則檔案包含：
 - 說明此規則重要的原因
 - 不建議的寫法（含說明）
 - 建議的寫法（含說明）
-- 必要時補充例外情境
+- 例外情境（如有白名單）

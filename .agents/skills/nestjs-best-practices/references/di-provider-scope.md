@@ -1,51 +1,60 @@
 ---
 rule: di-provider-scope
-category: 依賴注入
-tags: [di, scope, performance]
+category: dependency-injection
+tags: [dependency-injection, scope, performance, request-context]
 ---
 
-# REQUEST / TRANSIENT scope 損效能，優先用 DEFAULT
+# 預設使用 singleton scope，謹慎使用 REQUEST scope
 
-> Provider 預設是單例（DEFAULT scope），需要時才用 REQUEST / TRANSIENT，並留意它會逐級傳播且影響效能。
+> 沒有 request-specific 狀態的 provider 一律用 DEFAULT scope。
 
 ## 原因
 
-- 預設單例在整個應用共用一份實例，效能最好，多數 provider 都該維持預設。
-- REQUEST-scoped provider 每個請求建立一份，注入它的 provider 也會被迫變成 request-scoped，逐級傳播並增加每次請求的建構開銷。只有需要綁定單一請求資料時才用 REQUEST scope。
+- DEFAULT scope 在應用程式生命週期內只建立一個實例，效能最佳，不會因請求量增加而產生大量物件。
+- REQUEST scope 具有傳染性，當 REQUEST scope provider 被 singleton 依賴時，該 singleton 也會被提升為 REQUEST scope，造成難以預期的效能損耗。
 
 ## ❌ Bad
 
-```ts
-// 無狀態的 service 卻設成 request-scoped，平白增加每請求建構成本
+```typescript
 @Injectable({ scope: Scope.REQUEST })
-export class PriceCalculator {
-  calculate(items: Item[]) {
-    return items.reduce((s, i) => s + i.price, 0);
+export class UserService {
+  constructor(private readonly repo: UserRepository) {}
+
+  // 沒有任何 request-specific 狀態，不需要 REQUEST scope
+  async findAll() {
+    return this.repo.findAll()
   }
 }
 ```
 
-`PriceCalculator` 沒有任何請求相關狀態，設成 request-scoped 只會讓整條依賴鏈跟著變慢。
+每個請求都重建 `UserService`（以及其整條依賴鏈），卻沒有任何 request-specific 邏輯，白白消耗資源。
 
 ## ✅ Good
 
-```ts
-// 無狀態服務維持預設單例
+```typescript
+// 多數情況：DEFAULT scope（singleton）
 @Injectable()
-export class PriceCalculator {
-  calculate(items: Item[]) {
-    return items.reduce((sum, item) => sum + item.price, 0);
+export class UserService {
+  constructor(private readonly repo: UserRepository) {}
+
+  async findAll() {
+    return this.repo.findAll()
   }
 }
 
-// 真正需要每請求資料時，才用 request-scoped，並接受傳播成本
+// 真正需要 request context 時才使用 REQUEST scope
 @Injectable({ scope: Scope.REQUEST })
-export class RequestContext {
-  constructor(@Inject(REQUEST) private readonly req: Request) {}
-  get userId() {
-    return this.req.user?.id;
+export class RequestContextService {
+  constructor(@Inject(REQUEST) private readonly request: Request) {}
+
+  getCurrentUserId() {
+    return this.request.user?.id
   }
 }
 ```
 
-只有真正需要綁定單一請求資料（如 `RequestContext`）才用 REQUEST scope，並理解它會逐級傳播。
+只在確實需要存取 request 物件的 provider 上標記 REQUEST scope，其餘保持 singleton。
+
+## 例外
+
+若整條依賴鏈都已是 REQUEST scope，且效能測試確認可接受，才可考慮在其他 provider 也使用 REQUEST scope。

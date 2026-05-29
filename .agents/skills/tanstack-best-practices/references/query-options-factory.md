@@ -1,69 +1,71 @@
 ---
 rule: query-options-factory
-category: Query 資料管理
-tags: [query, queryOptions, query-key, dry]
+category: tanstack-query
+tags: [tanstack-query, queryOptions, factory, prefetch, reuse]
 ---
 
-# 以 `queryOptions()` 統一定義 Query
+# 用 `queryOptions()` 定義共用查詢選項
 
-> 將 query key、`queryFn`、`staleTime` 等選項封裝成 `queryOptions()` 工廠函式，讓 component、loader、prefetch 共用同一份定義，禁止在多處手寫 query key。
+> 所有查詢配置都應透過 `queryOptions()` 封裝，確保 `queryKey`、`queryFn` 和 `staleTime` 定義一次、到處共用。
 
 ## 原因
 
-- Query key 散落各處在執行 `invalidateQueries` 時容易出錯：少一層、多一層、字串型別不一致皆會導致 invalidation 失敗
-- `queryOptions()` 為 v5 新增的型別安全 API，可讓 `getQueryData()`、`prefetchQuery()`、`useQuery()` 共享同一份型別推導
-- Component、loader、`<Link>` prefetch 共用同一個 factory，後續修改 staleTime 或 fetch 邏輯僅需異動單一處
+- `queryKey` 和 `queryFn` 散落在各處時，容易出現不一致或打錯，導致 cache miss 或重複 fetch。
+- `queryOptions()` 的回傳值可直接傳入 `useQuery`、`useSuspenseQuery`、`prefetchQuery`、loader，無需重複定義。
+- 需要自訂 hook 時，建立在 `queryOptions()` 之上而非另立一套，保持單一來源。
 
 ## ❌ Bad
 
 ```ts
-// component 內手寫 query key
-function UserProfile({ id }: { id: string }) {
-  const { data } = useQuery({
-    queryKey: ["users", "detail", id],
-    queryFn: () => fetchUser(id),
-    staleTime: 5 * 60_000,
-  });
+// 各處重複定義 queryKey 和 queryFn，設定容易不同步
+function useTodosQuery() {
+  return useQuery({ queryKey: ["todos"], queryFn: fetchTodos })
 }
 
-// loader 又手寫一份，key 結構不同
-export const Route = createFileRoute("/users/$userId")({
-  loader: ({ context, params }) =>
-    context.queryClient.ensureQueryData({
-      queryKey: ["user", params.userId], // 少了 "detail" 一層
-      queryFn: () => fetchUser(params.userId),
-    }),
-});
+// loader 另外重複定義，容易與 hook 內的設定不一致
+export function loader() {
+  return queryClient.prefetchQuery({
+    queryKey: ["todos"],
+    queryFn: fetchTodos,
+  })
+}
 ```
 
-Loader 載入的 cache 與 component 訂閱的 key 不一致，導航後 component 仍需重新發出 request。
+`useTodosQuery` 和 `loader` 各自定義 `queryKey`，未來修改時必須同步改兩處，容易遺漏。
 
 ## ✅ Good
 
 ```ts
-// queries/user.ts
-import { queryOptions } from "@tanstack/react-query";
+import { QueryClient, queryOptions } from "@tanstack/react-query"
 
-export function userDetailOptions(id: string) {
-  return queryOptions({
-    queryKey: ["users", "detail", id] as const,
-    queryFn: ({ signal }) => fetchUser(id, { signal }),
-    staleTime: 5 * 60_000,
-  });
+const TODOS_STALE_TIME = 30_000
+
+// 定義一次，到處共用
+const todosQueryOptions = queryOptions({
+  queryKey: ["todos"],
+  queryFn: fetchTodos,
+  staleTime: TODOS_STALE_TIME,
+})
+
+// 元件用 useQuery
+function TodoList() {
+  const { data } = useQuery(todosQueryOptions)
 }
 
-// component
-const { data } = useSuspenseQuery(userDetailOptions(id));
+// 元件用 useSuspenseQuery
+function TodoListSuspense() {
+  const { data } = useSuspenseQuery(todosQueryOptions)
+}
 
-// loader
-context.queryClient.ensureQueryData(userDetailOptions(userId));
+// loader 用 prefetchQuery，選項完全一致
+export function loader({ context: { queryClient } }: { context: { queryClient: QueryClient } }) {
+  return queryClient.prefetchQuery(todosQueryOptions)
+}
 
-// hover prefetch
-queryClient.prefetchQuery(userDetailOptions(userId));
+// 需要自訂 hook 時，建立在 queryOptions 之上
+function useTodosQuery() {
+  return useQuery(todosQueryOptions)
+}
 ```
 
-三處共用 `userDetailOptions(id)`，可確保 key 與 fetch 邏輯完全一致，TypeScript 會從 `queryFn` 自動推導 `data` 型別。
-
-## 例外
-
-複雜的 list / detail / mutation key 體系可額外搭配 query key factory（物件結構），但所有 `useQuery` / `ensureQueryData` 仍透過 `queryOptions()` 函式取用，不直接寫 array literal。
+`todosQueryOptions` 是唯一來源，`useQuery`、`useSuspenseQuery`、`prefetchQuery` 都吃同一份設定，修改只需改一處。

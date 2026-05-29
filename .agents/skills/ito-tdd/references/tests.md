@@ -159,6 +159,7 @@ it('正確驗證標題', () => {
 
 - 技術術語（HTTP 狀態碼、API 名稱、method 名稱）保留英文，其餘用中文
 - 自由格式，重點是看名稱就知道在測什麼行為
+- 描述中不要用括號夾帶補充說明，無論全形或半形，要補充的資訊直接寫進句子
 - 只對新測試套用，不改既有的英文描述
 
 ```typescript
@@ -172,4 +173,10 @@ describe('密碼驗證', () => {
 describe('passwordValidator', () => {
   it('should fail when password is too short', () => { ... })
 })
+
+// BAD：用括號夾帶補充說明
+it('只含部分欄位的輸入（partial）通過 parse', () => { ... })
+
+// GOOD：補充寫進句子
+it('只含部分欄位的輸入通過 parse', () => { ... })
 ```

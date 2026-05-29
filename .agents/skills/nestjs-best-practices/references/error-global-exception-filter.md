@@ -1,73 +1,61 @@
 ---
 rule: error-global-exception-filter
-category: 錯誤處理
-tags: [error, exception-filter, zod]
+category: error-handling
+tags: [error-handling, exception-filter, global, http-response]
 ---
 
-# 用全域 exception filter 統一錯誤格式
+# 以 Global Exception Filter 統一錯誤回應格式
 
-> 註冊全域 exception filter 統一錯誤回應結構，並在其中接住 `nestjs-zod` 的 `ZodValidationException`，避免各處錯誤格式不一或外洩內部細節。
+> 所有錯誤都經同一個 filter 處理，生產環境不暴露 stack trace。
 
 ## 原因
 
-- 沒有統一 filter，不同例外回傳的 JSON 結構各異，前端難以一致解析。
-- 未處理的例外可能把 stack trace、內部訊息漏給 client，造成資訊洩漏。
-- 驗證失敗（`ZodValidationException`）的錯誤需要轉成對前端友善的欄位錯誤格式，集中在 filter 處理最一致。
+- 沒有統一 filter 時，NestJS 預設格式（`{ statusCode, message, error }`）與自訂格式並存，API consumer 無法依賴一致的錯誤結構。
+- 各路由自行 catch 錯誤容易忘記過濾敏感資訊，造成 stack trace 外洩。
 
 ## ❌ Bad
 
-```ts
-@Catch()
-export class AnyExceptionFilter implements ExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
-    const res = host.switchToHttp().getResponse();
-    // 直接把 exception 整包丟回去，可能外洩 stack 與內部訊息
-    res.status(500).json({ exception });
+```typescript
+@Get(':id')
+async findOne(@Param('id') id: string) {
+  try {
+    return await this.usersService.findOne(id)
+  } catch (e) {
+    throw new HttpException({ message: e.message, stack: e.stack }, 500)
   }
 }
 ```
 
-把例外整包回傳，內部細節外洩，且所有錯誤都變成 500，狀態碼失真。
+stack trace 被序列化後直接回傳給 client，且每個路由各自定義格式，consumer 難以統一解析。
 
 ## ✅ Good
 
-```ts
-import { ZodValidationException } from 'nestjs-zod';
-import { ZodError } from 'zod';
-
+```typescript
+// global-exception.filter.ts
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
+  constructor(private readonly logger: Logger) {}
+
   catch(exception: unknown, host: ArgumentsHost) {
-    const res = host.switchToHttp().getResponse();
+    const ctx = host.switchToHttp()
+    const response = ctx.getResponse<Response>()
 
-    if (exception instanceof ZodValidationException) {
-      // getZodError() 回傳 unknown，要先 narrow 成 ZodError 才能讀 issues
-      const zodError = exception.getZodError();
-      if (zodError instanceof ZodError) {
-        return res.status(400).json({
-          statusCode: 400,
-          error: 'ValidationError',
-          issues: zodError.issues, // 對前端友善的欄位錯誤
-        });
-      }
-    }
+    const status = exception instanceof HttpException
+      ? exception.getStatus()
+      : HttpStatus.INTERNAL_SERVER_ERROR
 
-    if (exception instanceof HttpException) {
-      const status = exception.getStatus();
-      return res.status(status).json({
-        statusCode: status,
-        error: exception.name,
-        message: exception.message,
-      });
-    }
+    const message = exception instanceof HttpException
+      ? exception.message
+      : 'Internal server error'
 
-    // 未預期錯誤：對外只給通用訊息，細節留在 log
-    return res.status(500).json({ statusCode: 500, error: 'InternalServerError' });
+    this.logger.error(exception)
+
+    response.status(status).json({ statusCode: status, message })
   }
 }
 
-// main.ts
-app.useGlobalFilters(new GlobalExceptionFilter());
+// app.module.ts
+// providers: [{ provide: APP_FILTER, useClass: GlobalExceptionFilter }]
 ```
 
-filter 統一回應結構，驗證錯誤轉成欄位 issues，未預期錯誤對外只給通用訊息，細節靠 logger 記錄不外洩。
+所有錯誤集中處理，回應格式一致，stack trace 只進 logger 不進 response body。
