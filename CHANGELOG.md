@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.4
+
+[compare changes](https://github.com/steveonead/monorepo/compare/v0.1.3...v0.1.4)
+
+### 🏡 Chore
+
+- **skills:** 重構 reference 結構並新增 ito/rtl/supertest/tailwind best practices skills ([30f5c18](https://github.com/steveonead/monorepo/commit/30f5c18))
+- 更新 lock file ([146c432](https://github.com/steveonead/monorepo/commit/146c432))
+
+### ❤️ Contributors
+
+- Stevesun <stevesun@guoshipartners.com>
+
 ## v0.1.3
 
 [compare changes](https://github.com/steveonead/monorepo/compare/v0.1.2...v0.1.3)
