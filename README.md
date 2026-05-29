@@ -29,6 +29,65 @@ corepack use pnpm@11.1.2
 echo "24.15.0" > .nvmrc
 ```
 
+## 版本發布流程
+
+版本管理使用 [changelogen](https://github.com/unjs/changelogen)（Changelog 產生 + 自動版號）與 [bumpp](https://github.com/antfu/bumpp)（互動式手動發版）。
+
+### 自動發版（CI）
+
+每次 push 到 `main` 後，`.github/workflows/release.yml` 自動執行：
+
+```mermaid
+flowchart TD
+    A[push to main] --> B{github.actor\n== github-actions bot?}
+    B -- 是 --> C[跳過，防止無限迴圈]
+    B -- 否 --> D[GitHub Actions 啟動]
+    D --> E[changelogen --release --push]
+    E --> F[依 Conventional Commits\n推算下一個版號]
+    F --> G[更新 CHANGELOG.md]
+    G --> H[建立 commit\nchore release vX.X.X]
+    H --> I[建立 git tag]
+    I --> J[push 回 main]
+```
+
+> `fetch-depth: 0` 確保 changelogen 能讀取完整 git history 以計算版號。
+
+### 手動發版（本機）
+
+```bash
+pnpm release
+```
+
+執行 `bumpp`（讀取 `bump.config.mjs`）：
+
+```mermaid
+flowchart TD
+    A[pnpm release] --> B[bumpp 互動式選擇新版號]
+    B --> C[changelogen 更新 CHANGELOG.md]
+    C --> D[建立 commit\nchore release vX.X.X]
+    D --> E[建立 git tag]
+    E --> F[⚠️ 不自動 push\npush: false]
+    F --> G[手動執行\ngit push --follow-tags]
+```
+
+### 版號規則
+
+依 [Conventional Commits](https://www.conventionalcommits.org/) 自動推算：
+
+| Commit 類型                  | 版號變化       |
+| ---------------------------- | -------------- |
+| `fix:`                       | patch（0.0.x） |
+| `feat:`                      | minor（0.x.0） |
+| `feat!:` / `BREAKING CHANGE` | major（x.0.0） |
+
+### 相關檔案
+
+| 檔案                            | 用途                 |
+| ------------------------------- | -------------------- |
+| `.github/workflows/release.yml` | CI 自動發版 workflow |
+| `bump.config.mjs`               | bumpp 手動發版設定   |
+| `CHANGELOG.md`                  | 自動產生的版本紀錄   |
+
 ## pnpm 設定位置（v11+）
 
 pnpm v11 起，設定分離至不同檔案：
