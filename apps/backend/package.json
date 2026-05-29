@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
-    "@nestjs/common": "^11.1.21",
+    "@nestjs/common": "^11.1.23",
     "@nestjs/config": "^4.0.4",
-    "@nestjs/core": "^11.1.21",
-    "@nestjs/platform-express": "^11.1.21",
+    "@nestjs/core": "^11.1.23",
+    "@nestjs/platform-express": "^11.1.23",
     "@prisma/client": "^6.19.3",
     "@superdsp/api-schemas": "workspace:*",
     "axios": "catalog:",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.21",
-    "@nestjs/testing": "^11.1.21",
+    "@nestjs/testing": "^11.1.23",
     "@superdsp/eslint-config": "workspace:*",
     "@swc/cli": "^0.8.1",
     "@swc/core": "^1.15.33",
