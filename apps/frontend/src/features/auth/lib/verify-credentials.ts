@@ -6,7 +6,7 @@ import type { LoginInput } from '@superdsp/api-schemas/auth/login';
  */
 const HARDCODED_CREDENTIALS = {
   email: 'admin@superdsp.com',
-  password: 'superdsp2025',
+  password: 'Gsp123456',
 } as const;
 
 export function verifyCredentials({ email, password }: LoginInput): boolean {
