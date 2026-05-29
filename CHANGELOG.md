@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.3
+
+[compare changes](https://github.com/steveonead/monorepo/compare/v0.1.2...v0.1.3)
+
+### 📖 Documentation
+
+- 新增版本發布流程說明至 README ([6a15082](https://github.com/steveonead/monorepo/commit/6a15082))
+
+### ❤️ Contributors
+
+- Stevesun <stevesun@guoshipartners.com>
+
 ## v0.1.2
 
 [compare changes](https://github.com/steveonead/monorepo/compare/v0.1.1...v0.1.2)
