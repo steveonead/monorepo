@@ -1,5 +1,6 @@
 {
   "name": "superdsp",
+  "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=24",
@@ -16,11 +17,14 @@
     "test": "turbo run test",
     "prisma:generate": "pnpm --filter @superdsp/backend prisma:generate",
     "prisma:migrate": "pnpm --filter @superdsp/backend prisma:migrate",
-    "prisma:studio": "pnpm --filter @superdsp/backend prisma:studio"
+    "prisma:studio": "pnpm --filter @superdsp/backend prisma:studio",
+    "release": "bumpp"
   },
   "devDependencies": {
     "@superdsp/eslint-config": "workspace:*",
     "@total-typescript/ts-reset": "^0.6.1",
+    "bumpp": "^11.1.0",
+    "changelogen": "^0.6.2",
     "eslint": "catalog:",
     "lint-staged": "^16.4.0",
     "prettier": "catalog:",
