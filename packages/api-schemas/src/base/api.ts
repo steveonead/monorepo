@@ -22,9 +22,9 @@ export function createPaginatedResponseSchema<T extends z.ZodTypeAny>(itemSchema
   return createApiSuccessSchema(
     z.object({
       items: z.array(itemSchema),
-      total: z.number().int().nonnegative(),
-      page: z.number().int().positive(),
-      pageSize: z.number().int().positive(),
+      total: z.int().nonnegative(),
+      page: z.int().positive(),
+      pageSize: z.int().positive(),
     }),
   );
 }

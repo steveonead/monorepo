@@ -12,11 +12,14 @@ pnpm typecheck    # 型別檢查所有 package（turbo typecheck）
 pnpm test         # 測試所有 package（turbo test）
 ```
 
+## 測試規則
+
+- 單元測試檔案放在**與被測試檔案同層**的 `__test__/` 目錄下。
+- 命名規則 packages/api-schemas 和 apps/frontend 用 `.test.ts` / `.test.tsx`。apps/backend 用 `.spec.ts`。
+
 ## Import 規則
 
-**禁止任何相對路徑 import，一律使用各 package 定義的 path alias。**
-
-各 package 的 alias 對應請見各自的 `AGENTS.md`。
+- 禁止任何相對路徑 import，一律使用各 package 定義的 path alias。
 
 ## 目錄結構
 
@@ -34,3 +37,7 @@ pnpm test         # 測試所有 package（turbo test）
 ├── turbo.json             # Turborepo 設定檔
 ├── pnpm-workspace.yaml
 ```
+
+## AI 協作行為準則
+
+- 當收到 Coding 任務時，必讀 `docs/karpathy-guidelines.md`

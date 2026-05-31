@@ -14,11 +14,10 @@
 - i18next 26
 - Vitest 4
 
-## Import 規則
+## shadcn UI
 
-禁止相對路徑，一律使用 `@`（對應 `src/*`）。
-
-## shadcn
+- 優先使用 `shadcn` 建立 UI
+- 禁止直接修改 `apps/frontend/src/components/ui` 中的基礎元件
 
 ```bash
 # 一律加 -c 指定 workspace，否則 monorepo root 會報錯
@@ -26,11 +25,21 @@
 yes N | npx shadcn@latest add <component> -c apps/frontend
 ```
 
-## 注意事項
+## React Compiler（annotation mode）
 
-- 本專案已啟用 `react compiler`，採用 **annotation mode**：需手動加 `'use memo'` directive 才會被 compiler 最佳化。
-- `queryKey` 一律透過 `createQueryKeys`（`src/lib/tanstack/query-keys.ts`）產生，禁止手寫 array literal。每個 feature 的 key 定義放在 `src/features/{feature}/queries/keys.ts`。
-- Mutation 的 query invalidation 採 **opt-in**：在 `useMutation` 的 `meta.invalidates` 宣告要失效的 queryKey 陣列，全域 `MutationCache` 會自動 invalidate，無需在每個 `onSuccess` 手寫。未宣告則不 invalidate 任何東西。
+- 新增 component 或 custom hook 時，預設**不**受 React Compiler 最佳化
+- 需要優化的 component/hook：在 function body **第一行**加 `"use memo"`（單/雙引號，非 backtick）
+- 遇到 compiler 相容問題時：加 `"use no memo"` 並附 TODO 說明原因
+- 用 React DevTools 確認是否出現 "Memo ✨" 標誌
+
+## Query Key 工廠
+
+- `queryKey` 一律透過 `createQueryKeys`（`src/lib/tanstack/query-keys.ts`）產生，禁止手寫 array literal。
+- 每個 feature 的 key 定義放在 `src/features/{feature}/queries/keys.ts`。
+
+## 透過 useMutation 的 `meta.invalidates` invalidate 的 queryKey 陣列
+
+- Mutation 的 query invalidation 採 **opt-in**：在 `useMutation` 的 `meta.invalidates` invalidate queryKey 陣列，無需在每個 `onSuccess` 手寫。
 
 ```ts
 useMutation({
