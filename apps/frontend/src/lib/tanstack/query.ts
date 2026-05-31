@@ -2,6 +2,8 @@ import type { QueryKey } from '@tanstack/react-query';
 
 import { matchQuery, MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 
+import { HttpError } from '@/lib/axios/http-error';
+
 declare module '@tanstack/react-query' {
   // eslint-disable-next-line ts/consistent-type-definitions
   interface Register {
@@ -11,15 +13,6 @@ declare module '@tanstack/react-query' {
     mutationMeta: {
       invalidates?: QueryKey[];
     };
-  }
-}
-
-class HttpError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-  ) {
-    super(message);
   }
 }
 

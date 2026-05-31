@@ -2,7 +2,7 @@ import type { Campaign } from '@superdsp/api-schemas/campaigns/campaign';
 import type { AxiosRequestConfig } from 'axios';
 
 import { matchQuery, MutationCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -196,9 +196,12 @@ describe('campaign 新增', () => {
 
     await user.type(within(dialog).getByLabelText('名稱'), '夏季衝刺活動');
     await user.type(within(dialog).getByLabelText('廣告主'), 'Beta 廣告主');
-    fireEvent.change(within(dialog).getByLabelText('開始日期'), {
-      target: { value: '2026-06-01' },
-    });
+    // datepicker：開啟「開始日期」popover 後於月曆點「今天」，讓必填的 startDate 不為空
+    // （月曆未指定 locale，今天的可存取名稱固定以 "Today," 開頭，不隨執行日期改變）
+    await user.click(within(dialog).getByLabelText('開始日期'));
+    await user.click(
+      within(await screen.findByRole('grid')).getByRole('button', { name: /^Today,/ }),
+    );
 
     await user.click(within(dialog).getByRole('button', { name: '建立' }));
 

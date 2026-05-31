@@ -3,6 +3,7 @@ import type { ZodType } from 'zod';
 
 import axios from 'axios';
 
+import { HttpError } from '@/lib/axios/http-error';
 import { isMockoonEnabled } from '@/lib/env';
 
 const instance = axios.create({
@@ -26,6 +27,14 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
+    // 把 AxiosError 映射成統一的 HttpError，讓 query 層 retry/error 判斷拿得到 status；
+    // 無 response 的網路錯誤維持原樣，才會走預設重試。
+    if (axios.isAxiosError(error) && error.response) {
+      return Promise.reject(
+        new HttpError(error.response.status, error.message, error.response.data),
+      );
+    }
+
     return Promise.reject(error);
   },
 );

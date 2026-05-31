@@ -4,7 +4,7 @@ import { verifyCredentials } from '@/features/auth/lib/verify-credentials.ts';
 
 describe('verifyCredentials', () => {
   it('帳號與密碼完全相符時回傳 true', () => {
-    expect(verifyCredentials({ email: 'admin@superdsp.com', password: 'superdsp2025' })).toBe(true);
+    expect(verifyCredentials({ email: 'admin@superdsp.com', password: 'Gsp123456' })).toBe(true);
   });
 
   it('密碼不符時回傳 false', () => {
@@ -14,6 +14,6 @@ describe('verifyCredentials', () => {
   });
 
   it('帳號不符時回傳 false', () => {
-    expect(verifyCredentials({ email: 'someone@other.com', password: 'superdsp2025' })).toBe(false);
+    expect(verifyCredentials({ email: 'someone@other.com', password: 'Gsp123456' })).toBe(false);
   });
 });

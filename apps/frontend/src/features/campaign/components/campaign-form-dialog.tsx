@@ -1,13 +1,17 @@
 import type { Campaign } from '@superdsp/api-schemas/campaigns/campaign';
 import type { AnyFieldApi } from '@tanstack/react-form';
 
+import { Calendar01Icon } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 import { CampaignStatus } from '@superdsp/api-schemas/campaigns/campaign';
 import { useForm } from '@tanstack/react-form';
+import { zhTW } from 'date-fns/locale';
 import { useState } from 'react';
 
 import type { CampaignFormValues } from '@/features/campaign/lib/campaign-form-schema';
 
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Dialog,
   DialogClose,
@@ -18,6 +22,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -29,6 +34,7 @@ import {
 import { campaignFormSchema } from '@/features/campaign/lib/campaign-form-schema';
 import { useCreateCampaign } from '@/features/campaign/queries/use-create-campaign';
 import { useUpdateCampaign } from '@/features/campaign/queries/use-update-campaign';
+import { cn } from '@/lib/utils';
 
 const STATUS_ITEMS = CampaignStatus.options.map((status) => ({ value: status, label: status }));
 
@@ -39,6 +45,21 @@ function toDateInputValue(date: Date) {
   const year = date.getUTCFullYear();
   const month = String(date.getUTCMonth() + 1).padStart(2, '0');
   const day = String(date.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Calendar 以本地時間運作：字串 ⇄ Date 一律用本地年月日拆解／組裝，
+// 確保選到的那天與表單字串完全一致，不因時區位移而前後跳一天。
+function parseDateInputValue(value: string): Date | undefined {
+  const [year, month, day] = value.split('-');
+  if (!year || !month || !day) return undefined;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
+
+function fromCalendarDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
@@ -123,7 +144,7 @@ function TextField({
 }: {
   field: AnyFieldApi;
   label: string;
-  type?: 'text' | 'date' | 'number';
+  type?: 'text' | 'number';
 }) {
   const hasError = field.state.meta.errors.length > 0;
   return (
@@ -144,6 +165,67 @@ function TextField({
         aria-invalid={hasError}
         aria-describedby={hasError ? `${field.name}-error` : undefined}
       />
+      <FieldError field={field} />
+    </div>
+  );
+}
+
+function DateField({ field, label }: { field: AnyFieldApi; label: string }) {
+  const [open, setOpen] = useState(false);
+  const hasError = field.state.meta.errors.length > 0;
+  const value = field.state.value as string;
+  const selected = parseDateInputValue(value);
+
+  return (
+    <div>
+      <label
+        htmlFor={field.name}
+        className={labelClass}
+      >
+        {label}
+      </label>
+      <Popover
+        open={open}
+        onOpenChange={(next) => {
+          setOpen(next);
+          // 關閉即視為離開欄位，與 TextField 的 onBlur 行為對齊
+          if (!next) field.handleBlur();
+        }}
+      >
+        <PopoverTrigger
+          render={
+            <Button
+              id={field.name}
+              variant="outline"
+              className={cn(
+                'w-full justify-start text-left font-normal',
+                !value && 'text-muted-foreground',
+              )}
+              aria-invalid={hasError}
+              aria-describedby={hasError ? `${field.name}-error` : undefined}
+            >
+              <HugeiconsIcon icon={Calendar01Icon} />
+              {value || '選擇日期'}
+            </Button>
+          }
+        />
+        <PopoverContent
+          align="start"
+          className="w-auto p-0"
+        >
+          <Calendar
+            autoFocus
+            locale={zhTW}
+            mode="single"
+            selected={selected}
+            defaultMonth={selected}
+            onSelect={(date) => {
+              field.handleChange(date ? fromCalendarDate(date) : '');
+              setOpen(false);
+            }}
+          />
+        </PopoverContent>
+      </Popover>
       <FieldError field={field} />
     </div>
   );
@@ -240,10 +322,9 @@ function CampaignForm({ campaign, onSuccess }: { campaign?: Campaign; onSuccess:
         validators={{ onSubmit: campaignFormSchema.shape.startDate }}
       >
         {(field) => (
-          <TextField
+          <DateField
             field={field}
             label="開始日期"
-            type="date"
           />
         )}
       </form.Field>
@@ -253,10 +334,9 @@ function CampaignForm({ campaign, onSuccess }: { campaign?: Campaign; onSuccess:
         validators={{ onSubmit: campaignFormSchema.shape.endDate }}
       >
         {(field) => (
-          <TextField
+          <DateField
             field={field}
             label="結束日期（可留空）"
-            type="date"
           />
         )}
       </form.Field>

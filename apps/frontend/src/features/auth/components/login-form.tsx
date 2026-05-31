@@ -11,9 +11,8 @@ import { useAuthStoreActions } from '@/features/auth/stores/auth-store';
 // 純前端 demo session token（無後端 JWT）。
 const SESSION_TOKEN = 'superdsp-session-token';
 
-const labelClass = 'mb-1.5 block text-xs tracking-wider text-muted-foreground uppercase';
-
 export function LoginForm() {
+  'use memo';
   const [authError, setAuthError] = useState<string | null>(null);
   const { setToken } = useAuthStoreActions();
   const navigate = useNavigate();
@@ -61,7 +60,7 @@ export function LoginForm() {
             <div>
               <label
                 htmlFor={field.name}
-                className={labelClass}
+                className="text-muted-foreground mb-1.5 block text-xs tracking-wider uppercase"
               >
                 Email Address
               </label>
@@ -70,7 +69,7 @@ export function LoginForm() {
                 name={field.name}
                 type="email"
                 autoComplete="email"
-                placeholder="user@agency.com"
+                placeholder="輸入 admin@superdsp.com"
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -100,7 +99,7 @@ export function LoginForm() {
             <div>
               <label
                 htmlFor={field.name}
-                className={labelClass}
+                className="text-muted-foreground mb-1.5 block text-xs tracking-wider uppercase"
               >
                 Password
               </label>
@@ -109,7 +108,7 @@ export function LoginForm() {
                 name={field.name}
                 type="password"
                 autoComplete="current-password"
-                placeholder="••••••••••••"
+                placeholder="輸入 Gsp123456"
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}

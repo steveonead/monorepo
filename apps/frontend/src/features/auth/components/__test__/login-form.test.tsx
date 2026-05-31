@@ -42,7 +42,7 @@ describe('loginForm', () => {
     render(<LoginForm />);
 
     await user.type(screen.getByLabelText('Email Address'), 'admin@superdsp.com');
-    await user.type(screen.getByLabelText('Password'), 'superdsp2025');
+    await user.type(screen.getByLabelText('Password'), 'Gsp123456');
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith({ to: '/campaigns' }));
@@ -69,7 +69,7 @@ describe('loginForm', () => {
     render(<LoginForm />);
 
     await user.type(screen.getByLabelText('Email Address'), 'not-an-email');
-    await user.type(screen.getByLabelText('Password'), 'superdsp2025');
+    await user.type(screen.getByLabelText('Password'), 'Gsp123456');
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() =>
