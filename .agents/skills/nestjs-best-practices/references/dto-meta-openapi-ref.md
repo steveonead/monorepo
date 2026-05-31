@@ -20,7 +20,6 @@ tags: [dto, zod, openapi, swagger, schema]
 import { z } from 'zod'
 import { createZodDto } from 'nestjs-zod'
 
-// Zod v3 的舊寫法，v4 不適用
 const UserSchema = z.object({
   id: z.uuid(),
   name: z.string(),
@@ -29,7 +28,7 @@ const UserSchema = z.object({
 export class UserDto extends createZodDto(UserSchema) {}
 ```
 
-`.describe()` 在 Zod v4 不產生具名 `$ref`，多端點引用時 schema 仍會重複展開。
+`.describe()` 在 Zod v4 仍有效，但不設定 `id`，無法產生具名 `$ref`，多端點引用時 schema 仍會重複展開。
 
 ## ✅ Good
 

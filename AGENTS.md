@@ -40,4 +40,4 @@ pnpm test         # 測試所有 package（turbo test）
 
 ## AI 協作行為準則
 
-- 當收到 Coding 任務時，必讀 `docs/karpathy-guidelines.md`
+- 當收到關於 Coding 任務時，**ALWAYS**閱讀 `docs/karpathy-guidelines.md`

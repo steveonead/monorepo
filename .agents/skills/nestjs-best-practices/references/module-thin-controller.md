@@ -16,10 +16,12 @@ tags: [module, controller, service, separation-of-concerns]
 ## ❌ Bad
 
 ```typescript
-import { Body, ConflictException, Injectable, Post } from '@nestjs/common'
+import { Body, ConflictException, Post } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UsersService } from './users.service'
+
+const BCRYPT_SALT_ROUNDS = 10
 
 @Post()
 async create(@Body() dto: CreateUserDto) {
@@ -27,7 +29,7 @@ async create(@Body() dto: CreateUserDto) {
   if (existing) {
     throw new ConflictException('Email already in use')
   }
-  const hashed = await bcrypt.hash(dto.password, 10)
+  const hashed = await bcrypt.hash(dto.password, BCRYPT_SALT_ROUNDS)
   return this.usersService.create({ ...dto, password: hashed })
 }
 ```

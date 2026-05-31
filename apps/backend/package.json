@@ -21,6 +21,7 @@
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.1.23",
     "@nestjs/platform-express": "^11.1.23",
+    "@nestjs/swagger": "^11.4.4",
     "@prisma/client": "^6.19.3",
     "@superdsp/api-schemas": "workspace:*",
     "axios": "catalog:",

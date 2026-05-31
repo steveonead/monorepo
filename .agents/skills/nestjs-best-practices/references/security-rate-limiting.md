@@ -13,6 +13,7 @@ tags: [security, throttler, rate-limit, brute-force, auth]
 - 無限流的 API 讓攻擊者可以無限次嘗試密碼、觸發簡訊或 Email 發送
 - 全局限流是防線基線，敏感端點需要獨立更嚴格的閾值才能抵擋暴力攻擊
 - `@nestjs/throttler` 是 NestJS 官方維護的套件，與全局 `APP_GUARD` 機制直接整合
+- 範例語法需要 `@nestjs/throttler` **v5 以上**（`forRoot([configs])` 陣列格式與 `@Throttle({ default: {...} })` 物件語法均為 v5 breaking change）
 
 ## ❌ Bad
 
@@ -72,4 +73,6 @@ async requestPasswordReset(@Body() dto: PasswordResetDto) {
 
 ## 例外
 
-健康檢查端點、內部服務間呼叫（已有 IP 白名單控制）可用 `@SkipThrottle()` 跳過限流。
+健康檢查端點、內部服務間呼叫（已有 IP 白名單控制）可用 `@SkipThrottle({ default: true })` 跳過限流。
+
+v5 起需明確指定要略過的 throttler 名稱（對應 ThrottlerModule.forRoot 中設定的名稱）；若使用預設無名 throttler，傳入 `{ default: true }`；無參數形式已不再有效。

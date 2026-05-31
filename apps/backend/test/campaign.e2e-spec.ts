@@ -146,7 +146,7 @@ describe('Campaign (e2e)', () => {
 
   it('PATCH /campaigns/:id 對不存在的 id 回傳 404', async () => {
     await request(app.getHttpServer())
-      .patch('/campaigns/00000000-0000-0000-0000-000000000000')
+      .patch('/campaigns/00000000-0000-4000-8000-000000000000')
       .send({
         name: 'Ghost',
         status: 'ACTIVE',
@@ -174,7 +174,7 @@ describe('Campaign (e2e)', () => {
 
   it('DELETE /campaigns/:id 對不存在的 id 回傳 404', async () => {
     await request(app.getHttpServer())
-      .delete('/campaigns/00000000-0000-0000-0000-000000000000')
+      .delete('/campaigns/00000000-0000-4000-8000-000000000000')
       .expect(404);
   });
 });

@@ -55,12 +55,15 @@ description: NestJS 11 + nestjs-zod 5 + Zod 4 最佳實踐規則集，供撰寫�
 - `module-selective-export` — Module 只 export 其他 module 真正需要的項目（通常只有 Service）
 - `module-shared-cross-cutting` — SharedModule 只存放真正 cross-cutting 的項目
 - `module-avoid-circular-dependency` — 循環依賴優先以 EventEmitter 解耦，`forwardRef()` 是最後手段
+- `module-api-versioning` — 以 `enableVersioning` + `@Controller({ version })` + `@Version()` 統一管理 API 版本
+- `module-nestjs11-wildcard-route` — NestJS 11 中 `forRoutes('*')` 須改為 `forRoutes('*path')`
 
 ### 依賴注入
 
 - `di-constructor-injection` — 偏好建構子注入，避免 property injection
 - `di-provider-scope` — 預設使用 DEFAULT（singleton）scope，謹慎使用 REQUEST scope
 - `di-injection-token` — 以 InjectionToken 注入介面，而非直接注入 class 實作
+- `di-use-factory` — 非同步初始化的 provider 使用 `useFactory`，不在建構子內執行 side effect
 
 ### 錯誤處理
 

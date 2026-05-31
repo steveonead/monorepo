@@ -6,12 +6,13 @@ tags: [setup, openapi, swagger, zod, nullable]
 
 # 掛載 Swagger 前呼叫 cleanupOpenApiDoc() 修正 nullable 格式
 
-> Zod v4 的 nullable 輸出不符合 OpenAPI 3.0 規格，必須後處理再掛載文件。
+> Zod v4 依 OpenAPI 3.1 規格輸出 nullable，多數工具鏈仍以 OpenAPI 3.0 為主，掛載前須後處理轉換格式。
 
 ## 原因
 
-- Zod v4 將 nullable 輸出為 `anyOf: [{ type: 'string' }, { type: 'null' }]`，OpenAPI 3.0 不支援此格式。
-- 未修正的文件會導致 Swagger UI 顯示異常，以及前端自動產生的 client type 出錯。
+- Zod v4 依 OpenAPI 3.1 規格輸出 `anyOf: [{ type: 'X' }, { type: 'null' }]`，此為有效的 OpenAPI 3.1 語法。
+- 多數 Swagger UI / 工具鏈仍以 OpenAPI 3.0 為主，`cleanupOpenApiDoc` 負責將此 3.1 語法轉換為 OpenAPI 3.0 相容的 `nullable: true`。
+- 未轉換的文件會導致 Swagger UI 顯示異常，以及前端自動產生的 client type 出錯。
 
 ## ❌ Bad
 
@@ -30,7 +31,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  // 直接掛載，nullable 格式不符合 OpenAPI 3.0
+  // 直接掛載，anyOf 的 3.1 語法未轉換為 3.0 相容格式
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
@@ -39,7 +40,7 @@ async function bootstrap() {
 bootstrap();
 ```
 
-`anyOf: [{ type: 'string' }, { type: 'null' }]` 在 OpenAPI 3.0 客戶端工具中解析錯誤或被忽略。
+`anyOf: [{ type: 'string' }, { type: 'null' }]` 是有效的 OpenAPI 3.1 語法，但 OpenAPI 3.0 客戶端工具無法正確解讀。
 
 ## ✅ Good
 

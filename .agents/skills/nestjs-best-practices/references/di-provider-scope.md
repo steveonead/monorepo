@@ -32,6 +32,9 @@ export class UserService {
 ## ✅ Good
 
 ```typescript
+import { Inject, Injectable, Scope } from '@nestjs/common'
+import { REQUEST } from '@nestjs/core'
+
 // 多數情況：DEFAULT scope（singleton）
 @Injectable()
 export class UserService {

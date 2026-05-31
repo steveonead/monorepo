@@ -32,7 +32,7 @@ import { ZodSerializerInterceptor } from 'nestjs-zod';
 export class AppModule {}
 ```
 
-序列化失敗時回傳 500，但 console 無任何輸出，問題難以被發現與定位。
+預設例外處理對 5xx 錯誤仍會輸出 log，但無法捕捉 ZodSerializationException，導致序列化錯誤回傳格式不一致。
 
 ## ✅ Good
 
@@ -47,7 +47,8 @@ import { ZodError } from 'zod';
 export class HttpExceptionFilter extends BaseExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
 
-  override catch(exception: HttpException, host: ArgumentsHost) {
+  // override 為可選關鍵字，官方文件範例不使用 override
+  catch(exception: HttpException, host: ArgumentsHost) {
     if (exception instanceof ZodSerializationException) {
       const zodError = exception.getZodError();
       if (zodError instanceof ZodError) {

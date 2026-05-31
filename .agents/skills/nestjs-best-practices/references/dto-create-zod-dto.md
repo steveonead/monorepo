@@ -12,7 +12,7 @@ tags: [dto, zod, validation, openapi]
 
 - class-validator 需分開宣告 class 與型別，維護兩份定義容易 diverge。
 - `z.infer<typeof Schema>` 自動推斷 TypeScript 型別，不需手寫 interface。
-- `ZodValidationPipe` 在執行期驗證，`@ApiBody()` 自動從 schema 產生 Swagger 文件。
+- `ZodValidationPipe` 在執行期驗證；nestjs-zod 的 Swagger plugin 整合會自動識別 `createZodDto` 產生的 class，無需手動標註 `@ApiBody()`。
 
 ## ❌ Bad
 

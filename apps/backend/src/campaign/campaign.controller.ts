@@ -14,6 +14,7 @@ import {
 import { createZodDto, ZodSerializerDto } from 'nestjs-zod';
 
 import { CampaignService } from '@/campaign/campaign.service';
+import { CampaignIdParamDto } from '@/campaign/dto/campaign-id-param.dto';
 
 class CreateCampaignDto extends createZodDto(CreateCampaignSchema) {}
 class UpdateCampaignDto extends createZodDto(UpdateCampaignSchema) {}
@@ -39,13 +40,16 @@ export class CampaignController {
 
   @Patch(':id')
   @ZodSerializerDto(CampaignDetailResponseDto)
-  update(@Param('id') id: string, @Body() dto: UpdateCampaignDto): CampaignDetailResponse {
-    return { status: 'success', data: this.campaignService.update(id, dto) };
+  update(
+    @Param() param: CampaignIdParamDto,
+    @Body() dto: UpdateCampaignDto,
+  ): CampaignDetailResponse {
+    return { status: 'success', data: this.campaignService.update(param.id, dto) };
   }
 
   @Delete(':id')
   @HttpCode(204)
-  remove(@Param('id') id: string): void {
-    this.campaignService.remove(id);
+  remove(@Param() param: CampaignIdParamDto): void {
+    this.campaignService.remove(param.id);
   }
 }

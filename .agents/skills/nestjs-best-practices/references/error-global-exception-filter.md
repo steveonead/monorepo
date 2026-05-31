@@ -16,12 +16,17 @@ tags: [error-handling, exception-filter, global, http-response]
 ## ❌ Bad
 
 ```typescript
+import { Get, HttpException, HttpStatus, Param } from '@nestjs/common'
+
 @Get(':id')
 async findOne(@Param('id') id: string) {
   try {
     return await this.usersService.findOne(id)
-  } catch (e) {
-    throw new HttpException({ message: e.message, stack: e.stack }, 500)
+  } catch (error) {
+    throw new HttpException(
+      { message: (error as Error).message, stack: (error as Error).stack },
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    )
   }
 }
 ```
@@ -32,25 +37,31 @@ stack trace 被序列化後直接回傳給 client，且每個路由各自定義�
 
 ```typescript
 // global-exception.filter.ts
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common'
+import { HttpAdapterHost } from '@nestjs/core'
+
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-  constructor(private readonly logger: Logger) {}
+  private readonly logger = new Logger(GlobalExceptionFilter.name)
+
+  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
+    const { httpAdapter } = this.httpAdapterHost
+
     const ctx = host.switchToHttp()
-    const response = ctx.getResponse<Response>()
 
     const status = exception instanceof HttpException
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR
 
     const message = exception instanceof HttpException
-      ? exception.message
+      ? exception.getResponse()
       : 'Internal server error'
 
     this.logger.error(exception)
 
-    response.status(status).json({ statusCode: status, message })
+    httpAdapter.reply(ctx.getResponse(), { statusCode: status, message }, status)
   }
 }
 
@@ -59,3 +70,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 ```
 
 所有錯誤集中處理，回應格式一致，stack trace 只進 logger 不進 response body。
+
+> **`exception.getResponse()` vs `exception.message`**：`exception.message` 只回傳預設字串（如 `'Bad Request'`），當呼叫端拋出帶有自訂 payload 的例外時（如 `throw new BadRequestException({ code: 'ERR_001' })`），`exception.message` 不包含完整 response body；應改用 `exception.getResponse()` 以取得完整的回應物件。
+
+> **`HttpAdapterHost` 與平台無關性**：`@Catch()` 的 catch-all filter 應使用 `HttpAdapterHost` 注入 `httpAdapter`，再透過 `httpAdapter.reply()` 回應，而非直接操作 Express 的 `Response` 物件。這樣可確保 filter 在 Express 與 Fastify 兩種平台下都能正常運作，避免平台鎖定。

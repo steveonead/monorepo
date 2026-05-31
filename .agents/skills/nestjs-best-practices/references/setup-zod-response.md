@@ -4,13 +4,15 @@ category: setup
 tags: [setup, response, openapi, serialization, zod, decorator]
 ---
 
-# 以 @ZodResponse 取代 @ApiOkResponse + @ZodSerializerDto 的組合
+# 以 @ZodResponse 取代 @ApiResponse + @ZodSerializerDto 的組合
+
+> 前提：需已安裝 @nestjs/swagger
 
 > 一個 decorator 同時完成 runtime 序列化、OpenAPI 文件、TypeScript 型別檢查，三者不會脫鉤。
 
 ## 原因
 
-- 分開寫 `@ApiOkResponse` 與 `@ZodSerializerDto` 時，容易只套其中一個，導致文件與實際回應不一致。
+- 分開寫 `@ApiResponse` 與 `@ZodSerializerDto` 時，容易只套其中一個，導致文件與實際回應不一致。
 - `@ZodResponse` 自動使用 schema 的 output 版本（transform 後的型別），型別檢查與 runtime 行為保持同步。
 
 ## ❌ Bad
