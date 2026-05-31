@@ -1,6 +1,6 @@
 import type { Campaign } from '@superdsp/api-schemas/campaigns/campaign';
 
-import { CampaignStatus } from '@superdsp/api-schemas/campaigns/campaign';
+import { CampaignStatusSchema } from '@superdsp/api-schemas/campaigns/campaign';
 import { z } from 'zod';
 
 // 表單欄位皆為字串輸入（input 一律 string，才能同時當 per-field 與整體 validator）。
@@ -8,7 +8,7 @@ import { z } from 'zod';
 export const campaignFormSchema = z.object({
   name: z.string().min(1, '請輸入名稱').max(100, '名稱不得超過 100 個字元'),
   advertiserName: z.string().min(1, '請輸入廣告主'),
-  status: CampaignStatus,
+  status: CampaignStatusSchema,
   startDate: z
     .string()
     .min(1, '請選擇開始日期')

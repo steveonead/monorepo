@@ -28,7 +28,7 @@
       "outputs": []
     },
     "typecheck": {
-      "dependsOn": ["topo"],
+      "dependsOn": ["^build", "topo"],
       "outputs": ["*.tsbuildinfo"],
       "inputs": ["$TURBO_DEFAULT$"],
       "incremental": [{ "outputs": ["tsconfig.tsbuildinfo"] }]

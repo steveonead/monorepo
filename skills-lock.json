@@ -1,12 +1,6 @@
 {
   "version": 1,
   "skills": {
-    "ito-best-practices": {
-      "source": "onead/ito-frontend-doc-vault",
-      "sourceType": "github",
-      "skillPath": ".claude/skills/ito-best-practices/SKILL.md",
-      "computedHash": "77a122f3d65bb16fe5215de999323e1b93675e1e202ed9d101d65b3bc87fe3b2"
-    },
     "ito-cleanup": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",

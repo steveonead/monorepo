@@ -1,6 +1,6 @@
 import type { Campaign } from '@superdsp/api-schemas/campaigns/campaign';
 
-import { CampaignStatus } from '@superdsp/api-schemas/campaigns/campaign';
+import { CampaignStatusSchema } from '@superdsp/api-schemas/campaigns/campaign';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -43,7 +43,7 @@ type CampaignListViewProps = CampaignFilter & {
 
 const STATUS_FILTER_ITEMS: { value: Campaign['status'] | null; label: string }[] = [
   { value: null, label: '全部 status' },
-  ...CampaignStatus.options.map((status) => ({ value: status, label: status })),
+  ...CampaignStatusSchema.options.map((status) => ({ value: status, label: status })),
 ];
 
 function formatDate(date: Date) {

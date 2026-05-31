@@ -3,6 +3,8 @@
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
     "paths": {
       "@/*": ["./src/*"]
     },

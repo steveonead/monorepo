@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
-import { createApiSuccessSchema, createPaginatedResponseSchema } from '@/base/api.js';
+import { createApiSuccessSchema, createPaginatedResponseSchema } from '@/base/api';
 
-export const CampaignStatus = z.enum(['ACTIVE', 'PAUSED', 'ENDED', 'DRAFT']);
+export const CampaignStatusSchema = z.enum(['ACTIVE', 'PAUSED', 'ENDED', 'DRAFT']);
 
 export const CampaignSchema = z.object({
   id: z.uuid(),
-  name: z.string().min(1).max(100),
-  status: CampaignStatus,
-  advertiserName: z.string().min(1).max(100),
+  name: z.string().check(z.minLength(1), z.maxLength(100)),
+  status: CampaignStatusSchema,
+  advertiserName: z.string().check(z.minLength(1), z.maxLength(100)),
   startDate: z.coerce.date(),
   endDate: z.coerce.date().nullable(),
   budgetTwd: z.number().int().positive().optional(),
@@ -27,8 +27,8 @@ export type UpdateCampaign = z.infer<typeof UpdateCampaignSchema>;
 
 export const CampaignListQuerySchema = z.object({
   page: z.coerce.number().int().positive().default(1),
-  pageSize: z.coerce.number().int().positive().default(20),
-  status: CampaignStatus.optional(),
+  pageSize: z.coerce.number().int().positive().max(100).default(20),
+  status: CampaignStatusSchema.optional(),
 });
 
 export type CampaignListQuery = z.infer<typeof CampaignListQuerySchema>;

@@ -22,8 +22,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/lint-and-format.sh",
-            "async": true
+            "command": ".claude/hooks/lint-and-format.sh"
           }
         ]
       }
@@ -33,7 +32,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c '$CLAUDE_PROJECT_DIR/.claude/hooks/typecheck.sh'"
+            "command": ".claude/hooks/typecheck.sh"
           }
         ]
       }

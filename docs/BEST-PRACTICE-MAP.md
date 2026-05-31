@@ -8,9 +8,11 @@
 
 - **js-ts-best-practices**: TypeScript 型別定義、utility function、module 結構
 - **react-best-practices**: React component、hook、context 的實作與審查
+- **shadcn**: shadcn/ui component 新增、修改、組合（`apps/frontend/src/components/ui` 內的基礎元件除外）
 - **tailwind-best-practices**: className 撰寫、responsive 設計、設計 token 使用
 - **tanstack-best-practices**: TanStack Router 路由設計、loader、search params；TanStack Query 的 query/mutation
 - **zod-best-practices**: API response 型別驗證、表單 schema 定義、runtime type guard
+- **zustand-best-practices**: Zustand store 設計、效能優化、middleware 組合、TypeScript 型別
 - **vitest-best-practices**: utility function 與 custom hook 的 unit test
 - **rtl-best-practices**: component 整合測試、使用者互動流程驗證
 
@@ -20,8 +22,10 @@
 - **nestjs-best-practices**: module / controller / service / guard / interceptor 架構設計與審查
 - **zod-best-practices**: DTO 驗證、config schema、環境變數型別安全
 - **vitest-best-practices**: service unit test、helper function 測試、mock 外部依賴
+- **supertest-best-practices**: NestJS e2e 測試撰寫、Supertest 請求建構、server 生命週期管理
 
 ## packages (packages/\*)
 
 - **js-ts-best-practices**: 共享型別設計、monorepo 模組邊界、package exports 設定
 - **zod-best-practices**: 共享 Zod schema 定義（api-schemas）、跨前後端 API contract 設計
+- **vitest-best-practices**: schema unit test、helper function 測試

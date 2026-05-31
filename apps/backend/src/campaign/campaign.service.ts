@@ -6,7 +6,7 @@ import type {
   UpdateCampaign,
 } from '@superdsp/api-schemas/campaigns/campaign';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 
 @Injectable()
@@ -66,6 +66,7 @@ export class CampaignService {
   }
 
   create(input: CreateCampaign): Campaign {
+    this.assertDateOrder(input.startDate, input.endDate);
     const campaign: Campaign = { id: randomUUID(), ...input };
     this.campaigns.push(campaign);
     return campaign;
@@ -74,6 +75,7 @@ export class CampaignService {
   update(id: string, input: UpdateCampaign): Campaign {
     const index = this.findIndexOrThrow(id);
     const campaign: Campaign = Object.assign({}, this.campaigns[index], input);
+    this.assertDateOrder(campaign.startDate, campaign.endDate);
     this.campaigns[index] = campaign;
     return campaign;
   }
@@ -89,5 +91,12 @@ export class CampaignService {
       throw new NotFoundException(`Campaign ${id} not found`);
     }
     return index;
+  }
+
+  // endDate 允許等於 startDate，但不可早於；null 代表無結束日，不驗證
+  private assertDateOrder(startDate: Date, endDate: Date | null): void {
+    if (endDate !== null && endDate < startDate) {
+      throw new BadRequestException('endDate 不可早於 startDate');
+    }
   }
 }

@@ -129,6 +129,14 @@ describe('campaignListQuerySchema', () => {
     expect(CampaignListQuerySchema.safeParse({ page: '0' }).success).toBe(false);
     expect(CampaignListQuerySchema.safeParse({ page: '-1' }).success).toBe(false);
   });
+
+  it('pageSize 超過 100 被拒絕', () => {
+    expect(CampaignListQuerySchema.safeParse({ pageSize: '101' }).success).toBe(false);
+  });
+
+  it('pageSize 剛好 100 通過 parse', () => {
+    expect(CampaignListQuerySchema.safeParse({ pageSize: '100' }).success).toBe(true);
+  });
 });
 
 describe('campaignDetailResponseSchema', () => {

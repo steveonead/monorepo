@@ -24,7 +24,7 @@ pnpm test         # 測試所有 package（turbo test）
 /
 ├── apps/
 │   ├── frontend/          # Vite + React + TanStack Router + TanStack Query + shadcn/ui
-│   └── backend/           # NestJS + Prisma
+│   └── backend/           # NestJS + Prisma + MySQL 5.7
 ├── packages/
 │   ├── api-schemas/       # 共享 Zod schema，依領域分組
 │   └── eslint-config/     # @antfu/eslint-config 封裝

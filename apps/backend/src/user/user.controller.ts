@@ -1,11 +1,11 @@
 import type { User } from '@superdsp/api-schemas/auth/user';
 
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateUserSchema } from '@superdsp/api-schemas/auth/user';
+import { CreateUserInputSchema } from '@superdsp/api-schemas/auth/user';
 import { createZodDto } from 'nestjs-zod';
 import { randomUUID } from 'node:crypto';
 
-class CreateUserDto extends createZodDto(CreateUserSchema) {}
+class CreateUserDto extends createZodDto(CreateUserInputSchema) {}
 
 const users: User[] = [];
 
@@ -21,7 +21,9 @@ export class UserController {
     const user: User = {
       id: randomUUID(),
       ...dto,
-      createdAt: new Date().toISOString().slice(0, 10),
+      // role 由 server 指派，不接受呼叫端輸入，避免特權提升
+      role: 'user',
+      createdAt: new Date(),
     };
     users.push(user);
     return user;

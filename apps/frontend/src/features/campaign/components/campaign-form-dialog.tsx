@@ -3,7 +3,7 @@ import type { AnyFieldApi } from '@tanstack/react-form';
 
 import { Calendar01Icon } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { CampaignStatus } from '@superdsp/api-schemas/campaigns/campaign';
+import { CampaignStatusSchema } from '@superdsp/api-schemas/campaigns/campaign';
 import { useForm } from '@tanstack/react-form';
 import { zhTW } from 'date-fns/locale';
 import { useState } from 'react';
@@ -36,7 +36,10 @@ import { useCreateCampaign } from '@/features/campaign/queries/use-create-campai
 import { useUpdateCampaign } from '@/features/campaign/queries/use-update-campaign';
 import { cn } from '@/lib/utils';
 
-const STATUS_ITEMS = CampaignStatus.options.map((status) => ({ value: status, label: status }));
+const STATUS_ITEMS = CampaignStatusSchema.options.map((status) => ({
+  value: status,
+  label: status,
+}));
 
 const labelClass = 'mb-1.5 block text-sm font-medium';
 

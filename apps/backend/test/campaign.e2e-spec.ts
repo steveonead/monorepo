@@ -32,7 +32,7 @@ describe('Campaign (e2e)', () => {
   });
 
   it('GET /campaigns 依 page/pageSize 分頁，total 反映全部筆數而非單頁筆數', async () => {
-    const baseline = await request(app.getHttpServer()).get('/campaigns?pageSize=1000');
+    const baseline = await request(app.getHttpServer()).get('/campaigns?pageSize=100');
     const total = baseline.body.data.total;
 
     const res = await request(app.getHttpServer()).get('/campaigns?page=1&pageSize=2').expect(200);

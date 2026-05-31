@@ -1,4 +1,4 @@
-import { CampaignStatus } from '@superdsp/api-schemas/campaigns/campaign';
+import { CampaignStatusSchema } from '@superdsp/api-schemas/campaigns/campaign';
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
 
@@ -9,7 +9,7 @@ import { CampaignListView } from '@/features/campaign/components/campaign-list';
 const campaignSearchSchema = z.object({
   // .default() 讓 input 可省略（search 整體變 optional），既有 navigate({ to: '/campaigns' }) 不需帶 search
   page: z.coerce.number().int().positive().catch(1).default(1),
-  status: CampaignStatus.optional().catch(undefined),
+  status: CampaignStatusSchema.optional().catch(undefined),
 });
 
 export const Route = createFileRoute('/_auth/campaigns/')({
