@@ -1,6 +1,10 @@
 # SuperDSP monorepo
 
-SuperDSP 2.0 使用 turborepo 2 建立的 monorepo
+SuperDSP 2.0 使用 turborepo v2 建立的 monorepo
+
+## AI 協作行為準則
+
+- 當收到關於 Coding 任務時，**ALWAYS**閱讀 `docs/karpathy-guidelines.md`
 
 ## 常見指令
 
@@ -11,15 +15,6 @@ pnpm lint         # lint 所有 package（turbo lint）
 pnpm typecheck    # 型別檢查所有 package（turbo typecheck）
 pnpm test         # 測試所有 package（turbo test）
 ```
-
-## 測試規則
-
-- 單元測試檔案放在**與被測試檔案同層**的 `__test__/` 目錄下。
-- 命名規則 packages/api-schemas 和 apps/frontend 用 `.test.ts` / `.test.tsx`。apps/backend 用 `.spec.ts`。
-
-## Import 規則
-
-- 禁止任何相對路徑 import，一律使用各 package 定義的 path alias。
 
 ## 目錄結構
 
@@ -38,6 +33,11 @@ pnpm test         # 測試所有 package（turbo test）
 ├── pnpm-workspace.yaml
 ```
 
-## AI 協作行為準則
+## 測試規則
 
-- 當收到關於 Coding 任務時，**ALWAYS**閱讀 `docs/karpathy-guidelines.md`
+- 單元測試檔案放在**與被測試檔案同層**的 `__test__/` 目錄下。
+- 命名規則 packages/api-schemas 和 apps/frontend 用 `.test.ts` / `.test.tsx`。apps/backend 用 `.spec.ts`。
+
+## 使用 es-toolkit 的 utility 函式
+
+- 當有需要撰寫 helper 或者 utility 函式的時候，優先使用 `es-toolkit`，沒有才自己寫

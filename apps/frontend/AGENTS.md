@@ -2,22 +2,26 @@
 
 ## Tech Stack
 
-- React 19
-- TypeScript 6
-- Vite 8
-- Zod 4
-- Tailwind CSS 4 + shadcn + Base UI + hugeicons
-- TanStack Router
-- TanStack Query 5
-- TanStack Form
-- TanStack Table 8
-- i18next 26
-- Vitest 4
+- React v19
+- TypeScript v6
+- Vite v8
+- Zod v4
+- Tailwind CSS v4 + shadcn + Base UI + hugeicons
+- TanStack Router v1
+- TanStack Query v5
+- TanStack Form v1
+- TanStack Table v8
+- i18next v26
+- Vitest v4
+
+## Import 規則
+
+- 禁止任何相對路徑 import，一律使用已定義的 path alias。
 
 ## shadcn UI
 
 - 優先使用 `shadcn` 建立 UI
-- 禁止直接修改 `apps/frontend/src/components/ui` 中的基礎元件
+- 禁止直接修改 `apps/frontend/src/components/ui` 中的基礎元件，也不需要 review
 
 ```bash
 # 一律加 -c 指定 workspace，否則 monorepo root 會報錯
