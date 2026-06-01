@@ -6,6 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { CampaignStatusSchema } from '@superdsp/api-schemas/campaigns/campaign';
 import { useForm } from '@tanstack/react-form';
 import { zhTW } from 'date-fns/locale';
+import { isNil, isNotNil } from 'es-toolkit';
 import { useState } from 'react';
 
 import type { CampaignFormValues } from '@/features/campaign/lib/campaign-form-schema';
@@ -83,10 +84,7 @@ function toFormValues(campaign?: Campaign): CampaignFormValues {
     status: campaign.status,
     startDate: toDateInputValue(campaign.startDate),
     endDate: campaign.endDate ? toDateInputValue(campaign.endDate) : '',
-    budgetTwd:
-      campaign.budgetTwd === null || campaign.budgetTwd === undefined
-        ? ''
-        : String(campaign.budgetTwd),
+    budgetTwd: isNil(campaign.budgetTwd) ? '' : String(campaign.budgetTwd),
   };
 }
 
@@ -101,11 +99,11 @@ export function CampaignFormDialog({ open, onOpenChange, campaign }: CampaignFor
   // 關閉時 parent 會同時將 campaign 清為 undefined，但退場動畫期間 DialogContent
   // 仍掛載；保留最後一筆 campaign，避免標題、欄位與按鈕短暫翻成新增模式而閃爍。
   const [displayed, setDisplayed] = useState(campaign);
-  if (campaign !== null && campaign !== undefined && campaign !== displayed) {
+  if (isNotNil(campaign) && campaign !== displayed) {
     setDisplayed(campaign);
   }
 
-  const isEdit = displayed !== null && displayed !== undefined;
+  const isEdit = isNotNil(displayed);
   return (
     <Dialog
       open={open}

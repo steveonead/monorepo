@@ -1,6 +1,7 @@
 import type { Campaign } from '@superdsp/api-schemas/campaigns/campaign';
 
 import { CampaignStatusSchema } from '@superdsp/api-schemas/campaigns/campaign';
+import { isNotNil } from 'es-toolkit';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -117,7 +118,7 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
       />
 
       <CampaignFormDialog
-        open={editingCampaign !== null && editingCampaign !== undefined}
+        open={isNotNil(editingCampaign)}
         campaign={editingCampaign}
         onOpenChange={(open) => {
           if (!open) setEditingCampaign(undefined);
@@ -125,7 +126,7 @@ export function CampaignListView({ page, status, onChange }: CampaignListViewPro
       />
 
       <DeleteCampaignDialog
-        open={deletingCampaign !== null && deletingCampaign !== undefined}
+        open={isNotNil(deletingCampaign)}
         campaign={deletingCampaign}
         onOpenChange={(open) => {
           if (!open) setDeletingCampaign(undefined);

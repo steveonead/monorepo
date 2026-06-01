@@ -15,12 +15,12 @@ catalogs:
     axios:
       specifier: ^1.16.1
       version: 1.16.1
+    es-toolkit:
+      specifier: ^1.46.1
+      version: 1.46.1
     eslint:
       specifier: ^10.4.0
       version: 10.4.0
-    eslint-flat-config-utils:
-      specifier: ^3.2.0
-      version: 3.2.0
     prettier:
       specifier: ^3.8.3
       version: 3.8.3
@@ -98,6 +98,9 @@ importers:
       axios:
         specifier: 'catalog:'
         version: 1.16.1
+      es-toolkit:
+        specifier: 'catalog:'
+        version: 1.46.1
       nestjs-zod:
         specifier: ^5.4.0
         version: 5.4.0(@nestjs/common@11.1.23(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/swagger@11.4.4(@nestjs/common@11.1.23(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.23)(reflect-metadata@0.2.2))(rxjs@7.8.2)(zod@4.4.3)
@@ -198,6 +201,9 @@ importers:
       date-fns:
         specifier: ^4.3.0
         version: 4.3.0
+      es-toolkit:
+        specifier: 'catalog:'
+        version: 1.46.1
       i18next:
         specifier: ^26.2.0
         version: 26.2.0(typescript@6.0.3)
@@ -351,7 +357,7 @@ importers:
         specifier: ^10.1.8
         version: 10.1.8(eslint@10.4.0(jiti@2.7.0))
       eslint-flat-config-utils:
-        specifier: 'catalog:'
+        specifier: ^3.2.0
         version: 3.2.0
     devDependencies:
       '@types/node':
@@ -3234,6 +3240,9 @@ packages:
   es-set-tostringtag@2.1.0:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
+
+  es-toolkit@1.46.1:
+    resolution: {integrity: sha512-5eNtXOs3tbfxXOj04tjjseeWkRWaoCjdEI+96DgwzZoe6c9juL49pXlzAFTI72aWC9Y8p7168g6XIKjh7k6pyQ==}
 
   escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
@@ -9163,6 +9172,8 @@ snapshots:
       get-intrinsic: 1.3.0
       has-tostringtag: 1.0.2
       hasown: 2.0.3
+
+  es-toolkit@1.46.1: {}
 
   escalade@3.2.0: {}
 
