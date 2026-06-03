@@ -19,7 +19,7 @@ description: 處理所有外部查詢需求，包含套件用法與 API、錯誤
 
 ## 核心流程
 
-### 步驟 0：codebase 掃描 偵測與確認
+### 步驟 0：codebase 掃描偵測與確認
 
 若查詢類型為 best practice / pattern / architecture / 套件用法，**且**當前工作目錄在 git repo 下，詢問使用者：
 
@@ -39,13 +39,13 @@ description: 處理所有外部查詢需求，包含套件用法與 API、錯誤
 
 從下列工具清單擇一或擇數使用，查詢內容明確橫跨兩個以上工具分類時平行執行對應工具，否則序列執行。執行至各工具回傳結果為止。
 
-#### 找官方文件（/find-docs skill，context7 MCP Fallback）
+#### 找官方文件（context7 MCP → `/find-docs` skill Fallback）
 
 - 用途：查 lib/framework/SDK/CLI 的官方 API、syntax、code snippet、設定與版本特定資訊
 - 區分訊號：查詢內容含具體 lib 名稱與「怎麼用」「API」「語法」「snippet」「設定」等實作詞
 - 執行順序：
-  1. 呼叫 `/find-docs` skill 執行查詢
-  2. `/find-docs` 失敗（任何原因，包含配額 / 認證失敗）時，忽略 find-docs 的錯誤處理邏輯，改用 context7 MCP 執行相同查詢
+  1. 呼叫 context7 MCP 執行查詢
+  2. context7 MCP 失敗（任何原因，包含配額 / 認證失敗）時，靜默改用 `/find-docs` skill 執行相同查詢
 
 #### deepwiki（MCP）
 
@@ -82,7 +82,7 @@ description: 處理所有外部查詢需求，包含套件用法與 API、錯誤
 
 | 合理化藉口 | 實際情況 |
 |---|---|
-| 「/find-docs 失敗，直接跳 exa 搜就好」 | /find-docs 失敗要先 Fallback 到 context7 MCP，不是跳過工具 A 整個分支 |
+| 「context7 MCP 失敗，直接跳 exa 搜就好」 | context7 MCP 失敗要先 Fallback 到 `/find-docs` skill，不是跳過工具 A 整個分支 |
 | 「查詢很短，跳過工具選擇直接 exa 搜就好」 | 短查詢可能是 API 語法問題，跳過工具選擇讓文件命中率大幅下降 |
 | 「結果過濾後沒幾筆，補幾筆黑名單域名的結果」 | 過濾後結果少時應 Fallback 至 WebSearch，不放行黑名單域名 |
 | 「使用者沒說要附來源，可省略來源區塊」 | 來源區塊是輸出契約，供使用者驗證，不可省略 |
@@ -92,7 +92,7 @@ description: 處理所有外部查詢需求，包含套件用法與 API、錯誤
 
 - 輸出缺少「來源」區塊
 - 結果含黑名單域名（如 `csdn.net`、`w3schools.com`）未過濾
-- `/find-docs` 失敗後未嘗試 context7 MCP 直接跳至下一工具
+- context7 MCP 失敗後未嘗試 `/find-docs` skill 直接跳至下一工具
 - 複雜查詢無摘要直接展開大段說明
 - 呼叫 exa 時未加時效提示，且查詢內容非歷史主題或未指定版本
 - 缺口未對每條做 grep/read 驗證即輸出
@@ -102,12 +102,12 @@ description: 處理所有外部查詢需求，包含套件用法與 API、錯誤
 - [ ] 結果經 `references/source-filter.md` 黑名單過濾，輸出無命中域名
 - [ ] 輸出含「來源」區塊與可點擊 URL 清單
 - [ ] 未建立任何檔案（不存檔）
-- [ ] `/find-docs` 失敗時已嘗試 context7 MCP Fallback
+- [ ] context7 MCP 失敗時已嘗試 `/find-docs` skill Fallback
 - [ ] codebase 掃描模式：每條缺口均有 grep/read 驗證，未驗證項目已標記「未能驗證」
 
 ## 錯誤處理
 
-- **工具 A 失敗**（/find-docs 配額 / 認證失敗或任何錯誤）：忽略 find-docs 錯誤邏輯，靜默改用 context7 MCP
+- **工具 A 失敗**（context7 MCP 配額 / 認證失敗或任何錯誤）：靜默改用 `/find-docs` skill
 - **其他工具失敗**（配額 / 認證失敗 / 零結果）：fallback 至下一個合理工具
 - **所有工具失敗**：靜默改用 harness 內建 `WebSearch`/`WebFetch`，不中斷回覆
 - **codebase 掃描後缺口驗證失敗**（grep/read 找不到對應符號）：標記「未能驗證」並說明原因，不直接斷言缺失
@@ -115,8 +115,8 @@ description: 處理所有外部查詢需求，包含套件用法與 API、錯誤
 ## 延伸參考
 
 - `references/source-filter.md`：劣質網域黑名單清單
-- `/find-docs` skill：ctx7 CLI 的兩步驟用法（library → docs）
-- `context7` MCP：`/find-docs` CLI 失敗時的Fallback，提供相同文件查詢能力
+- `context7` MCP：官方文件查詢主力工具，提供 lib/framework/SDK 的 API、syntax、snippet
+- `/find-docs` skill：context7 MCP 失敗時的 Fallback，透過 ctx7 CLI 兩步驟查詢（library → docs）
 - `exa` MCP：網路搜尋、網頁爬取與深度研究
 - `deepwiki` MCP：GitHub repo AI 生成文件，可直接問答架構與設計
 - `gh` CLI：GitHub issue/PR/release/action 查詢與追蹤

@@ -41,13 +41,13 @@
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-grill-with-docs/SKILL.md",
-      "computedHash": "f6a49ac653ceba0358990b47dc798518c6c1f7454eb5d9be7365a3881e2e6f87"
+      "computedHash": "bb1fc88ac0b01dc26b985dcdfa7b333f11a45fafd7960a24a8a2ad32bf6367ca"
     },
     "ito-handoff": {
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-handoff/SKILL.md",
-      "computedHash": "6f05e98e5483cf5cf14bba5d74cd43e4ba7191d92a54bf4c7e35ff77a77968f6"
+      "computedHash": "3e1e4ea4bd861be9d88f73d9959fe19ec93c98c7718dd7f61f0961a9703ece3d"
     },
     "ito-pr": {
       "source": "onead/ito-frontend-doc-vault",
@@ -71,7 +71,7 @@
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/ito-search/SKILL.md",
-      "computedHash": "e1117f75beb5a694a11774a87fee3e13b0fa8f134bb9cc51b1ce993c09bef34f"
+      "computedHash": "4580b64da3f139c66fe720cb0c09a4e6a98a9ecf6de92f5a61f31963747bba32"
     },
     "ito-skill": {
       "source": "onead/ito-frontend-doc-vault",
