@@ -60,7 +60,7 @@ disable-model-invocation: true
 
 #### 模糊語言精確化
 
-使用者用模糊或過載術語時，提出精確的標準術語：
+使用者用模糊或一詞多義時，提出精確的標準術語：
 
 > 「你說的『account』，是指 Customer 還是 User？這兩個是不同的概念。」
 

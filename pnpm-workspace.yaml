@@ -7,7 +7,7 @@ catalog:
   '@types/node': ^25.9.1
   axios: '^1.16.1'
   eslint: ^10.4.0
-  'es-toolkit': '^1.46.1'
+  'es-toolkit': '^1.47.0'
   prettier: ^3.8.3
   typescript: ^6.0.3
   vitest: ^4.1.7
@@ -41,3 +41,4 @@ trustPolicyExclude:
   - chokidar@4.0.3
   - semver@6.3.1 # shadcn 依賴的 @babel 套件，發布時缺少 provenance attestation，非供應鏈攻擊
   - reselect@5.1.1 # @base-ui/react 依賴鏈，發布時遺失 provenance attestation（reduxjs/reselect#752），非供應鏈攻擊
+  - tinyexec@1.2.2 # bumpp 依賴鏈，維護者 43081j 臨時改手動發布（1.2.0-1.2.2），1.2.3+ 已恢復 Trusted Publishing，非供應鏈攻擊
