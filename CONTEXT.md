@@ -1,35 +1,20 @@
-# SuperDSP 廣告層級
+# SuperDSP 2.0 Context
 
-SuperDSP 2.0 廣告投放系統的核心術語表，定義廣告操作人員（AOE）管理廣告時使用的層級結構與領域概念。
+SuperDSP 2.0 為一 DSP 平台，可以提供內部使用者與外部使用者自行建立與操作數位廣告。
 
-## 通用語言
+## 廣告建立
 
-### 廣告層級
+**Campaign Group（活動群組）**：Campaign 的選擇性分類容器。
+_避免使用_：Group、Ad Group
 
-**Campaign（廣告活動）**:
-頂層廣告實體，持有預算、走期與行銷目標，底下包含一或多個 LI。對應第三方平台的 Campaign 概念，對應 ODM 系統的 IO（Insertion Order）角色。
-_避免使用_: IO, Insertion Order, IO 單
+**Campaign（廣告活動）**：廣告投放的頂層執行單位，設定行銷目標、走期與總預算上限，底下包含零至多個 Line Item。
+_避免使用_：Ad Campaign、Flight
 
-**活動群組（Group）**:
-可選的 Campaign 容器，用於將相關廣告活動分組。無自身預算、走期與狀態，不對子層 Campaign 產生遮蔽效果。一個 Campaign 最多屬於一個活動群組（nullable FK）。
-_避免使用_: 廣告活動（指容器概念時）
+**Line Item（投放項目）**：廣告投放的執行單位，定義投放目標、走期、預算與素材包綁定。
+_避免使用_：LI、Placement、Ad Order
 
-**LI / 投放項目（Line Item）**:
-Campaign 的子層，定義廣告品類、格式、計價方式、投放維度與每日預算表，並綁定素材包。
-_避免使用_: 廣告單元, 投放單
+**Creative Pack（素材包）**：廣告素材的容器，可包含一至多個 Creative，與 Line Item 多對多綁定。
+_避免使用_：Creative Package、Creative Bundle、Creative Set
 
-**素材包（Creative Packs）**:
-由外部系統匯入的廣告素材容器，包含一或多支個別素材（唯讀）。與 LI 為多對多綁定關係。
-_避免使用_: 素材（單指個別素材時）, Creative（單指個別素材時）
-
-### 角色
-
-**AOE（Ad Operations Engineer）**:
-OneAD 內部廣告操作人員，擁有部分外部用戶不具備的專屬欄位（如產品線、投放優先層級、代理商）。
-_避免使用_: 內部用戶, admin
-
-### 外部平台
-
-**ODM**:
-AOE 目前操作廣告的舊系統，SuperDSP 2.0 的目標是取代它。
-_避免使用_: 舊系統, 後台
+**Creative（廣告素材）**：Creative Pack 底下的個別廣告素材，可能為 Banner 或者 Video。
+_避免使用_：Ad、Asset、Banner、影片、Video

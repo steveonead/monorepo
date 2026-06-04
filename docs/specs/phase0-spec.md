@@ -37,7 +37,7 @@
 [活動群組（Group）— 選擇性容器，可省略]
   └─ Campaign（廣告活動）
        └─ Line Item / LI（投放項目）
-            └─ 素材包（Creative Package，多對多綁定）
+            └─ 素材包（Creative Pack，多對多綁定）
                  └─ 個別素材（多筆，唯讀）
 ```
 

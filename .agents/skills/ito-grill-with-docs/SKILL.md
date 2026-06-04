@@ -25,8 +25,8 @@ disable-model-invocation: true
 
 開始追問前，先探索 project 的文件結構：
 
-- 若存在 `CONTEXT-MAP.md`，讀取後找出所有 context 及其 `CONTEXT.md` 位置
-- 若存在 `CONTEXT.md`（root 或 context 子目錄），讀取術語表
+- 若存在 `CONTEXT-MAP.md`，讀取後找出所有 context 及其 `CONTEXT.md` 位置（monorepo 通常指向 `docs/contexts/`）
+- 若存在 `CONTEXT.md`（root 或 `docs/contexts/` 子目錄），讀取術語表
 - 若存在 `docs/adr/`，掃描既有 ADR，取得最大編號
 - 三者皆不存在時，記錄「文件尚未建立，術語確認時懶建立」
 
@@ -58,6 +58,8 @@ disable-model-invocation: true
 
 > 「你的術語表把『cancellation』定義為 X，但你現在似乎是指 Y，哪個才是？」
 
+使用者確認後，立即更新 `CONTEXT.md` 中的術語，或是 `_避免使用_` 欄位。
+
 #### 模糊語言精確化
 
 使用者用模糊或一詞多義時，提出精確的標準術語：
@@ -76,7 +78,7 @@ disable-model-invocation: true
 
 #### 即時更新 CONTEXT.md
 
-術語確認當下立即更新 `CONTEXT.md`，不等收斂。若 `CONTEXT.md` 尚不存在，第一個術語確認時建立。`CONTEXT.md` 只放術語定義，不放實作細節或決策紀錄。格式參考 [CONTEXT-FORMAT.md](./references/CONTEXT-FORMAT.md)。
+術語確認當下立即更新 `CONTEXT.md`，不等收斂。若 `CONTEXT.md` 尚不存在，第一個術語確認時建立。格式參考 [CONTEXT-FORMAT.md](./references/CONTEXT-FORMAT.md)。
 
 #### 即時寫入 ADR
 
