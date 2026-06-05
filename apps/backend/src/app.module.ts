@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { createZodValidationPipe, ZodSerializerInterceptor } from 'nestjs-zod';
 
-import { CampaignModule } from '@/campaign/campaign.module';
 import { HttpExceptionFilter } from '@/common/filters/http-exception.filter';
+import { EnvSchema } from '@/env.schema';
 import { UserModule } from '@/user/user.module';
 
 const StrictZodValidationPipe = createZodValidationPipe({
@@ -16,9 +16,9 @@ const StrictZodValidationPipe = createZodValidationPipe({
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env'],
+      validate: (config) => EnvSchema.parse(config),
     }),
     UserModule,
-    CampaignModule,
   ],
   providers: [
     { provide: APP_PIPE, useClass: StrictZodValidationPipe },
