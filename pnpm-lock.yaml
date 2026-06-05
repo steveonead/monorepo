@@ -15,6 +15,9 @@ catalogs:
     axios:
       specifier: ^1.16.1
       version: 1.16.1
+    date-fns:
+      specifier: ^4.3.0
+      version: 4.3.0
     es-toolkit:
       specifier: ^1.47.0
       version: 1.47.0
@@ -98,6 +101,9 @@ importers:
       axios:
         specifier: 'catalog:'
         version: 1.16.1
+      date-fns:
+        specifier: 'catalog:'
+        version: 4.3.0
       es-toolkit:
         specifier: 'catalog:'
         version: 1.47.0
@@ -199,7 +205,7 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       date-fns:
-        specifier: ^4.3.0
+        specifier: 'catalog:'
         version: 4.3.0
       es-toolkit:
         specifier: 'catalog:'
@@ -8117,8 +8123,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.59.1(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.59.1(typescript@6.0.3)
-      '@typescript-eslint/types': 8.59.1
+      '@typescript-eslint/tsconfig-utils': 8.60.0(typescript@6.0.3)
+      '@typescript-eslint/types': 8.60.0
       debug: 4.4.3
       typescript: 6.0.3
     transitivePeerDependencies:
