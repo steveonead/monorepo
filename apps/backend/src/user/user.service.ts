@@ -3,7 +3,7 @@ import type { User } from '@superdsp/api-schemas/auth/user';
 import { Injectable } from '@nestjs/common';
 import { CreateUserInputSchema } from '@superdsp/api-schemas/auth/user';
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod/v4';
+import { z } from 'zod';
 
 type CreateUserInput = z.infer<typeof CreateUserInputSchema>;
 

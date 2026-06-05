@@ -9,8 +9,8 @@ export const CampaignSchema = z.object({
   name: z.string().check(z.minLength(1), z.maxLength(100)),
   status: CampaignStatusSchema,
   advertiserName: z.string().check(z.minLength(1), z.maxLength(100)),
-  startDate: z.coerce.date(),
-  endDate: z.coerce.date().nullable(),
+  startDate: z.iso.datetime(),
+  endDate: z.iso.datetime().nullable(),
   budgetTwd: z.number().int().positive().optional(),
 });
 

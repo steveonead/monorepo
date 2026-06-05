@@ -45,10 +45,11 @@ const STATUS_ITEMS = CampaignStatusSchema.options.map((status) => ({
 const labelClass = 'mb-1.5 block text-sm font-medium';
 
 // 列表日期採 UTC 顯示，這裡轉回 date input 的 YYYY-MM-DD 也用 UTC，避免時區位移
-function toDateInputValue(date: Date) {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
+function toDateInputValue(date: Date | string) {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const year = dateObj.getUTCFullYear();
+  const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getUTCDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 

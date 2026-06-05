@@ -47,14 +47,15 @@ const STATUS_FILTER_ITEMS: { value: Campaign['status'] | null; label: string }[]
   ...CampaignStatusSchema.options.map((status) => ({ value: status, label: status })),
 ];
 
-function formatDate(date: Date) {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(date.getUTCDate()).padStart(2, '0');
+function formatDate(date: Date | string) {
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
+  const year = dateObj.getUTCFullYear();
+  const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getUTCDate()).padStart(2, '0');
   return `${year}/${month}/${day}`;
 }
 
-function formatDateRange(startDate: Date, endDate: Date | null) {
+function formatDateRange(startDate: Date | string, endDate: Date | null | string) {
   return endDate
     ? `${formatDate(startDate)} ~ ${formatDate(endDate)}`
     : `${formatDate(startDate)} ~ 無截止`;

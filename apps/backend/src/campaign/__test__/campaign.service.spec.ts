@@ -16,13 +16,13 @@ describe('campaignService', () => {
     name: 'Test Campaign',
     status: 'ACTIVE',
     advertiserName: 'Acme',
-    startDate: new Date('2026-06-01'),
-    endDate: new Date('2026-08-31'),
+    startDate: '2026-06-01T00:00:00.000Z',
+    endDate: '2026-08-31T00:00:00.000Z',
   };
 
   describe('create', () => {
     it('endDate 早於 startDate 時拋出 BadRequestException', () => {
-      expect(() => service.create({ ...validInput, endDate: new Date('2026-05-01') })).toThrow(
+      expect(() => service.create({ ...validInput, endDate: '2026-05-01T00:00:00.000Z' })).toThrow(
         BadRequestException,
       );
     });
@@ -46,15 +46,15 @@ describe('campaignService', () => {
   describe('update', () => {
     it('合併後 endDate 早於 startDate 時拋出 BadRequestException', () => {
       const created = service.create(validInput);
-      expect(() => service.update(created.id, { endDate: new Date('2026-05-01') })).toThrow(
+      expect(() => service.update(created.id, { endDate: '2026-05-01T00:00:00.000Z' })).toThrow(
         BadRequestException,
       );
     });
 
     it('合併後日期順序合法時成功更新', () => {
       const created = service.create(validInput);
-      const updated = service.update(created.id, { endDate: new Date('2026-12-31') });
-      expect(updated.endDate).toEqual(new Date('2026-12-31'));
+      const updated = service.update(created.id, { endDate: '2026-12-31T00:00:00.000Z' });
+      expect(updated.endDate).toEqual('2026-12-31T00:00:00.000Z');
     });
   });
 });

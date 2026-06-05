@@ -17,8 +17,8 @@ export class CampaignService {
       name: 'Summer Sale',
       status: 'ACTIVE',
       advertiserName: 'Acme Corp',
-      startDate: new Date('2026-06-01'),
-      endDate: new Date('2026-08-31'),
+      startDate: '2026-06-01T00:00:00.000Z',
+      endDate: '2026-08-31T00:00:00.000Z',
       budgetTwd: 500000,
     },
     {
@@ -26,7 +26,7 @@ export class CampaignService {
       name: 'Winter Promo',
       status: 'ACTIVE',
       advertiserName: 'Globex',
-      startDate: new Date('2026-12-01'),
+      startDate: '2026-12-01T00:00:00.000Z',
       endDate: null,
       budgetTwd: 300000,
     },
@@ -35,15 +35,15 @@ export class CampaignService {
       name: 'Spring Launch',
       status: 'ACTIVE',
       advertiserName: 'Initech',
-      startDate: new Date('2026-03-01'),
-      endDate: new Date('2026-04-30'),
+      startDate: '2026-03-01T00:00:00.000Z',
+      endDate: '2026-04-30T00:00:00.000Z',
     },
     {
       id: randomUUID(),
       name: 'Brand Awareness',
       status: 'PAUSED',
       advertiserName: 'Umbrella',
-      startDate: new Date('2026-01-01'),
+      startDate: '2026-01-01T00:00:00.000Z',
       endDate: null,
       budgetTwd: 120000,
     },
@@ -52,7 +52,7 @@ export class CampaignService {
       name: 'Q3 Draft',
       status: 'DRAFT',
       advertiserName: 'Hooli',
-      startDate: new Date('2026-07-01'),
+      startDate: '2026-07-01T00:00:00.000Z',
       endDate: null,
     },
   ];
@@ -94,8 +94,8 @@ export class CampaignService {
   }
 
   // endDate 允許等於 startDate，但不可早於；null 代表無結束日，不驗證
-  private assertDateOrder(startDate: Date, endDate: Date | null): void {
-    if (endDate !== null && endDate < startDate) {
+  private assertDateOrder(startDate: string, endDate: string | null): void {
+    if (endDate !== null && new Date(endDate) < new Date(startDate)) {
       throw new BadRequestException('endDate 不可早於 startDate');
     }
   }
