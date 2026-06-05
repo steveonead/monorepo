@@ -7,10 +7,7 @@
 - Tailwind CSS v4 / shadcn (Base UI / hugeicons)
 - TanStack Form v1 / TanStack Table v8
 - i18next v26 / date-fns v4 / es-toolkit v1
-
-**Testing**
-
-- Vitest v4
+- Vitest v4 / Playwright v1
 
 ## 開發與測試規範
 

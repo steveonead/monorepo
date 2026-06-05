@@ -4,7 +4,7 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { createZodValidationPipe, ZodSerializerInterceptor } from 'nestjs-zod';
 
 import { CampaignModule } from '@/campaign/campaign.module';
-import { HttpExceptionFilter } from '@/filters/http-exception.filter';
+import { HttpExceptionFilter } from '@/common/filters/http-exception.filter';
 import { UserModule } from '@/user/user.module';
 
 const StrictZodValidationPipe = createZodValidationPipe({

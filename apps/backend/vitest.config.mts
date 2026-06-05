@@ -8,6 +8,7 @@ export default defineConfig({
       module: { type: 'es6' },
     }),
   ],
+  oxc: false,
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),

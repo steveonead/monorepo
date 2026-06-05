@@ -4,23 +4,17 @@ import type {
 } from '@superdsp/api-schemas/campaigns/campaign';
 
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
-import {
-  CampaignDetailResponseSchema,
-  CampaignListQuerySchema,
-  CampaignListResponseSchema,
-  CreateCampaignSchema,
-  UpdateCampaignSchema,
-} from '@superdsp/api-schemas/campaigns/campaign';
-import { createZodDto, ZodSerializerDto } from 'nestjs-zod';
+import { ZodSerializerDto } from 'nestjs-zod';
 
 import { CampaignService } from '@/campaign/campaign.service';
 import { CampaignIdParamDto } from '@/campaign/dto/campaign-id-param.dto';
-
-class CreateCampaignDto extends createZodDto(CreateCampaignSchema) {}
-class UpdateCampaignDto extends createZodDto(UpdateCampaignSchema) {}
-class CampaignListQueryDto extends createZodDto(CampaignListQuerySchema) {}
-class CampaignListResponseDto extends createZodDto(CampaignListResponseSchema) {}
-class CampaignDetailResponseDto extends createZodDto(CampaignDetailResponseSchema) {}
+import {
+  CampaignDetailResponseDto,
+  CampaignListQueryDto,
+  CampaignListResponseDto,
+  CreateCampaignDto,
+  UpdateCampaignDto,
+} from '@/campaign/dto/campaign.dto';
 
 @Controller('campaigns')
 export class CampaignController {
