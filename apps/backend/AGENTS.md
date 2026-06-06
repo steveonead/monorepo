@@ -17,6 +17,8 @@
 - 優先用 `createZodDto(XxxSchema)` from `@superdsp/api-schemas`。server-only schema 定義在各模組的 `<module>/dto/`。
 - 新功能先設計 Zod schema（api-schemas），再依此建立 Prisma schema。
 
+- Error response 由 `HttpExceptionFilter` 自動格式化為 `ApiErrorResponse`，controller 只回傳 data、拋 `HttpException` 即可。
+
 ### 測試
 
 - Unit test 檔案放在**與被測試檔案同層**的 `__test__/` 目錄下，命名為 `<filename>.spec.ts`。

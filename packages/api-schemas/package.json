@@ -22,16 +22,6 @@
         "types": "./dist/base/*.d.cts",
         "default": "./dist/base/*.cjs"
       }
-    },
-    "./campaigns/*": {
-      "import": {
-        "types": "./dist/campaigns/*.d.mts",
-        "default": "./dist/campaigns/*.mjs"
-      },
-      "require": {
-        "types": "./dist/campaigns/*.d.cts",
-        "default": "./dist/campaigns/*.cjs"
-      }
     }
   },
   "scripts": {

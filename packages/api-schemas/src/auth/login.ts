@@ -8,3 +8,7 @@ export const LoginSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof LoginSchema>;
+
+export const LoginResponseSchema = z.object({ token: z.string() });
+
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { LoginSchema } from '@/auth/login';
+import { LoginResponseSchema, LoginSchema } from '@/auth/login';
 
 const validLogin = {
   email: 'user@example.com',
@@ -35,6 +35,23 @@ describe('loginSchema', () => {
 
   it('超過 72 字元的密碼被拒絕', () => {
     const result = LoginSchema.safeParse({ ...validLogin, password: 'a'.repeat(73) });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe('loginResponseSchema', () => {
+  it('token 字串通過 parse', () => {
+    const result = LoginResponseSchema.safeParse({ token: 'superdsp-session-token' });
+    expect(result.success).toBe(true);
+  });
+
+  it('token 非字串時被拒絕', () => {
+    const result = LoginResponseSchema.safeParse({ token: 123 });
+    expect(result.success).toBe(false);
+  });
+
+  it('缺少 token 欄位時被拒絕', () => {
+    const result = LoginResponseSchema.safeParse({});
     expect(result.success).toBe(false);
   });
 });

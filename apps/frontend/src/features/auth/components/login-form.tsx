@@ -1,34 +1,30 @@
 import { LoginSchema } from '@superdsp/api-schemas/auth/login';
 import { useForm } from '@tanstack/react-form';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { verifyCredentials } from '@/features/auth/lib/verify-credentials';
+import { loginMutationOptions } from '@/features/auth/mutations/login';
 import { useAuthStoreActions } from '@/features/auth/stores/auth-store';
-
-// 純前端 demo session token（無後端 JWT）。
-const SESSION_TOKEN = 'superdsp-session-token';
 
 export function LoginForm() {
   'use memo';
-  const [authError, setAuthError] = useState<string | null>(null);
   const { setToken } = useAuthStoreActions();
   const navigate = useNavigate();
+
+  const mutation = useMutation({
+    ...loginMutationOptions(),
+    onSuccess: ({ token }) => {
+      setToken(token);
+      void navigate({ to: '/campaigns' });
+    },
+  });
 
   const form = useForm({
     defaultValues: { email: '', password: '' },
     onSubmit: ({ value }) => {
-      setAuthError(null);
-
-      if (!verifyCredentials(value)) {
-        setAuthError('帳號或密碼錯誤');
-        return;
-      }
-
-      setToken(SESSION_TOKEN);
-      void navigate({ to: '/campaigns' });
+      mutation.mutate(value);
     },
   });
 
@@ -41,12 +37,12 @@ export function LoginForm() {
         void form.handleSubmit();
       }}
     >
-      {authError ? (
+      {mutation.isError ? (
         <p
           role="alert"
           className="bg-destructive/10 text-destructive rounded-md px-3 py-2 text-sm"
         >
-          {authError}
+          帳號或密碼錯誤
         </p>
       ) : null}
 

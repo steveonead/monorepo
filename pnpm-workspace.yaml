@@ -6,8 +6,8 @@ catalog:
   '@antfu/eslint-config': ^9.0.0
   '@types/node': ^25.9.1
   axios: '^1.16.1'
-  'date-fns': '^4.3.0'
-  eslint: ^10.4.0
+  'date-fns': '^4.4.0'
+  eslint: ^10.4.1
   'es-toolkit': '^1.47.0'
   prettier: ^3.8.3
   typescript: ^6.0.3

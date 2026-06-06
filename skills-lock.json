@@ -137,7 +137,7 @@
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/tanstack-best-practices/SKILL.md",
-      "computedHash": "7079fa53911ba7150310812d474c60c67c1a96bf2d9483823ad63c621ffc94d1"
+      "computedHash": "007feb44e73e0eb57647f488e6560723f743f3fa887d3dadb97646e60d795fac"
     },
     "vitest-best-practices": {
       "source": "onead/ito-frontend-doc-vault",

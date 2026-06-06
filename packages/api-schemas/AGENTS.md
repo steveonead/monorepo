@@ -16,6 +16,11 @@
 - 測試檔案放在**與被測試檔案同層**的 `__test__/` 目錄下。
 - 命名規則：`<filename>.test.ts`。
 
+## API Envelope（`base/api.ts`）
+
+- **後端 DTO**：`createApiSuccessSchema(DataSchema)`
+- **前端 parse 完整回應**：`createApiResponseSchema(DataSchema)`，以 `res.status === 'success'` narrow type
+
 ## 新增領域時，必須改以下一處
 
 **`package.json` exports**

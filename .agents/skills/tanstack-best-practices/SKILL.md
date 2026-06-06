@@ -47,6 +47,7 @@ description: TanStack Query v5 + Router v1 最佳實踐規則集，供撰寫、�
 
 ### Mutation
 
+- `mutation-options-factory` — 用 mutationOptions() 封裝可共用的 mutation 設定，mutationKey 用於 filter 時必填
 - `mutation-optimistic-steps` — Optimistic Update 的標準三 callback 五動作流程
 - `mutation-cache-invalidation` — mutationCache global callback + meta.invalidates 集中管理 invalidation
 
