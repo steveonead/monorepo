@@ -24,7 +24,7 @@
 - Error：`{ statusCode: <error code>, message? }`（無 `data`）
 
 各 domain 定義 `XxxResponseSchema = createSuccessResponseSchema(DataSchema)` 供前後端共用（後端包 DTO、前端 parse）。
-error 前端用 `ErrorResponseSchema.safeParse()` 取 `statusCode`。error code 列舉見 `base/api-status-code.ts`。
+error 前端用 `ErrorResponseSchema.safeParse()` 取 `statusCode`。
 
 ## 新增領域時，必須改以下一處
 

@@ -13,13 +13,13 @@
 ### 開發
 
 - 禁止任何相對路徑 import，一律使用已定義的 path alias（`@/`）。
-- 一律使用 `nestjs-zod`，禁用 `class-validator` / `class-transformer`。
+- 禁用 `class-validator` / `class-transformer`，一律使用 `nestjs-zod`。
 - 優先用 `createZodDto(XxxSchema)` from `@superdsp/api-schemas`。server-only schema 定義在各模組的 `<module>/dto/`。
-- 新功能先設計 Zod schema（api-schemas），再依此建立 Prisma schema。
-
+- 新功能先設計 Zod schema（`@superdsp/api-schemas`），再依此建立 Prisma schema。
 - API 回應統一走 `statusCode` discriminator：
-  - **Success**：用 `ok(data, message?)` / `partialOk(...)`（`@/common/utils/api-response`）包裝，禁止 return raw data（無內容回 `ok(null)`）。以 `@ZodResponse({ type: XxxResponseDto })` 序列化，DTO 來自 api-schemas 的共用 `XxxResponseSchema`。
-  - **Error**：只拋 `HttpException`，由 `AllExceptionsFilter` 統一成 `{ statusCode, message? }`。未預期錯誤回 500 / `INTERNAL_SERVER_ERROR`（prod 隱藏 message）。
+  - 以 `@ZodResponse({ type: XxxResponseDto })` 序列化，DTO 來自 api-schemas 的共用 `XxxResponseSchema`。
+  - **Success**：用 `ok(data, message?)` / `partialOk(...)` 包裝，禁止 return raw data（無內容回 `ok(null)`）。
+  - **Error**：只拋 `HttpException`，由 `AllExceptionsFilter` 統一成 `{ statusCode, message? }`。
 
 ### 測試
 
