@@ -39,7 +39,7 @@ Route 已存在。Variant 渲染在**同一個 route**，用 `?variant=` URL 參
 
 > 「三個 settings 頁面的 variant，用 `?variant=` 切換，掛在既有 `/settings` route 上。」
 
-不管使用者在不在線，這一行都要有。
+不管問不問得到使用者，這一行都要有。
 
 ### 步驟 2：生成結構截然不同的 variant
 
@@ -87,13 +87,13 @@ return (
 
 把 switcher 做成一個共用元件，子形狀 A 和 B 都可以複用。
 
-### 步驟 5：把操作權交給使用者
+### 步驟 5：讓使用者自己去翻
 
 提供 URL 和各 `?variant=` 的 key，讓使用者自己去翻。通常最有價值的回饋是「我想要 B 的 header 配上 C 的 sidebar」，那才是使用者真正想要的設計。
 
 ### 步驟 6：記錄答案，清理現場
 
-確定哪個 variant 勝出後，記錄選了哪個以及原因（commit message、ADR、issue，或若使用者不在線先放在 `NOTES.md`）。
+確定哪個 variant 勝出後，記錄選了哪個以及原因（commit message、ADR、issue，或問不到使用者時先放在 `NOTES.md`）。
 
 然後清理：
 

@@ -1,13 +1,13 @@
 ---
 name: ito-prototype
-description: 建立一次性 prototype 來回答設計問題，依問題性質分為 Logic（terminal TUI 測試狀態機）與 UI（多 variant 瀏覽器切換）兩支。說「做個 prototype」、「先試試看」、「prototype this」、「try a few designs」時使用。不適用於正式功能實作。
+description: 建立 throwaway prototype 來回答設計問題，依問題性質分為 Logic（terminal TUI 測試狀態機）與 UI（多 variant 瀏覽器切換）兩支。說「做個 prototype」、「先試試看」、「先 sanity-check 一下資料模型」、「prototype this」、「try a few designs」時使用。不適用於正式功能實作。
 ---
 
 # ito-prototype
 
 ## 概覽
 
-Prototype 是**一次性的程式碼，目的是回答一個問題**。問題的性質決定要走哪個分支，選錯分支整個 prototype 就白做了。
+Prototype 是**throwaway 程式碼，目的是回答一個問題**。問題的性質決定要走哪個分支，選錯分支整個 prototype 就白做了。
 
 ## 使用時機
 
@@ -27,7 +27,7 @@ Prototype 是**一次性的程式碼，目的是回答一個問題**。問題的
 - **「這個邏輯或狀態模型感覺對嗎？」** → 讀取 `LOGIC.md`，建立 terminal TUI。
 - **「這個畫面應該長什麼樣子？」** → 讀取 `UI.md`，生成多個 UI variant。
 
-兩個分支的產出截然不同，判斷錯誤等於浪費整個 prototype。若問題真的模稜兩可、使用者又不在線，以周圍程式碼為準（後端模組 → Logic，頁面或元件 → UI），並在 prototype 頂端說明這個假設。
+兩個分支的產出截然不同，判斷錯誤等於浪費整個 prototype。若問題真的模稜兩可、問不到使用者，以周圍程式碼為準（後端模組 → Logic，頁面或元件 → UI），並在 prototype 頂端說明這個假設。
 
 ### 步驟 2：執行對應分支
 
@@ -53,12 +53,12 @@ Prototype 回答完問題後，在 prototype 旁邊建立 `NOTES.md`：
 
 ## 兩個分支都適用的規則
 
-1. **一次性，且清楚標示。** 把 prototype 放在實際會用到它的模組或頁面旁邊，但命名要讓讀者一眼看出這不是正式程式碼。
+1. **Throwaway，且清楚標示。** 把 prototype 放在實際會用到它的模組或頁面旁邊，但命名要讓讀者一眼看出這不是正式程式碼。
 2. **一個指令就能跑。** 使用專案既有的 task runner（`pnpm [name]`），使用者不必思考怎麼啟動。
-3. **預設不持久化。** 狀態存在記憶體裡。若問題本身涉及資料庫，用 scratch DB 或本地檔案，命名帶「PROTOTYPE」字樣並標注「可以刪除」。
+3. **預設不存資料。** 狀態存在記憶體。若問題本身涉及資料庫，用 scratch DB 或本地檔案，命名帶「PROTOTYPE」字樣並標注「可以刪除」。
 4. **跳過打磨。** 不寫測試、不做超出「讓 prototype 能跑」所需的錯誤處理、不做抽象化。目標是快速學到東西然後刪掉它。
-5. **呈現狀態。** 每次操作後（Logic）或切換 variant 時（UI），印出或渲染完整的相關狀態，讓使用者看到發生了什麼。
-6. **回答完就刪掉或吸收進去。** Prototype 完成任務後，要嘛刪掉，要嘛把驗證過的決策摺進正式程式碼，不要讓它在 repo 裡慢慢腐爛。
+5. **讓狀態可見。** 每次操作後（Logic）或切換 variant 時（UI），印出或渲染完整的相關狀態，讓使用者看到發生了什麼。
+6. **問題回答完就刪掉，或合進正式程式碼。** Prototype 完成任務後，要嘛刪掉，要嘛把驗證過的決策移進正式程式碼，不要讓它在 repo 裡慢慢腐爛。
 
 ## 常見合理化藉口
 
