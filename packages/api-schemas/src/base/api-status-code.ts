@@ -35,3 +35,8 @@ const API_SUCCESS_STATUS_CODES = ['SUCCESS', 'PARTIAL_SUCCESS'] as const;
 export const SuccessCodeSchema = z.enum(API_SUCCESS_STATUS_CODES);
 
 export type ApiSuccessStatusCode = (typeof API_SUCCESS_STATUS_CODES)[number];
+
+export function getSuccessCode(option?: { partial: boolean }): ApiSuccessStatusCode {
+  const { partial } = option ?? {};
+  return partial ? 'PARTIAL_SUCCESS' : 'SUCCESS';
+}

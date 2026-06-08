@@ -96,7 +96,7 @@ describe('POST /auth/login', () => {
     expect(res.body).toMatchObject({ statusCode: 'UNAUTHORIZED', message: expect.any(String) });
   });
 
-  it('密碼不足 8 字元回傳 400 與含 path 的驗證訊息', async () => {
+  it('密碼不足 8 字元回傳 400 與固定格式錯誤訊息', async () => {
     const res = await request(app.getHttpServer())
       .post('/auth/login')
       .send({ email: 'admin@superdsp.com', password: 'short' })
@@ -105,9 +105,8 @@ describe('POST /auth/login', () => {
     expect(res.status).toBe(HttpStatus.BAD_REQUEST);
     expect(res.body).toMatchObject({
       statusCode: 'VALIDATION_ERROR',
-      message: expect.any(String),
+      message: '請求資料格式錯誤',
     });
-    expect(res.body.message).toContain('password');
   });
 });
 
@@ -162,7 +161,7 @@ describe('POST /auth/login production 模式不洩漏內部錯誤細節', () => 
       expect(res.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
       expect(res.body).toMatchObject({
         statusCode: 'INTERNAL_SERVER_ERROR',
-        message: 'Internal server error',
+        message: '系統發生錯誤，請稍候再試',
       });
       expect(res.body.message).not.toContain('boom');
     } finally {
@@ -184,7 +183,7 @@ describe('POST /auth/login production 模式不洩漏內部錯誤細節', () => 
       expect(res.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
       expect(res.body).toMatchObject({
         statusCode: 'INTERNAL_SERVER_ERROR',
-        message: 'Internal server error',
+        message: '系統發生錯誤，請稍候再試',
       });
       expect(res.body.message).not.toContain('10.0.0.5');
     } finally {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getErrorCode } from '@/base/api-status-code';
+import { getErrorCode, getSuccessCode } from '@/base/api-status-code';
 
 describe('getErrorCode', () => {
   it('已知狀態碼回傳對應 error code', () => {
@@ -17,5 +17,19 @@ describe('getErrorCode', () => {
     expect(getErrorCode(429)).toBe('INTERNAL_SERVER_ERROR');
     expect(getErrorCode(503)).toBe('INTERNAL_SERVER_ERROR');
     expect(getErrorCode(418)).toBe('INTERNAL_SERVER_ERROR');
+  });
+});
+
+describe('getSuccessCode', () => {
+  it('不傳入參數回傳 SUCCESS', () => {
+    expect(getSuccessCode()).toBe('SUCCESS');
+  });
+
+  it('傳入參數回傳 SUCCESS', () => {
+    expect(getSuccessCode({ partial: false })).toBe('SUCCESS');
+  });
+
+  it('傳入參數回傳 PARTIAL_SUCCESS', () => {
+    expect(getSuccessCode({ partial: true })).toBe('PARTIAL_SUCCESS');
   });
 });
