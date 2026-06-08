@@ -7,6 +7,8 @@ export const Route = createFileRoute('/login')({
 });
 
 function LoginPage() {
+  'use memo';
+
   return (
     <div className="bg-muted fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="bg-card w-full max-w-md overflow-hidden rounded-lg border shadow-lg">

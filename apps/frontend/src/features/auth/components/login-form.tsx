@@ -10,7 +10,6 @@ import { useAuthStoreActions } from '@/features/auth/stores/auth-store';
 import { HttpError } from '@/lib/axios/http-error';
 
 export function LoginForm() {
-  'use memo';
   const { setToken } = useAuthStoreActions();
   const navigate = useNavigate();
 
@@ -66,6 +65,7 @@ export function LoginForm() {
                 id={field.name}
                 name={field.name}
                 type="email"
+                className="h-10"
                 autoComplete="email"
                 placeholder="輸入 admin@superdsp.com"
                 value={field.state.value}
@@ -105,6 +105,7 @@ export function LoginForm() {
                 id={field.name}
                 name={field.name}
                 type="password"
+                className="h-10"
                 autoComplete="current-password"
                 placeholder="輸入 Gsp123456"
                 value={field.state.value}
@@ -137,7 +138,7 @@ export function LoginForm() {
 
       <Button
         type="submit"
-        className="h-11 w-full text-xs tracking-wider uppercase"
+        className="h-10 w-full text-xs tracking-wider uppercase"
       >
         Sign In →
       </Button>
@@ -153,7 +154,7 @@ export function LoginForm() {
         type="button"
         variant="outline"
         disabled
-        className="h-11 w-full text-xs tracking-widest uppercase"
+        className="h-10 w-full text-xs tracking-widest uppercase"
       >
         Single Sign-On (SSO)
       </Button>
