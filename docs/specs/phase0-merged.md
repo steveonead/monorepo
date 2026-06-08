@@ -65,7 +65,7 @@ Campaign 向使用者呈現三個衍生資訊（系統自動計算，使用者�
 
 1. **無投放項目**：非 `archived` LI 數量 = 0（含無 LI、底下 LI 全部封存）
 2. **N / M 投放中**：有任一非 `archived` LI 尚未 `completed`（N = `active` LI 數，M = 非 `archived` LI 總數）
-3. **已完成**：底下所有非 `archived` LI 皆已 `completed`
+3. **已完成**：底下所有非 `archived` LI 皆為 `completed`，或為（`paused` 且 `endDate < 今天`）
 
 > Campaign 走期結束後**不自動凍結底下 LI**，走期只是建立／編輯 LI 時的邊界約束，不觸發任何自動收斂或封存機制。
 
@@ -89,7 +89,6 @@ stateDiagram-v2
     active --> paused : 暫停（§3.6）
     active --> completed : 走期到期
     paused --> active : 重新啟用（§3.5）
-    paused --> completed : 走期到期
     paused --> archived : 封存
     completed --> archived : 封存
 ```
@@ -117,14 +116,17 @@ stateDiagram-v2
 
 ### §3.4 completed 的觸發
 
-- **走期到期自動 completed**：LI `endDate` 過期後，系統自動將 `active` 或 `paused` LI 設為 `completed` 並停止投放
+- **走期到期自動 completed**：LI `endDate` 過期後，系統自動將 `active` LI 設為 `completed` 並停止投放
 - `draft` LI 走期到期後**維持 `draft`**，不自動 `completed`
+- `paused` LI 走期到期後**維持 `paused`**，不自動 `completed`；走期仍可修改，延長後（`endDate >= 今天`）可重新啟用
 - **預算花完不等於 completed**：仍在走期內加預算即可續跑
 - `completed` **為功能終態**：不可啟用、不可修改，需重新投放請建立新 LI 或複製（見 §7.2.3、§8.3.2）
 
 ### §3.5 啟用 LI 條件
 
 啟用 LI（`draft` / `paused` → `active`），須同時通過：
+
+> 走期已過期（`endDate < 今天`）的 `paused` LI，「重新啟用」按鈕為 disabled，hover tooltip 說明「走期已到期，請先更新走期後再啟用」；StatusBadge 維持 `paused` 並附 icon hint，hover 同上。
 
 1. 自身狀態為 `draft` 或 `paused`
 2. **Campaign 邊界檢查**：所屬 Campaign 存在且未封存、LI 走期完全落在 Campaign 走期內、LI 預算加總 ≤ Campaign 預算上限
