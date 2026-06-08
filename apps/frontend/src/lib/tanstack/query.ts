@@ -12,6 +12,7 @@ declare module '@tanstack/react-query' {
     };
     mutationMeta: {
       invalidates?: QueryKey[];
+      skipGlobalError?: boolean;
     };
   }
 }
@@ -21,7 +22,7 @@ const queryClient = new QueryClient({
     queries: {
       retry: (failureCount, error) => {
         // 401/403/404 重試三次只會造成使用者無謂等待，直接放棄重試
-        if (error instanceof HttpError && error.status >= 400 && error.status < 500) {
+        if (error instanceof HttpError && error.httpStatus >= 400 && error.httpStatus < 500) {
           return false;
         }
 
@@ -45,6 +46,13 @@ const queryClient = new QueryClient({
     },
   }),
   mutationCache: new MutationCache({
+    // eslint-disable-next-line max-params
+    onError: (error, _vars, _ctx, mutation) => {
+      // 標記 skipGlobalError 的 mutation 自行於元件層處理錯誤，跳過全域顯示
+      if (mutation.meta?.skipGlobalError) return;
+
+      console.error(error);
+    },
     // eslint-disable-next-line max-params
     onSuccess: (_data, _vars, _ctx, mutation) => {
       // 未宣告 meta.invalidates 的 mutation 不做任何 invalidation（opt-in）

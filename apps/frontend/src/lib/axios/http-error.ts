@@ -1,8 +1,10 @@
+import type { ApiErrorStatusCode } from '@superdsp/api-schemas/base/api-status-code';
+
 export class HttpError extends Error {
   constructor(
-    public status: number,
+    public httpStatus: number,
+    public statusCode: ApiErrorStatusCode,
     message: string,
-    public data?: unknown,
   ) {
     super(message);
     this.name = 'HttpError';

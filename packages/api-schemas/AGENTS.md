@@ -16,10 +16,15 @@
 - 測試檔案放在**與被測試檔案同層**的 `__test__/` 目錄下。
 - 命名規則：`<filename>.test.ts`。
 
-## API Envelope（`base/api.ts`）
+## API Response（`base/api.ts`）
 
-- **後端 DTO**：`createApiSuccessSchema(DataSchema)`
-- **前端 parse 完整回應**：`createApiResponseSchema(DataSchema)`，以 `res.status === 'success'` narrow type
+`statusCode` discriminator 的統一回應：
+
+- Success：`{ statusCode: 'SUCCESS' | 'PARTIAL_SUCCESS', data, message? }`
+- Error：`{ statusCode: <error code>, message? }`（無 `data`）
+
+各 domain 定義 `XxxResponseSchema = createSuccessResponseSchema(DataSchema)` 供前後端共用（後端包 DTO、前端 parse）。
+error 前端用 `ErrorResponseSchema.safeParse()` 取 `statusCode`。error code 列舉見 `base/api-status-code.ts`。
 
 ## 新增領域時，必須改以下一處
 

@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { createSuccessResponseSchema } from '@/base/api';
+
 export const LoginSchema = z.object({
   email: z.email({ error: '請輸入有效的電子郵件地址' }),
   password: z
@@ -9,6 +11,8 @@ export const LoginSchema = z.object({
 
 export type LoginInput = z.infer<typeof LoginSchema>;
 
-export const LoginResponseSchema = z.object({ token: z.string() });
+export const LoginResultSchema = z.object({ token: z.string() });
 
-export type LoginResponse = z.infer<typeof LoginResponseSchema>;
+export type LoginResult = z.infer<typeof LoginResultSchema>;
+
+export const LoginResponseSchema = createSuccessResponseSchema(LoginResultSchema);

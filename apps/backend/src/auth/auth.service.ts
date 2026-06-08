@@ -1,4 +1,4 @@
-import type { LoginInput, LoginResponse } from '@superdsp/api-schemas/auth/login';
+import type { LoginInput, LoginResult } from '@superdsp/api-schemas/auth/login';
 
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
@@ -8,7 +8,7 @@ const SESSION_TOKEN = 'superdsp-session-token';
 
 @Injectable()
 export class AuthService {
-  login({ email, password }: LoginInput): LoginResponse {
+  login({ email, password }: LoginInput): LoginResult {
     if (email !== HARDCODED_EMAIL || password !== HARDCODED_PASSWORD) {
       throw new UnauthorizedException('帳號或密碼錯誤');
     }

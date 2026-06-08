@@ -149,7 +149,7 @@
       "source": "onead/ito-frontend-doc-vault",
       "sourceType": "github",
       "skillPath": ".claude/skills/zod-best-practices/SKILL.md",
-      "computedHash": "86f9886234f976e5d9bf175e59a8567d897814f8ec9d0643fd0f4f489257cb54"
+      "computedHash": "a282212096c76d03fb94ce823bf3ba20b10a3d0280872ce88fcedb6c63020f74"
     },
     "zustand-best-practices": {
       "source": "onead/ito-frontend-doc-vault",

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { loginMutationOptions } from '@/features/auth/mutations/login';
 import { useAuthStoreActions } from '@/features/auth/stores/auth-store';
+import { HttpError } from '@/lib/axios/http-error';
 
 export function LoginForm() {
   'use memo';
@@ -15,8 +16,9 @@ export function LoginForm() {
 
   const mutation = useMutation({
     ...loginMutationOptions(),
-    onSuccess: ({ token }) => {
-      setToken(token);
+    meta: { skipGlobalError: true },
+    onSuccess: ({ data }) => {
+      setToken(data.token);
       void navigate({ to: '/campaigns' });
     },
   });
@@ -42,7 +44,7 @@ export function LoginForm() {
           role="alert"
           className="bg-destructive/10 text-destructive rounded-md px-3 py-2 text-sm"
         >
-          帳號或密碼錯誤
+          {mutation.error instanceof HttpError ? mutation.error.message : '登入失敗，請稍後再試'}
         </p>
       ) : null}
 

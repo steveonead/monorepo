@@ -1,33 +1,26 @@
 import { z } from 'zod';
 
-export function createApiSuccessSchema<T extends z.ZodTypeAny>(dataSchema: T) {
-  return z.object({ status: z.literal('success'), data: dataSchema });
+import type { ApiSuccessStatusCode } from '@/base/api-status-code';
+
+import { ErrorCodeSchema, SuccessCodeSchema } from '@/base/api-status-code';
+
+export function createSuccessResponseSchema<T extends z.ZodTypeAny>(dataSchema: T) {
+  return z.object({
+    statusCode: SuccessCodeSchema,
+    data: dataSchema,
+    message: z.string().optional(),
+  });
 }
 
-export type ApiSuccessResponse<T extends z.ZodTypeAny> = z.infer<
-  ReturnType<typeof createApiSuccessSchema<T>>
->;
-
-export const ApiErrorSchema = z.object({
-  status: z.literal('error'),
-  code: z.string(),
-  message: z.string(),
-  errors: z
-    .array(
-      z.object({
-        path: z.union([z.string(), z.array(z.union([z.string(), z.number()]))]),
-        message: z.string(),
-      }),
-    )
-    .optional(),
+export const ErrorResponseSchema = z.object({
+  statusCode: ErrorCodeSchema,
+  message: z.string().optional(),
 });
 
-export type ApiErrorResponse = z.infer<typeof ApiErrorSchema>;
+export type ErrorResponse = z.infer<typeof ErrorResponseSchema>;
 
-export function createApiResponseSchema<T extends z.ZodTypeAny>(dataSchema: T) {
-  return z.discriminatedUnion('status', [createApiSuccessSchema(dataSchema), ApiErrorSchema]);
-}
-
-export type ApiResponse<T extends z.ZodTypeAny> = z.infer<
-  ReturnType<typeof createApiResponseSchema<T>>
->;
+export type SuccessResponse<TData> = {
+  statusCode: ApiSuccessStatusCode;
+  data: TData;
+  message?: string;
+};

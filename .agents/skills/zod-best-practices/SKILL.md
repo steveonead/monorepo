@@ -37,6 +37,8 @@ description: Zod v4 最佳實踐規則集，供撰寫、審查或重構 Zod sche
 - `deprecated-zod-to-json-schema` — 禁用第三方套件 `zod-to-json-schema`，改用 `z.toJSONSchema()`
 - `deprecated-merge` — 禁用 `.merge()`，改用 `.extend()` 或 object spread
 - `deprecated-record-single-arg` — `z.record()` 必須傳兩個參數
+- `deprecated-number-int` — 禁用 `z.number().int()`，改用 `z.int()` / `z.int32()` / `z.uint32()` 等數值頂層函式
+- `deprecated-coerce-input-type` — 禁用依賴 `z.coerce` schema 的 `z.input<>` 型別推斷，v4 input type 已為 `unknown`
 
 ### 解析邊界
 

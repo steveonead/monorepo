@@ -4,8 +4,8 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { createZodValidationPipe, ZodSerializerInterceptor } from 'nestjs-zod';
 
 import { AuthModule } from '@/auth/auth.module';
-import { HttpExceptionFilter } from '@/common/filters/http-exception.filter';
-import { EnvSchema } from '@/env.schema';
+import { AllExceptionsFilter } from '@/common/filters/all-exceptions.filter';
+import { EnvSchema } from '@/config/env.schema';
 
 const StrictZodValidationPipe = createZodValidationPipe({
   strictSchemaDeclaration: true,
@@ -23,7 +23,7 @@ const StrictZodValidationPipe = createZodValidationPipe({
   providers: [
     { provide: APP_PIPE, useClass: StrictZodValidationPipe },
     { provide: APP_INTERCEPTOR, useClass: ZodSerializerInterceptor },
-    { provide: APP_FILTER, useClass: HttpExceptionFilter },
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
   ],
 })
 export class AppModule {}

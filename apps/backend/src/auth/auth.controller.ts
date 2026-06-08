@@ -3,6 +3,7 @@ import { ZodResponse } from 'nestjs-zod';
 
 import { AuthService } from '@/auth/auth.service';
 import { LoginDto, LoginResponseDto } from '@/auth/dto/auth.dto';
+import { ok } from '@/common/utils/api-response';
 
 @Controller('auth')
 export class AuthController {
@@ -11,6 +12,6 @@ export class AuthController {
   @Post('login')
   @ZodResponse({ type: LoginResponseDto })
   login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
+    return ok(this.authService.login(dto));
   }
 }

@@ -33,7 +33,7 @@ beforeEach(() => {
 
 describe('loginForm', () => {
   it('帳密錯誤時顯示「帳號或密碼錯誤」且不導向、不寫入 token', async () => {
-    vi.mocked(sendRequest).mockRejectedValue(new HttpError(401, 'Unauthorized'));
+    vi.mocked(sendRequest).mockRejectedValue(new HttpError(401, 'UNAUTHORIZED', '帳號或密碼錯誤'));
     const user = userEvent.setup();
     renderWithClient(<LoginForm />);
 
@@ -48,7 +48,7 @@ describe('loginForm', () => {
 
   it('帳密正確時設定 token、持久化至 localStorage 並導向 /campaigns', async () => {
     const token = 'superdsp-session-token';
-    vi.mocked(sendRequest).mockResolvedValue({ token });
+    vi.mocked(sendRequest).mockResolvedValue({ statusCode: 'SUCCESS', data: { token } });
     const user = userEvent.setup();
     renderWithClient(<LoginForm />);
 

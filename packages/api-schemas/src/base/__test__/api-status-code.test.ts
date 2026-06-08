@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getErrorCode } from '@/base/error-codes';
+import { getErrorCode } from '@/base/api-status-code';
 
 describe('getErrorCode', () => {
   it('已知狀態碼回傳對應 error code', () => {
@@ -13,10 +13,9 @@ describe('getErrorCode', () => {
     expect(getErrorCode(500)).toBe('INTERNAL_SERVER_ERROR');
   });
 
-  it('未知狀態碼回傳 ERROR fallback', () => {
-    expect(getErrorCode(418)).toBe('UNKNOWN_ERROR');
-    expect(getErrorCode(999)).toBe('UNKNOWN_ERROR');
-    expect(getErrorCode(-500)).toBe('UNKNOWN_ERROR');
-    expect(getErrorCode(1_000)).toBe('UNKNOWN_ERROR');
+  it('未對應的狀態碼 fallback 為 INTERNAL_SERVER_ERROR', () => {
+    expect(getErrorCode(429)).toBe('INTERNAL_SERVER_ERROR');
+    expect(getErrorCode(503)).toBe('INTERNAL_SERVER_ERROR');
+    expect(getErrorCode(418)).toBe('INTERNAL_SERVER_ERROR');
   });
 });

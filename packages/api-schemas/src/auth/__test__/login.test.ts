@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { LoginResponseSchema, LoginSchema } from '@/auth/login';
+import { LoginResultSchema, LoginSchema } from '@/auth/login';
 
 const validLogin = {
   email: 'user@example.com',
@@ -39,19 +39,19 @@ describe('loginSchema', () => {
   });
 });
 
-describe('loginResponseSchema', () => {
+describe('loginResultSchema', () => {
   it('token 字串通過 parse', () => {
-    const result = LoginResponseSchema.safeParse({ token: 'superdsp-session-token' });
+    const result = LoginResultSchema.safeParse({ token: 'superdsp-session-token' });
     expect(result.success).toBe(true);
   });
 
   it('token 非字串時被拒絕', () => {
-    const result = LoginResponseSchema.safeParse({ token: 123 });
+    const result = LoginResultSchema.safeParse({ token: 123 });
     expect(result.success).toBe(false);
   });
 
   it('缺少 token 欄位時被拒絕', () => {
-    const result = LoginResponseSchema.safeParse({});
+    const result = LoginResultSchema.safeParse({});
     expect(result.success).toBe(false);
   });
 });
