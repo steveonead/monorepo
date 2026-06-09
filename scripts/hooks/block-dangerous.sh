@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# 安全防護必須 fail closed：jq 缺失時封鎖，而非放行危險指令
+command -v jq >/dev/null 2>&1 || { echo "BLOCKED: jq 未安裝，危險指令防護無法運作。請先安裝 jq。" >&2; exit 2; }
+
 CMD=$(jq -r '.tool_input.command // ""')
 [[ -z "$CMD" ]] && exit 0
 

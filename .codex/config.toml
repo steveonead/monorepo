@@ -1,0 +1,4 @@
+# 啟用 lifecycle hooks（顯式設定，消除「預設是否開啟」的版本歧義）
+# hooks 定義見同層的 .codex/hooks.json，指向共用的 scripts/hooks/*.sh
+[features]
+hooks = true

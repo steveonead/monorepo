@@ -6,12 +6,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$(git rev-parse --show-toplevel)/.codex/hooks/block-dangerous.sh\"",
+            "command": "\"$(git rev-parse --show-toplevel)/scripts/hooks/block-dangerous.sh\"",
             "statusMessage": "檢查危險指令"
           },
           {
             "type": "command",
-            "command": "\"$(git rev-parse --show-toplevel)/.codex/hooks/enforce-pnpm.sh\"",
+            "command": "\"$(git rev-parse --show-toplevel)/scripts/hooks/enforce-pnpm.sh\"",
             "statusMessage": "強制使用 pnpm"
           }
         ]
@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$(git rev-parse --show-toplevel)/.codex/hooks/lint-and-format.sh\"",
+            "command": "\"$(git rev-parse --show-toplevel)/scripts/hooks/lint-and-format.sh\"",
             "statusMessage": "ESLint --fix + Prettier"
           }
         ]
@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$(git rev-parse --show-toplevel)/.codex/hooks/typecheck.sh\"",
+            "command": "\"$(git rev-parse --show-toplevel)/scripts/hooks/typecheck.sh\"",
             "timeout": 120,
             "statusMessage": "Typecheck（pnpm turbo typecheck）"
           }

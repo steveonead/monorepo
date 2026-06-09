@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# fail closed：jq 缺失時封鎖，避免 npm/yarn/bun 防護被靜默繞過
+command -v jq >/dev/null 2>&1 || { echo "BLOCKED: jq 未安裝，套件管理器防護無法運作。請先安裝 jq。" >&2; exit 2; }
+
 CMD=$(jq -r '.tool_input.command // ""')
 [[ -z "$CMD" ]] && exit 0
 

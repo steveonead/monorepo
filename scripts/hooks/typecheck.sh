@@ -5,11 +5,13 @@ if [ "$(echo "$INPUT" | jq -r '.stop_hook_active')" = "true" ]; then
   exit 0
 fi
 
-[ -z "${CLAUDE_PROJECT_DIR:-}" ] && exit 0
-cd "$CLAUDE_PROJECT_DIR"
+# 兩邊皆可用：Claude Code 提供 CLAUDE_PROJECT_DIR；Codex 不提供，fallback 至 git root
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null)}"
+[ -z "$PROJECT_DIR" ] && exit 0
+cd "$PROJECT_DIR"
 
 # 若無 TS/TSX 未提交變更（例如使用者取消並還原），跳過 typecheck
-CHANGED_TS=$(git diff --name-only HEAD 2>/dev/null | grep -cE '\.(ts|tsx)$' || echo 0)
+CHANGED_TS=$(git diff --name-only HEAD 2>/dev/null | grep -cE '\.(ts|tsx)$' || true)
 if [ "$CHANGED_TS" -eq 0 ]; then
   exit 0
 fi
