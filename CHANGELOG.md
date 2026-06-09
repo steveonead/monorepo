@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.27
+
+[compare changes](https://github.com/steveonead/monorepo/compare/v0.1.26...v0.1.27)
+
 ## v0.1.26
 
 [compare changes](https://github.com/steveonead/monorepo/compare/v0.1.25...v0.1.26)
