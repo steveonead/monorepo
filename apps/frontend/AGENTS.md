@@ -14,7 +14,24 @@
 ### 開發
 
 - 禁止任何相對路徑 import，一律使用已定義的 path alias（`@/`）。
-- 以 **Mobile-first** 的思維建立整個響應式網站，根據 viewport 由小至大設計 UI Layout。
+
+### RWD 策略
+
+**Desktop-first**：使用 Tailwind 預設 breakpoint。
+
+| Breakpoint | 寬度        | 支援等級 | Layout                               |
+| ---------- | ----------- | -------- | ------------------------------------ |
+| `xl:`      | ≥ 1280px    | 完整     | 預設目標，sidebar 固定               |
+| `lg:`      | 1024–1279px | 完整     | sidebar 固定，版型略縮               |
+| `md:`      | 768–1023px  | 完整     | sidebar 改 off-canvas drawer         |
+| —          | < 768px     | 有限     | 單欄、隱藏次要資訊、核心功能可用即可 |
+
+| 原則                          | 說明                                                           |
+| ----------------------------- | -------------------------------------------------------------- |
+| Desktop 優先                  | 複雜表格、圖表在 < 768px 幾乎無法正常使用，勿強行 mobile-first |
+| 斷點切在 content 斷裂處       | 不必遷就 480/768 等整數，版面在哪裡開始擠就在那裡加            |
+| Sidebar 是主要 layout concern | 以 1280px 為 overlay vs. persistent 分界，其他元件跟著走       |
+| 資料元件用 Container Query    | 表格、圖表用 `@container` 自適應，不依賴全域 viewport          |
 
 #### shadcn UI
 
